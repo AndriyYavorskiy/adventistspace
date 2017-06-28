@@ -26,7 +26,7 @@
 	return ob;
 });*/
 
-angular.module('AS').directive("asReader", function($compile, $window, asReaderManager){
+angular.module('AS').directive("asReader", function($compile, $window, asBibleInstanceManager){
 	var ob = {};
 	ob.restrict = "EA";
 	ob.template = `
@@ -57,7 +57,7 @@ angular.module('AS').directive("asReader", function($compile, $window, asReaderM
 			} else if ($window.location.hash) {
 				return $window.location.hash.replace("#", "");
 			} else {
-				var lastBookmark = asReaderManager.remindLastBookmark();
+				var lastBookmark = asBibleInstanceManager.remindLastBookmark();
 				return lastBookmark ? lastBookmark : "ru:matt:1";
 			}
 		}
@@ -66,7 +66,7 @@ angular.module('AS').directive("asReader", function($compile, $window, asReaderM
 });
 
 angular.module('AS')
-	.directive('asBibleInstance', function ($window, $http, asReaderManager, asReaderModel){
+	.directive('asBibleInstance', function ($window, $http, asBibleInstanceManager, asReaderModel){
 		var ob = {};
 		ob.templateUrl = "/components/BibleReader/asBibleInstance.html";
 		ob.restrict = "EA";
@@ -149,7 +149,7 @@ angular.module('AS')
 				} else if ($window.location.hash) {
 					return $window.location.hash.replace("#", "");
 				} else {
-					var lastBookmark = asReaderManager.remindLastBookmark();
+					var lastBookmark = asBibleInstanceManager.remindLastBookmark();
 					return lastBookmark ? lastBookmark : "ru:matt:1";
 				}
 			}
@@ -167,25 +167,33 @@ angular.module('AS')
 					addInstance("ru:tim1:12:1");
 				}
 			}
-			function toggleBook (bookId) {
-				var book = getBookModelById(bookId), promise;
+			function toggleBook (target) {
+				return setBookState(target, "toggle");
+			}
+			function openBook (target) {
+				return setBookState(target, "open");
+			}
+			function setBookState (target, action) {
+				var book;
+				if (target.alias){
+					book = target;
+				} else {
+					book = getBookModelById(target)
+				}
 				if (!book.chapters.length) {
-					promise = $http.get("/scriptures/Bible_ru/" + book.alias + ".json").then(function (response) {
+					return asBibleInstanceManager.loadBookModel(book).then(function (response) {
 						book.chapters = response.data;
 						book.state = true;
 					});
-				} else {
-					book.state = !book.state;
-					return {then: function (f) {f()}};
 				}
-				return promise;
-				// explore this method; solution is doubtful
+				book.state = action === "open" || !book.state;
+				return {then: function (f) {f()}};
 			}
 			function visitReference(ref) {
 				if (!ref) {
 					console.warn(scope);
 				}
-				if (!asReaderManager.isValidReference(ref)) {
+				if (!asBibleInstanceManager.isValidReference(ref)) {
 					throw new Error("Incorrect reference!");
 					return;
 				}
@@ -197,7 +205,7 @@ angular.module('AS')
 				selector = "#" + bookId + chapterNum + verseNum;
 				//console.info(selector);
 				if (chapterNum) {
-					toggleBook(bookId).then(function (res) {
+					openBook(bookId).then(function (res) {
 						setTimeout(function () {goToDOMelement(selector)}, 0);
 					});
 					
@@ -223,13 +231,13 @@ angular.module('AS')
 			}
 			scope.$on("$destroy", function () {
 				//console.warn('scope destroyed: last reference: ' + scope.reference);
-				asReaderManager.rememberLastBookmark(scope.reference);
+				asBibleInstanceManager.rememberLastBookmark(scope.reference);
 			}); 
 		}
 		return ob;
 	});
 	
-angular.module("AS").factory("asReaderManager", function (BIBLEMATRIX) {
+angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMATRIX) {
 	var manager = {};
 	manager.addBookmark = function (bookmark) {}
 	manager.removeBookmark = function (bookmark) {}
@@ -245,6 +253,7 @@ angular.module("AS").factory("asReaderManager", function (BIBLEMATRIX) {
 		}
 	}
 	manager.isValidReference = isValidReference;
+	manager.loadBookModel = loadBookModel;
 	return manager;
 	function isValidReference (bookmark) {
 		if (!bookmark) {
@@ -274,6 +283,9 @@ angular.module("AS").factory("asReaderManager", function (BIBLEMATRIX) {
 		}
 		
 		return byREGEX && byMATRIX;
+	}
+	function loadBookModel (book) {
+		return $http.get("/scriptures/Bible_ru/" + book.alias + ".json");
 	}
 });
 angular.module("AS").constant("asReaderModel", function () {
