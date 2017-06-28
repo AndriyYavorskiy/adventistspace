@@ -1,0 +1,32 @@
+
+	<div class="book-toolbar">
+		<div class="share-box">
+			<div class="go-left">http://adventistspace/#</div>
+			<input type="text" placehoder="Біблійний текст" id="ref" ng-model="reference" 
+				class="inp txt sensation share">{{reference}}
+		</div>
+		<input type="text" placehoder="Біблійний текст" class="inp txt m sensation search">
+		<button class="btn m" ng-click="visitReference(reference)">Пройти</button>
+	</div>
+	<div class="reader bible" ng-dblclick="openNewInstance($event)">
+		<div class="book" id="{{book.id}}"
+			 ng-repeat="book in books track by $index"
+			 ng-class="{open: book.state}">
+			<div class="book-name" ng-click="toggleBook(book.id)">{{book.name}}</div>
+			<div class="chapters">
+				<div class="chapter" ng-repeat="chapter in book.chapters track by $index">
+					<div class="chapter-number">
+						<span class="esc" ng-click="toggleBook(book.id)">-</span>
+						{{book.alias + " " + ($index + 1)}}
+					</div>
+					<div class="verses">
+						<p class="verse" ng-repeat="verse in chapter track by $index">
+							{{$index + 1 + " " + verse}}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+

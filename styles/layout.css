@@ -1,0 +1,139 @@
+header{
+	background: #3f3f40;
+	background-size: cover;
+	display: flex;
+	height: 100px;
+}
+header .name{
+	margin: auto;
+}
+header .name h1{
+	color: #BCAA70;
+    font-weight: 700;
+    font-size: 111px;
+	text-shadow: 0 0 7px, 0 -1px #fff;
+}
+
+.modal{
+	background: rgba(0,0,0, .4);
+	display: flex;
+	height: 100%;
+	width: 100%;
+	overflow-y: scroll;
+	padding: 32px 0;
+	position: fixed;
+	top: 0;
+}
+.window {
+	opacity: 1;
+	width: 768px;
+	margin: auto;
+}
+
+.window .head{
+	border-radius: 2px 2px 0 0;
+	padding: 8px 12px;
+	position: relative;
+	background: linear-gradient(#B9EF76, #A0DE52);
+	color: #fff;
+	height: 42px;
+}
+.window .head span{
+	color: #fff;
+}
+.window .head .close:hover{
+    background: rgba(0,0,0, .1);
+}
+.window .head .close{
+	border-radius: 0 2px 0 0;
+	color: #fff;
+	cursor: default;
+	font-size: 18px;
+	position: absolute;
+    right: 0px;
+    top: 0px;
+    padding: 5.5px 14px;
+    line-height: 31px;	
+	width: 42px;
+}
+.window .body {
+	background: #fff;
+	min-height: 512px;
+}
+.window .body > div {
+	padding: 8px 12px;
+}
+.window .body .col p{
+	padding-bottom: 27px;
+}
+.window .footer {
+	background: #eee;
+	padding: 8px 12px;
+	border-radius: 0 0 2px 2px;
+	border-top: 1px solid #ccc;
+}
+.gifts{
+	margin: auto;
+	padding: 0 4px;
+	left: -40px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	transition: .3s;
+	//align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	z-index: 777;
+}
+.gifts:hover{
+	background: rgba(222,222,222, .2);
+	box-shadow: 0 0 4px rgba(0,0,0, .4);
+	left: 0;
+}
+.gift{
+	background-size: cover;
+	//margin: auto;
+	height: 40px;
+	transition: .3s;
+	width: 40px;
+	transform: scale(0.8);
+}
+.gift:hover{
+	transform: scale(1);
+}
+
+.gifts .low {
+	background: url('../images/Law-icon3	.png');
+	background-size: cover;
+}
+.gifts .word {
+	background: url('../images/Fish5.png');
+	background-size: cover;
+}
+.gifts .bible {
+	background: url('../images/Bible-icon2	.png');
+	background-size: cover;
+}
+.gifts .church {
+	background: url('../images/Church-icon.png');
+	background-size: cover;
+}
+.gifts .infinity {
+	background: url('../images/Infinity-icon.png');
+	background-size: cover;
+}
+
+
+.columns {
+	padding: 32px;
+}
+.columns .col:not(:first-child){
+	margin-left: 64px;
+}
+.page-footer {
+	background: #3f3f40;
+}
+.page-footer .col p {
+	color: #BCAA70;
+	
+}

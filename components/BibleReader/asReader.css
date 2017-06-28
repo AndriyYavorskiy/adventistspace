@@ -1,0 +1,178 @@
+.readers-wrapper {
+	background: rgba(249, 236, 74, 0.95);
+	background: rgba(183, 181, 157, 0.75);
+    background: rgba(224, 220, 197, 0.75);
+	height: 100%;
+    left: 0;
+	position: fixed;
+    //top: 6%;
+	
+	padding-top: 6%;
+    padding-bottom: 6%;
+    top: 0;
+	
+	width: 100%;
+}
+
+.books-wrapper {
+	box-shadow: 0 0 3px rgba(0,0,0, .1), 0 0 16px rgba(0,0,0, .1);
+    /*background: #b69f88;*/
+    border-radius: 5px;
+	display: flex;
+	//    color: #ad947f;
+    height: 100%;
+	justify-content: center;
+    position: relative;
+    //width: 612px;
+}
+.reader-toolbar {
+    /*background: #b69f88;border-bottom: 1px solid #8c7465;
+	background: #cdf72f;border-bottom: 1px solid #bada43;
+    box-shadow: 0 5px 7px -3px rgba(0, 0, 0, .04);*/
+	border-radius: 5px 5px 0 0;
+	height: 52px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+.book-wrapper {
+	float: left;
+	height: 100%;
+	padding: 52px 0 0 0;
+	position: relative;
+}
+.book-wrapper:not(:last-of-type) {
+	margin-right: 12px;
+}
+.book-wrapper .share-box {
+	font-size: 14px;
+	position: absolute;
+	top: -16px;
+}
+.book-wrapper .share-box * {
+	font-size: 14px;
+}
+.book-toolbar {
+	//background: linear-gradient(#FF6161, #FF3D3D);
+	background: #fff;
+	border-bottom: 1px solid #eee;
+	border-radius: 5px 5px 0 0;
+    box-shadow: 0 3px 16px -3px rgba(0, 0, 0, .04);
+	font-size: 16px;
+	height: 52px;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+.book-toolbar * {
+	font-size: 16px;
+}
+.book-toolbar .share-box {
+	width: 100%;
+}
+.book-toolbar .inp.share {
+	background: none;
+	border: 1px solid transparent;
+	float: left;
+	font-size: 14px;
+	width: 140px;
+}
+.book-toolbar .inp.share:focus {
+	background: #fff;
+	border: 1px solid #fff;
+}
+.book-toolbar .search {
+	border-radius: 2px 0 0 2px;
+	border-right: none;
+    margin: 8px;
+	margin-right: 0;
+	width: 208px;
+}
+.book-toolbar .inp.ng-invalid-pattern {
+	color: #ff7777;
+}
+.book-toolbar .btn {
+	border-radius: 0 2px 2px 0;
+	width: 78px
+}
+.book-toolbar .inp.search,
+.book-toolbar .btn {
+	float: left;
+    margin-top: 8px;
+}
+
+	[as-reader] {
+		height: 100%;
+	}
+	.bible.reader {
+		background: #fff;
+		border-radius: 0 0 0 5px;
+		height: 100%;
+		overflow-y: auto;
+		width: 300px;
+	}
+	.bible.reader .book {
+		padding: 0 16px;
+	}
+	.bible.reader .book.open {
+		background: #f9f9f9;
+		padding-bottom: 28px;
+	}
+	.bible.reader .book:not(:last-of-type) {
+		//margin-bottom: 16px;
+	}
+	.bible.reader .book-name {
+		//border-bottom: 1px dashed #f3e2d8;
+		color: #f17878;
+		cursor: pointer;
+		font-size: 18px;
+		padding: 8px 0;
+		text-align: center;
+	}
+	.bible.reader .chapter-number {
+		//border-bottom: 1px dashed #f3e2d8;
+		color: #f17878;
+		font-size: 17px;
+		margin: 8px auto;
+		text-align: center;
+		width: 50%;
+	}
+	.bible.reader .chapters {
+		display: none;
+	}
+	.bible.reader .book.open .chapters {
+		display: block;
+	}
+	.bible.reader .verse {
+		font-size: 16px;
+		//margin-bottom: 4px;
+		padding: 2px 12px;
+		text-align: justify;
+	}
+	.bible.reader .verse.spotlight {
+		background: #c0ffee;
+		color: #2a4351;
+	}
+	.bible.reader .esc {
+		border-radius: 50%;
+		color: #f17878;
+		cursor: pointer;
+		float: right;
+		font-size: 21px;
+		height: 16px;
+		line-height: 14px;
+		margin-left: -16px;
+		margin-top: 2px;
+		width: 16px;
+	}
+	.bible.reader .esc:hover {
+		background: #f17878;
+		color: #fff;
+	}
+	.close-modal {
+		cursor: pointer;
+		position: absolute;
+		right: 0;
+		top: -30px;
+	}

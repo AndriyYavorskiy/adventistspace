@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang='ua' ng-app='AS'>
+	<head>
+		<title>Adventist Space</title>
+		<meta charset="utf-8">
+		<link rel='stylesheet' href='styles/layout.css'>
+		<link rel='stylesheet' href='styles/prety.css'>
+		<link rel='stylesheet' href='styles/general.css'>
+		<link rel='stylesheet' href='styles/components.css'>
+		<link rel='stylesheet' href='styles/inputs.css'>
+		<link rel='stylesheet' href='components/BibleReader/asReader.css'>
+		<link href='http://fonts.googleapis.com/css?family=Philosopher:400,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+		<script src='scripts/angular.js'></script>
+		<script>angular.module('AS', []);</script>
+		<script src='scripts/asMainCtrl.js'></script>
+		<script src='components/asToolbar.js'></script>
+		<script src='components/BibleReader/asReader.js'></script>
+		<script src='components/modal/asModal.js'></script>
+		<link rel="shortcut icon" href="images/Fish3.png" type="image/x-icon">
+	</head>
+		<body ng-controller="as-main as mainCtrl">
+			<main>
+				<div class='module'>
+					<div class='slide column'>
+						<div class='message'>
+							<h1>Ісус - єдиний посередник між людиню та Богом</h1>
+							<section>
+								<p>
+									5 Ибо един Бог, един и посредник между Богом и человеками, человек Христос Иисус, 
+								</p>
+								<p>
+									6 предавший Себя для искупления всех.
+								</p>
+							</section>
+							<p class='source' ng-click="mainCtrl.showBibleReader('ru:tim1:2')">
+								Слова апостола Павла | Перше послання Тимофію розділ 2
+							</p>
+						</div>
+					</div>
+					<div class='slide mediator mt-400px absolute'></div>
+					<div class='column flex'>
+						<div class='facts'>
+							<a>Fact 1</a>
+							<a class='active'>Fact 2</a>
+							<a>Fact 3</a>
+						</div>
+						<div class='fact'>
+							<p>Fact</p>
+						</div>
+					</div>
+				</div>
+				<div class='module'>
+					<div class='slide column'>
+						<div class='message'>
+							<h1>Закон Бога не зміниться навіть до кінця історії Землі</h1>
+							<section>
+								<p>	
+									17 Не думайте, что Я пришел нарушить закон или пророков: не нарушить пришел Я, но исполнить.
+								</p>
+								<p>
+									18 Ибо истинно говорю вам: доколе не прейдет небо и земля, ни одна иота или ни одна черта не прейдет из закона, пока не исполнится все</p>
+								</p>
+							</section>
+							<p class='source'>Ісус Христос | Евангеліє від Матвія 5:17</p>
+						</div>
+					</div>
+					<div class='slide law mt-400px absolute'></div>
+					<div class='columns flex'>
+						<div class='col'>
+							<p>
+								2 Что мы любим детей Божиих, узнаём из того, когда любим Бога и соблюдаем заповеди Его.
+							</p>
+							<p>
+								3 Ибо это есть любовь к Богу, чтобы мы соблюдали заповеди Его; и заповеди Его нетяжки.
+							</p>
+							<p class='autor'>1-е Іоанна розділ 5 вірш 2 - 3</p>
+						</div>
+						<div class='col'>
+							<p>
+								6 Любовь же состоит в том, чтобы мы поступали по заповедям Его.
+							</p>
+							<p class='autor'>2-е Іоанна розділ 1 вірш 6</p>
+							<br>
+							<p>
+								2 Кто говорит: «я познал Его», но заповедей Его не соблюдает, тот лжец, и нет в нем истины;	
+							</p>
+							<p class='autor'>Євангеліє від Іоанна розділ 2 вірш 2</p>
+						</div>
+						<div class='col'>
+							<p>
+								
+							</p>
+							<p class='autor'>Перше Євангеліє від Іоанна розділ 2 вірш 2</p>
+						</div>
+					</div>
+				</div>
+				<div class='module'>
+					<div class='slide column'>
+						<div class='message'>
+							<h1>Бог хоче щоб усі люди вивчали Біблію</h1>
+							<section>
+								<p>
+									2 ибо это хорошо и угодно Спасителю нашему Богу,
+								</p>
+								<p>
+									4 Который хочет, чтобы все люди спаслись и достигли познания истины
+								</p>
+							</section>
+							<p class='source'>
+								Слова апостола Павла | Перше послання Тимофію розділ 2
+							</p>
+						</div>
+					</div>
+					<div class='slide learn mt-400px absolute'></div>
+					<div class='columns flex'>
+						<div class='col'>
+							<p>
+								7 Главное — мудрость: приобретай мудрость, и всем имением твоим приобретай разум. 
+							</p>
+							<p class='autor'>Соломон | Притчі 4:7</p>
+						</div>
+						<div class='col'>
+							<p>
+								Слово Христово да вселяется в вас обильно, со всякою премудростью; научайте и вразумляйте друг друга псалмами, славословием и духовными песнями, во благодати воспевая в сердцах ваших Господу.. 
+							</p>
+							<p class='autor'>Слова апостола Павла | Послання до Колоссян розділ 3 вірш 16</p>
+						</div>
+					</div>
+				</div>
+			</main>
+			<div as-toolbar></div>
+		</body>
+		<script>
+/*
+	Іконка зі скрижалями
+	Іконка з Біблією
+	Іконка з Ісусом
+	Іконка з церквою
+*/
+		</script>
+</html>

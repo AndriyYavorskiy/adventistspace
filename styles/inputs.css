@@ -1,0 +1,33 @@
+.inp {
+	border-radius: 2px;
+}
+.inp.s {
+	height: 24px;
+	padding: 0 8px;
+}
+.inp.m {
+	height: 36px;
+	padding: 0 12px;
+}
+.sensation {
+	border: 1px solid #eee;
+}
+
+.btn {
+	border: none;
+}
+.btn.m {
+	font-size: 16px;
+	height: 36px;
+	padding: 0 12px;
+}
+.btn.primary {
+    background: #A0DE52;
+	border-radius: 2px;
+	color: #fff;
+}
+.btn.blank {
+    background: none;
+	border: none;
+	//color: #fff;
+}
