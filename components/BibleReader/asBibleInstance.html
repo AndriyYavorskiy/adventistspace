@@ -8,7 +8,7 @@
 		<input type="text" placehoder="Біблійний текст" class="inp txt m sensation search">
 		<button class="btn m" ng-click="visitReference(reference)">Пройти</button>
 	</div>
-	<div class="reader bible" ng-dblclick="openNewInstance($event)">
+	<div class="reader bible">
 		<div class="book" id="{{book.id}}"
 			 ng-repeat="book in books track by $index"
 			 ng-class="{open: book.state}">
@@ -20,7 +20,8 @@
 						{{book.alias + " " + ($index + 1)}}
 					</div>
 					<div class="verses">
-						<p class="verse" ng-repeat="verse in chapter track by $index">
+						<p class="verse" ng-repeat="verse in chapter track by $index" 
+						ng-mousedown="reactOnWheel($event, book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))">
 							{{$index + 1 + " " + verse}}
 						</p>
 					</div>

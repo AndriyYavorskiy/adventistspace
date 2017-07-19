@@ -26,7 +26,7 @@
 	return ob;
 });*/
 
-angular.module('AS').directive("asReader", function($compile, $window, asBibleInstanceManager){
+angular.module('AS').directive("asReader", function($compile, $window, asBibleInstanceManager, $rootScope){
 	var ob = {};
 	ob.restrict = "EA";
 	ob.template = `
@@ -45,6 +45,9 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 		function init () {
 			var ref = getReference();
 			addInstance(ref);
+			$rootScope.$on("appeal:add-instance", function (event, ref) {
+				addInstance(ref);
+			});
 		}
 		function addInstance (reference) {
 			var template = angular.element("<div as-bible-instance='" + reference + "' class='book-wrapper'></div>");
@@ -66,7 +69,7 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 });
 
 angular.module('AS')
-	.directive('asBibleInstance', function ($window, $http, asBibleInstanceManager, asReaderModel){
+	.directive('asBibleInstance', function ($window, $http, asBibleInstanceManager, asReaderModel, $rootScope){
 		var ob = {};
 		ob.templateUrl = "/components/BibleReader/asBibleInstance.html";
 		ob.restrict = "EA";
@@ -84,6 +87,7 @@ angular.module('AS')
 			init("Ru");
 			function init (lang) {
 				scope.reference = getReference();
+				scope.lang = lang;
 				//console.info(scope.reference);
 				scope.visitReference = visitReference;
 				$http.get('/components/BibleReader/asReader' + lang + '.json').then(function (response) {
@@ -97,6 +101,7 @@ angular.module('AS')
 						var ref = scope.reference;
 						visitReference(ref)
 					}, 0);
+					scope.reactOnWheel = reactOnWheel;
 
 					/*ids = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","James","Pet1","Pet2","John1","John2","John3","Jude","Rev"];
 					idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];
@@ -142,7 +147,17 @@ angular.module('AS')
 				}, 1000);
 			}*/
 			element.on("click", selectText);
-			
+			function selectText(e) {
+				if (e.target.classList.contains('verse')) {
+					angular.element(e.target).toggleClass("spotlight");
+				}
+			}
+			function reactOnWheel(e, r) {
+				if( e.which == 2 || e.button == 4 ) {
+				   e.preventDefault();
+				   $rootScope.$emit("appeal:add-instance", scope.lang.toLowerCase() + ":" + r);
+				}
+			}
 			function getReference () {
 				if (attrs.asBibleInstance) {
 					return attrs.asBibleInstance;
@@ -151,20 +166,6 @@ angular.module('AS')
 				} else {
 					var lastBookmark = asBibleInstanceManager.remindLastBookmark();
 					return lastBookmark ? lastBookmark : "ru:matt:1";
-				}
-			}
-			function selectText(e) {
-				if (e.target.classList.contains('verse')) {
-					angular.element(e.target).toggleClass("spotlight");
-				}
-			}
-			scope.openNewInstance = function(e) {
-				if( e.which == 2 ) {
-				   e.preventDefault();
-				   alert("middle button"); 
-				}
-				if (e.target.classList.contains('verse')) {
-					addInstance("ru:tim1:12:1");
 				}
 			}
 			function toggleBook (target) {
@@ -194,7 +195,7 @@ angular.module('AS')
 					console.warn(scope);
 				}
 				if (!asBibleInstanceManager.isValidReference(ref)) {
-					throw new Error("Incorrect reference!");
+					throw new Error("Incorrect reference:" + ref + ".");
 					return;
 				}
 				var hashParts = ref.replace("#").split(":"),
