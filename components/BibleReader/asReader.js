@@ -48,11 +48,17 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 			$rootScope.$on("appeal:add-instance", function (event, ref) {
 				addInstance(ref);
 			});
+			$rootScope.$on("appeal:remove-instance", function (event, node) {
+				removeInstance(node);
+			});
 		}
 		function addInstance (reference) {
 			var template = angular.element("<div as-bible-instance='" + reference + "' class='book-wrapper'></div>");
 			angular.element(element[0].querySelector(".books-wrapper")).append(template);
 			$compile(template)(scope.$new(true));
+		}
+		function removeInstance (node) {
+			node.remove();
 		}
 		function getReference () {
 			if (attrs.asReader) {
@@ -102,7 +108,7 @@ angular.module('AS')
 						visitReference(ref)
 					}, 0);
 					scope.reactOnWheel = reactOnWheel;
-
+					scope.removeInstance = removeInstance;
 					/*ids = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","James","Pet1","Pet2","John1","John2","John3","Jude","Rev"];
 					idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];
 					var blank = angular.copy(scope.books.map(function (book, index) {
@@ -157,6 +163,9 @@ angular.module('AS')
 				   e.preventDefault();
 				   $rootScope.$emit("appeal:add-instance", scope.lang.toLowerCase() + ":" + r);
 				}
+			}
+			function removeInstance(event) {
+				$rootScope.$emit("appeal:remove-instance", element);
 			}
 			function getReference () {
 				if (attrs.asBibleInstance) {

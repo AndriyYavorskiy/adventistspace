@@ -1,12 +1,13 @@
 
 	<div class="book-toolbar">
+		<button class="btn m blank remove-instance" ng-click="removeInstance($event)">✖</button>
 		<div class="share-box">
 			<div class="go-left">http://adventistspace/#</div>
 			<input type="text" placehoder="Біблійний текст" id="ref" ng-model="reference" 
 				class="inp txt sensation share">{{reference}}
 		</div>
 		<input type="text" placehoder="Біблійний текст" class="inp txt m sensation search">
-		<button class="btn m" ng-click="visitReference(reference)">Пройти</button>
+		<button class="btn m go" ng-click="visitReference(reference)">Пройти</button>
 	</div>
 	<div class="reader bible">
 		<div class="book" id="{{book.id}}"
