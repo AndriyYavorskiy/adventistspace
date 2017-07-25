@@ -31,9 +31,10 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 	ob.restrict = "EA";
 	ob.template = `
 		<div class="readers-wrapper">
+			<button class="btn m blank close-modal" ng-click="closeModal()">✖</button>
+			<button class="btn m blank close-modal" ng-click="closeModal()">✖</button>
 			<div class="books-wrapper">
 				<div class="reader-toolbar">
-					<button class="btn m blank close-modal" ng-click="closeModal()">✖</button>
 				</div>
 			</div>
 		</div>
@@ -42,32 +43,47 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 	ob.link = function (scope, element, attrs) {
 		scope.addInstance = function (ref) {addInstance(ref)};
 		init();
-		function init () {
-			var ref = getReference();
+		scope.$on("$destroy", function () {
+			
+		});
+		scope.$on("appeal:add-bookmark", function (event, ref) {
+			asBibleInstanceManager.addToLastBookmarks(ref);
+		});	
+
+		scope.$on("appeal:add-instance", function (event, ref) {
 			addInstance(ref);
-			$rootScope.$on("appeal:add-instance", function (event, ref) {
-				addInstance(ref);
-			});
-			$rootScope.$on("appeal:remove-instance", function (event, node) {
-				removeInstance(node);
-			});
+		});
+		scope.$on("appeal:remove-instance", function (event, node) {
+			removeInstance(node);
+		});
+		function init () {
+			var state = getLastState();
+			if (state instanceof Array) {
+				state.forEach(function (ref) {
+					addInstance(ref);
+				});	
+			} else {
+				addInstance(state);
+			}
+			asBibleInstanceManager.clearLastBookmarks();
 		}
 		function addInstance (reference) {
-			var template = angular.element("<div as-bible-instance='" + reference + "' class='book-wrapper'></div>");
+			var template = angular.element("<div as-bible-instance='" + reference + "' class='book-wrapper'></div>"),
+				newScope = scope.$new(true);
 			angular.element(element[0].querySelector(".books-wrapper")).append(template);
-			$compile(template)(scope.$new(true));
+			$compile(template)(newScope);
 		}
 		function removeInstance (node) {
 			node.remove();
 		}
-		function getReference () {
+		function getLastState () {
 			if (attrs.asReader) {
 				return attrs.asReader;
 			} else if ($window.location.hash) {
 				return $window.location.hash.replace("#", "");
 			} else {
-				var lastBookmark = asBibleInstanceManager.remindLastBookmark();
-				return lastBookmark ? lastBookmark : "ru:matt:1";
+				var lastBookmark = asBibleInstanceManager.remindLastState();
+				return lastBookmark.length ? lastBookmark : "ru:matt:1";
 			}
 		}
 	};
@@ -88,14 +104,15 @@ angular.module('AS')
 		ob.link = function (scope, element, attrs) {
 			//scope.openBook = openBook;
 			scope.toggleBook = toggleBook;
+			scope.visitReference = visitReference;
+			scope.reactOnWheel = reactOnWheel;
+			scope.removeInstance = removeInstance;
 			scope.referenceRegex = /^(ru|ua|en){1}(:\w{2,})?(:\d+)?(:\d+((-\d+)?|(,\d+)*)?)?$/gim;
 
 			init("Ru");
 			function init (lang) {
 				scope.reference = getReference();
 				scope.lang = lang;
-				//console.info(scope.reference);
-				scope.visitReference = visitReference;
 				$http.get('/components/BibleReader/asReader' + lang + '.json').then(function (response) {
 					var initialModel = response.data.map(function (book) {
 						book.state = false;
@@ -107,8 +124,6 @@ angular.module('AS')
 						var ref = scope.reference;
 						visitReference(ref)
 					}, 0);
-					scope.reactOnWheel = reactOnWheel;
-					scope.removeInstance = removeInstance;
 					/*ids = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","James","Pet1","Pet2","John1","John2","John3","Jude","Rev"];
 					idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];
 					var blank = angular.copy(scope.books.map(function (book, index) {
@@ -126,6 +141,9 @@ angular.module('AS')
 					
 				});
 			}
+			scope.$on("$destroy", function () {
+				scope.$emit("appeal:add-bookmark", scope.reference);
+			});
 			/*function PREPAREMATRIX() {
 				var idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];
 				var blank = {};
@@ -161,11 +179,12 @@ angular.module('AS')
 			function reactOnWheel(e, r) {
 				if( e.which == 2 || e.button == 4 ) {
 				   e.preventDefault();
-				   $rootScope.$emit("appeal:add-instance", scope.lang.toLowerCase() + ":" + r);
+				   scope.$emit("appeal:add-instance", scope.lang.toLowerCase() + ":" + r);
 				}
 			}
 			function removeInstance(event) {
-				$rootScope.$emit("appeal:remove-instance", element);
+				scope.$destroy();
+				scope.$emit("appeal:remove-instance", element);
 			}
 			function getReference () {
 				if (attrs.asBibleInstance) {
@@ -173,7 +192,7 @@ angular.module('AS')
 				} else if ($window.location.hash) {
 					return $window.location.hash.replace("#", "");
 				} else {
-					var lastBookmark = asBibleInstanceManager.remindLastBookmark();
+					var lastBookmark = asBibleInstanceManager.remindLastState();
 					return lastBookmark ? lastBookmark : "ru:matt:1";
 				}
 			}
@@ -239,10 +258,6 @@ angular.module('AS')
 			function goToDOMelement (selector) {
 				element[0].querySelector(selector).scrollIntoView();
 			}
-			scope.$on("$destroy", function () {
-				//console.warn('scope destroyed: last reference: ' + scope.reference);
-				asBibleInstanceManager.rememberLastBookmark(scope.reference);
-			}); 
 		}
 		return ob;
 	});
@@ -251,16 +266,24 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 	var manager = {};
 	manager.addBookmark = function (bookmark) {}
 	manager.removeBookmark = function (bookmark) {}
-	manager.clearBookmarks = function () {}
 	manager.updateBookmark = function (bookmark) {}
-	manager.remindLastBookmark = function () {
-		var bookmark = localStorage.getItem("BibleReference");
-		return isValidReference(bookmark) ? bookmark : "";
+	manager.remindLastState = function () {
+		return JSON.parse(localStorage.getItem("BibleReaderLastState")) || [];
 	}
 	manager.rememberLastBookmark = function (bookmark) {
 		if (isValidReference(bookmark)) {
 			localStorage.setItem("BibleReference", bookmark);
 		}
+	}
+	manager.addToLastBookmarks = function (bookmark) {
+		var readerState = JSON.parse(localStorage.getItem("BibleReaderLastState")) || [];
+		if (isValidReference(bookmark)) {
+			readerState.push(bookmark);
+			localStorage.setItem("BibleReaderLastState", JSON.stringify(readerState));
+		}
+	}
+	manager.clearLastBookmarks = function () {
+		localStorage.removeItem("BibleReaderLastState");
 	}
 	manager.isValidReference = isValidReference;
 	manager.loadBookModel = loadBookModel;
@@ -280,15 +303,15 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 			verseNum = parts[3] ? parts[3].split(parts[3].match(/\W/i)).sort(function(a,b){return a < b})[0] : undefined;
 			if (bookId && !(BIBLEMATRIX()[bookId].length)) {
 				byMATRIX = false;
-				throw new Error(bookmark + "Incorrect book id.");
+				throw new Error(bookmark + " - Incorrect book id.");
 			}
 			if (chapterNum && !(BIBLEMATRIX()[bookId].length >= chapterNum && chapterNum >= 0)) {
 				byMATRIX = false;
-				throw new Error(bookmark + "Incorrect chapter number.")
+				throw new Error(bookmark + " - Incorrect chapter number.")
 			}
 			if (verseNum && !(BIBLEMATRIX()[bookId][chapterNum] >= verseNum)) {
 				byMATRIX = false;
-				throw new Error(bookmark + "Incorrect book number.");
+				throw new Error(bookmark + " - Incorrect book number.");
 			}
 		}
 		
