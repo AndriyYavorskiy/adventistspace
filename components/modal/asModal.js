@@ -1,6 +1,6 @@
 
 	angular.module('AS')
-	.service("asModal", function($templateRequest, $document, $compile, asModalState, $rootScope) {
+	.service("asModal", function($document, $compile, $rootScope) {
 		this.open = function (component) {
 			var template = angular.element("<div as-modal " + component + "></div>");
 				angular.element($document[0].body).append(template);
@@ -10,7 +10,6 @@
 	angular.module("AS").directive("asModal", function () {
 		var ob = {};
 		ob.restrict = "A";
-		//ob.scope = {closeModal: "@"};
 		ob.link = function (s, e, a) {
 			s.closeModal = function () {
 				s.$destroy();

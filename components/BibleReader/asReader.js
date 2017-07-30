@@ -91,7 +91,7 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 });
 
 angular.module('AS')
-	.directive('asBibleInstance', function ($window, $http, asBibleInstanceManager, asReaderModel, $rootScope){
+	.directive('asBibleInstance', function ($window, $http, asBibleInstanceManager, asReaderModel, $rootScope, instanceState){
 		var ob = {};
 		ob.templateUrl = "/components/BibleReader/asBibleInstance.html";
 		ob.restrict = "EA";
@@ -102,16 +102,18 @@ angular.module('AS')
 		
 		//ob.controller = function () {};
 		ob.link = function (scope, element, attrs) {
-			//scope.openBook = openBook;
+			scope.bibleBook = "";
 			scope.toggleBook = toggleBook;
 			scope.visitReference = visitReference;
 			scope.reactOnWheel = reactOnWheel;
 			scope.removeInstance = removeInstance;
+			scope.switchToBook = switchToBook;
 			scope.referenceRegex = /^(ru|ua|en){1}(:\w{2,})?(:\d+)?(:\d+((-\d+)?|(,\d+)*)?)?$/gim;
 
-			init("Ru");
-			function init (lang) {
-				scope.reference = getReference();
+			init("ru");
+			function init (lang, reference) {
+				scope.reference = reference || getReference();
+				instanceState.setLang(lang);
 				scope.lang = lang;
 				$http.get('/components/BibleReader/asReader' + lang + '.json').then(function (response) {
 					var initialModel = response.data.map(function (book) {
@@ -170,6 +172,17 @@ angular.module('AS')
 					console.table(bl);
 				}, 1000);
 			}*/
+			/*function searchForBook () {
+				if (scope.bibleBook.length > 2) {
+					scope.ACBooks = asBibleInstanceManager.helpToFindBook(scope.bibleBook);
+				}
+			}*/
+			function switchToBook (book) {
+				scope.reference = instanceState.setBook(book.id).getReference();
+				visitReference(scope.reference);
+				scope.bibleBook = book.name;
+			}
+
 			element.on("click", selectText);
 			function selectText(e) {
 				if (e.target.classList.contains('verse')) {
@@ -177,7 +190,7 @@ angular.module('AS')
 				}
 			}
 			function reactOnWheel(e, r) {
-				if( e.which == 2 || e.button == 4 ) {
+				if (e.which == 2 || e.button == 4) {
 				   e.preventDefault();
 				   scope.$emit("appeal:add-instance", scope.lang.toLowerCase() + ":" + r);
 				}
@@ -261,8 +274,47 @@ angular.module('AS')
 		}
 		return ob;
 	});
-	
-angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMATRIX) {
+angular.module("AS").service("instanceState", function () {
+	var self = this,
+		state = {};
+		
+	this.setLang = function (lang) {
+		state.lang = lang;
+		return self;
+	}
+	this.setBook = function (bookId) {
+		state.book = bookId;
+		return self;
+	}
+	this.setChapter = function (chapter) {
+		state.chapter = chapter;
+		return self;
+	}
+	this.setVerse= function (verse) {
+		state.verse = verse;
+		return self;
+	}
+	this.parseReference = function (reference) {
+		var parts = reference.split(":");
+		state = {
+			lang: parts[0],
+			book: parts[1],
+			versechapter: parts[2],
+			verse: parts[3],
+		}
+		return self;
+	}
+	this.assembleReference = function () {
+		var book = state.book ? ":" + state.book : "",
+			chapter = state.chapter ? ":" + state.chapter : "",
+			verse = state.verse ? ":" + state.verse : "";
+		return state.lang + book + chapter + verse;
+	}
+	this.getReference = function () {
+		return self.assembleReference();
+	}
+});
+angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMATRIX, asReaderModel) {
 	var manager = {};
 	manager.addBookmark = function (bookmark) {}
 	manager.removeBookmark = function (bookmark) {}
@@ -287,7 +339,18 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 	}
 	manager.isValidReference = isValidReference;
 	manager.loadBookModel = loadBookModel;
+	manager.helpToFindBook = helpToFindBook;
 	return manager;
+	function helpToFindBook(searchText) {
+		var results = [];
+		asReaderModel().ru.forEach(function (bookModel) {
+			var bookNameIsSimilar = bookModel.name.toLowerCase().indexOf(searchText.toLowerCase()) >= 0;
+			if (bookNameIsSimilar) {
+				results.push(bookModel);
+			}
+		});
+		return results;
+	}
 	function isValidReference (bookmark) {
 		if (!bookmark) {
 			throw new Error("Reference argument is: " + bookmark + ".");

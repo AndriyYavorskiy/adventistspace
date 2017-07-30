@@ -6,7 +6,12 @@
 			<input type="text" placehoder="Біблійний текст" id="ref" ng-model="reference" 
 				class="inp txt sensation share">
 		</div>
-		<input type="text" placehoder="Біблійний текст" class="inp txt m sensation search">
+		<div class="select-book">
+			<input type="text" ng-model="bibleBook" id="bible-book"
+			placehoder="Біблійний текст" class="inp txt m sensation search">
+			<div class="autocomplete" as-autocomplete-for="#bible-book" 
+			bible-book="bibleBook" switch-to-book="switchToBook"></div>
+		</div>
 		<button class="btn m go" ng-click="visitReference(reference)">Пройти</button>
 	</div>
 	<div class="reader bible">
