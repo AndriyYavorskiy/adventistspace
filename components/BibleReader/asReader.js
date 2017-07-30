@@ -41,20 +41,16 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 	`;
 	ob.transclude = true;
 	ob.link = function (scope, element, attrs) {
-		scope.addInstance = function (ref) {addInstance(ref)};
+		scope.addInstance = addInstance;
 		init();
-		scope.$on("$destroy", function () {
-			
-		});
 		scope.$on("appeal:add-bookmark", function (event, ref) {
 			asBibleInstanceManager.addToLastBookmarks(ref);
-		});	
-
+		});
 		scope.$on("appeal:add-instance", function (event, ref) {
 			addInstance(ref);
 		});
 		scope.$on("appeal:remove-instance", function (event, node) {
-			removeInstance(node);
+			node.remove();
 		});
 		function init () {
 			var state = getLastState();
@@ -65,16 +61,15 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 			} else {
 				addInstance(state);
 			}
-			asBibleInstanceManager.clearLastBookmarks();
+			scope.$on("$destroy", function () {
+				asBibleInstanceManager.clearLastBookmarks();
+			});
 		}
 		function addInstance (reference) {
 			var template = angular.element("<div as-bible-instance='" + reference + "' class='book-wrapper'></div>"),
 				newScope = scope.$new(true);
 			angular.element(element[0].querySelector(".books-wrapper")).append(template);
 			$compile(template)(newScope);
-		}
-		function removeInstance (node) {
-			node.remove();
 		}
 		function getLastState () {
 			if (attrs.asReader) {
@@ -98,9 +93,6 @@ angular.module('AS')
 		ob.scope = {
 			addInstance: "="
 		};
-		//ob.require = "^addInstance";
-		
-		//ob.controller = function () {};
 		ob.link = function (scope, element, attrs) {
 			scope.bibleBook = "";
 			scope.toggleBook = toggleBook;
@@ -195,9 +187,9 @@ angular.module('AS')
 				   scope.$emit("appeal:add-instance", scope.lang.toLowerCase() + ":" + r);
 				}
 			}
-			function removeInstance(event) {
-				scope.$destroy();
+			function removeInstance() {
 				scope.$emit("appeal:remove-instance", element);
+				scope.$destroy();
 			}
 			function getReference () {
 				if (attrs.asBibleInstance) {
@@ -362,7 +354,7 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 		if (byREGEX) {
 			var parts = bookmark.split(":");
 			bookId = parts[1];
-			chapterNum = parts[2];
+			chapterNum = (+parts[2]) - 1;
 			verseNum = parts[3] ? parts[3].split(parts[3].match(/\W/i)).sort(function(a,b){return a < b})[0] : undefined;
 			if (bookId && !(BIBLEMATRIX()[bookId].length)) {
 				byMATRIX = false;
