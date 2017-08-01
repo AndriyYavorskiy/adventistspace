@@ -32,10 +32,8 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 	ob.template = `
 		<div class="readers-wrapper">
 			<button class="btn m blank close-modal" ng-click="closeModal()">✖</button>
-			<button class="btn m blank close-modal" ng-click="closeModal()">✖</button>
 			<div class="books-wrapper">
-				<div class="reader-toolbar">
-				</div>
+				<div class="reader-toolbar"></div>
 			</div>
 		</div>
 	`;
@@ -90,9 +88,6 @@ angular.module('AS')
 		var ob = {};
 		ob.templateUrl = "/components/BibleReader/asBibleInstance.html";
 		ob.restrict = "EA";
-		ob.scope = {
-			addInstance: "="
-		};
 		ob.link = function (scope, element, attrs) {
 			scope.bibleBook = "";
 			scope.toggleBook = toggleBook;
