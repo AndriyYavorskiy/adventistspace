@@ -92,7 +92,7 @@ angular.module('AS')
 			scope.bibleBook = "";
 			scope.toggleBook = toggleBook;
 			scope.visitReference = visitReference;
-			scope.reactOnWheel = reactOnWheel;
+			scope.markVerse = markVerse;
 			scope.removeInstance = removeInstance;
 			scope.switchToBook = switchToBook;
 			scope.referenceRegex = /^(ru|ua|en){1}(:\w{2,})?(:\d+)?(:\d+((-\d+)?|(,\d+)*)?)?$/gim;
@@ -176,10 +176,16 @@ angular.module('AS')
 					angular.element(e.target).toggleClass("spotlight");
 				}
 			}
-			function reactOnWheel(e, r) {
+			function markVerse(e, r) {
 				if (e.which == 2 || e.button == 4) {
 				   e.preventDefault();
-				   scope.$emit("appeal:add-instance", scope.lang.toLowerCase() + ":" + r);
+				   notifyReader();
+				}
+				if (e.ctrlKey) {
+					notifyReader();
+				}
+				function notifyReader() {
+					scope.$emit("appeal:add-instance", scope.lang.toLowerCase() + ":" + r);
 				}
 			}
 			function removeInstance() {

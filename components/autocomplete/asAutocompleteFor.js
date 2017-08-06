@@ -9,7 +9,7 @@ angular.module('AS')
 							  {{candidate.name}}
 						   </div>`;
 		object.link = function (s, e, a) {
-			var input = document.querySelector(a.asAutocompleteFor);
+			var input = angular.element(e[0].parentNode)[0].querySelector(a.asAutocompleteFor);
 			s.candidates = [];
 			angular.element(input).on("keyup", searchForBook);
 			function searchForBook () {
