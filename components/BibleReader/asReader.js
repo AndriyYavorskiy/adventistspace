@@ -92,7 +92,7 @@ angular.module('AS')
 			scope.bibleBook = "";
 			scope.toggleBook = toggleBook;
 			scope.visitReference = visitReference;
-			scope.markVerse = markVerse;
+			scope.handeleVerseManipulation = handeleVerseManipulation;
 			scope.removeInstance = removeInstance;
 			scope.switchToBook = switchToBook;
 			scope.referenceRegex = /^(ru|ua|en){1}(:\w{2,})?(:\d+)?(:\d+((-\d+)?|(,\d+)*)?)?$/gim;
@@ -176,16 +176,21 @@ angular.module('AS')
 					angular.element(e.target).toggleClass("spotlight");
 				}
 			}
-			function markVerse(e, r) {
-				if (e.which == 2 || e.button == 4) {
-				   e.preventDefault();
+			function handeleVerseManipulation(event, ref) {
+				var reference = scope.lang.toLowerCase() + ":" + ref;
+				if (event.which == 2 || event.button == 4) {
+				   event.preventDefault();
 				   notifyReader();
 				}
-				if (e.ctrlKey) {
+				if (event.altKey) {
 					notifyReader();
 				}
+				if (event.ctrlKey) {
+					scope.reference = instanceState.parseReference(reference).getReference();
+					visitReference(reference);
+				}
 				function notifyReader() {
-					scope.$emit("appeal:add-instance", scope.lang.toLowerCase() + ":" + r);
+					scope.$emit("appeal:add-instance", reference);
 				}
 			}
 			function removeInstance() {
@@ -292,7 +297,7 @@ angular.module("AS").service("instanceState", function () {
 		state = {
 			lang: parts[0],
 			book: parts[1],
-			versechapter: parts[2],
+			chapter: parts[2],
 			verse: parts[3],
 		}
 		return self;

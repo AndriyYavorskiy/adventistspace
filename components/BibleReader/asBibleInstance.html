@@ -27,7 +27,7 @@
 					</div>
 					<div class="verses">
 						<p class="verse" ng-repeat="verse in chapter track by $index" 
-						ng-mousedown="markVerse($event, book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))">
+						   ng-mousedown="handeleVerseManipulation($event, book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))">
 							{{$index + 1 + " " + verse}}
 						</p>
 					</div>
