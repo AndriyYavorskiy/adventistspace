@@ -165,7 +165,7 @@ angular.module('AS')
 				}
 			}*/
 			function switchToBook (book) {
-				scope.reference = instanceState.setBook(book.id).getReference();
+				refreshReference({book: book.id, chapter: 1});
 				visitReference(scope.reference);
 				scope.bibleBook = book.name;
 			}
@@ -186,7 +186,7 @@ angular.module('AS')
 					notifyReader();
 				}
 				if (event.ctrlKey) {
-					scope.reference = instanceState.parseReference(reference).getReference();
+					refreshReference(reference);
 					visitReference(reference);
 				}
 				function notifyReader() {
@@ -207,11 +207,26 @@ angular.module('AS')
 					return lastBookmark ? lastBookmark : "ru:matt:1";
 				}
 			}
-			function toggleBook (target) {
-				return setBookState(target, "toggle");
+			function refreshReference (params) {
+				var freshReference;
+				if (typeof params === "string") {
+					freshReference = scope.reference = instanceState.parseReference(params).getReference();
+					return freshReference;
+				}
+				if (Object.keys(params).indexOf("book" > -1)) {instanceState.setBook(params.book);}
+				if (Object.keys(params).indexOf("chapter" > -1)) {instanceState.setChapter(params.chapter);}
+				if (Object.keys(params).indexOf("verse" > -1)) {instanceState.setVerse(params.verse);}
+				freshReference = scope.reference =  instanceState.getReference();
+				return freshReference;
 			}
-			function openBook (target) {
-				return setBookState(target, "open");
+			function toggleBook (targetBook) {
+				if (!targetBook.state) {
+					refreshReference({book: targetBook.id, chapter: 1});
+				}
+				return setBookState(targetBook.id, "toggle");
+			}
+			function openBook (targetBookId) {
+				return setBookState(targetBookId, "open");
 			}
 			function setBookState (target, action) {
 				var book;
@@ -231,18 +246,18 @@ angular.module('AS')
 			}
 			function visitReference(ref) {
 				if (!ref) {
-					console.warn(scope);
-				}
+					console.warn("No reference passed to visit!");
+					return;}
 				if (!asBibleInstanceManager.isValidReference(ref)) {
 					throw new Error("Incorrect reference:" + ref + ".");
 					return;
 				}
 				var hashParts = ref.replace("#").split(":"),
-				lang = hashParts[0],
-				bookId = hashParts.length >= 2 ? hashParts[1] : "",
-				chapterNum = hashParts.length >= 3 ? " .chapter:nth-child(" + parseInt(hashParts[2], 10) + ")" : "",
-				verseNum = hashParts.length === 4 ? " .verse:nth-child(" + hashParts[3].split(/(-|,)/i)[0] + ")" : "",
-				selector = "#" + bookId + chapterNum + verseNum;
+					lang = hashParts[0],
+					bookId = hashParts.length >= 2 ? hashParts[1] : "",
+					chapterNum = hashParts.length >= 3 ? " .chapter:nth-child(" + parseInt(hashParts[2], 10) + ")" : "",
+					verseNum = hashParts.length === 4 ? " .verse:nth-child(" + hashParts[3].split(/(-|,)/i)[0] + ")" : "",
+					selector = "#" + bookId + chapterNum + verseNum;
 				//console.info(selector);
 				if (chapterNum) {
 					openBook(bookId).then(function (res) {

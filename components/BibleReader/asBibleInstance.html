@@ -18,11 +18,11 @@
 		<div class="book" id="{{book.id}}"
 			 ng-repeat="book in books track by $index"
 			 ng-class="{open: book.state}">
-			<div class="book-name" ng-click="toggleBook(book.id)">{{book.name}}</div>
+			<div class="book-name" ng-click="toggleBook(book)">{{book.name}}</div>
 			<div class="chapters">
 				<div class="chapter" ng-repeat="chapter in book.chapters track by $index">
 					<div class="chapter-number">
-						<span class="esc" ng-click="toggleBook(book.id)">-</span>
+						<span class="esc" ng-click="toggleBook(book)">-</span>
 						{{book.alias + " " + ($index + 1)}}
 					</div>
 					<div class="verses">
