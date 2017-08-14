@@ -84,11 +84,12 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 });
 
 angular.module('AS')
-	.directive('asBibleInstance', function ($window, $http, asBibleInstanceManager, asReaderModel, $rootScope, instanceState){
+	.directive('asBibleInstance', function ($window, $http, asBibleInstanceManager, asReaderModel, $rootScope, instanceStateProvider, BIBLEMATRIX){
 		var ob = {};
 		ob.templateUrl = "/components/BibleReader/asBibleInstance.html";
 		ob.restrict = "EA";
 		ob.link = function (scope, element, attrs) {
+			var instanceState = new instanceStateProvider.StateStorage;
 			scope.bibleBook = "";
 			scope.toggleBook = toggleBook;
 			scope.visitReference = visitReference;
@@ -99,7 +100,6 @@ angular.module('AS')
 
 			init("ru");
 			function init (lang, reference) {
-				scope.reference = reference || getReference();
 				instanceState.setLang(lang);
 				scope.lang = lang;
 				$http.get('/components/BibleReader/asReader' + lang + '.json').then(function (response) {
@@ -109,6 +109,7 @@ angular.module('AS')
 					});
 					
 					scope.books = response.data;
+					refreshState(reference || getInitialReference());
 					setTimeout(function () {
 						var ref = scope.reference;
 						visitReference(ref)
@@ -165,10 +166,12 @@ angular.module('AS')
 				}
 			}*/
 			function switchToBook (book) {
-				refreshReference({book: book.id, chapter: 1});
-				visitReference(scope.reference);
+				refreshState({book: book.id, chapter: 1});
 				scope.bibleBook = book.name;
 			}
+			scope.navigate = function (route) {
+				refreshState(route);
+			};
 
 			element.on("click", selectText);
 			function selectText(e) {
@@ -186,8 +189,7 @@ angular.module('AS')
 					notifyReader();
 				}
 				if (event.ctrlKey) {
-					refreshReference(reference);
-					visitReference(reference);
+					refreshState(reference);
 				}
 				function notifyReader() {
 					scope.$emit("appeal:add-instance", reference);
@@ -197,7 +199,7 @@ angular.module('AS')
 				scope.$emit("appeal:remove-instance", element);
 				scope.$destroy();
 			}
-			function getReference () {
+			function getInitialReference () {
 				if (attrs.asBibleInstance) {
 					return attrs.asBibleInstance;
 				} else if ($window.location.hash) {
@@ -207,21 +209,40 @@ angular.module('AS')
 					return lastBookmark ? lastBookmark : "ru:matt:1";
 				}
 			}
-			function refreshReference (params) {
-				var freshReference;
-				if (typeof params === "string") {
-					freshReference = scope.reference = instanceState.parseReference(params).getReference();
-					return freshReference;
+			function refreshState (params) {
+				var refreshParams = (typeof params === "string") ? instanceState.parseReference(params).copy() : params, 
+					freshBookId = refreshParams.book || instanceState.copy().book;
+
+				if (Object.keys(refreshParams).indexOf("book") > -1) {
+					instanceState.setBook(refreshParams.book);
+					scope.currentBook = getBookModelById(refreshParams.book);
+					if (!scope.currentBook.chapters.length) {
+						asBibleInstanceManager.loadBookModel(scope.currentBook).then(function (response) {
+							scope.currentBook.chapters = response.data;
+							scope.reference = instanceState.getReference();
+							scope.currentBook.state = true;
+							refreshState(params)
+						});
+						return;
+					}
 				}
-				if (Object.keys(params).indexOf("book" > -1)) {instanceState.setBook(params.book);}
-				if (Object.keys(params).indexOf("chapter" > -1)) {instanceState.setChapter(params.chapter);}
-				if (Object.keys(params).indexOf("verse" > -1)) {instanceState.setVerse(params.verse);}
-				freshReference = scope.reference =  instanceState.getReference();
-				return freshReference;
+				if (Object.keys(refreshParams).indexOf("chapter") > -1) {
+					var map = new Array(BIBLEMATRIX()[freshBookId][refreshParams.chapter - 1]).fill(true);
+					map.forEach(function (item, index){
+						map[index] = index + 1;
+					});
+					scope.currentBook.chapter = map;
+					instanceState.setChapter(refreshParams.chapter);
+				}
+				if (Object.keys(refreshParams).indexOf("verse") > -1) {
+					instanceState.setVerse(refreshParams.verse);
+				}
+				scope.reference = instanceState.getReference();
+				visitReference(scope.reference);
 			}
 			function toggleBook (targetBook) {
 				if (!targetBook.state) {
-					refreshReference({book: targetBook.id, chapter: 1});
+					refreshState({book: targetBook.id, chapter: 1});
 				}
 				return setBookState(targetBook.id, "toggle");
 			}
@@ -287,46 +308,101 @@ angular.module('AS')
 		}
 		return ob;
 	});
-angular.module("AS").service("instanceState", function () {
-	var self = this,
-		state = {};
-		
-	this.setLang = function (lang) {
-		state.lang = lang;
-		return self;
-	}
-	this.setBook = function (bookId) {
-		state.book = bookId;
-		return self;
-	}
-	this.setChapter = function (chapter) {
-		state.chapter = chapter;
-		return self;
-	}
-	this.setVerse= function (verse) {
-		state.verse = verse;
-		return self;
-	}
-	this.parseReference = function (reference) {
-		var parts = reference.split(":");
-		state = {
-			lang: parts[0],
-			book: parts[1],
-			chapter: parts[2],
-			verse: parts[3],
+	/*
+angular.module("AS").factory("instanceState", function () {
+	StateStorage = function () {
+		var self = this,
+			state = {};
+			
+		self.setLang = function (lang) {
+			state.lang = lang;
+			return self;
 		}
-		return self;
+		self.setBook = function (bookId) {
+			state.book = bookId;
+			return self;
+		}
+		self.setChapter = function (chapter) {
+			state.chapter = chapter;
+			return self;
+		}
+		self.setVerse= function (verse) {
+			state.verse = verse;
+			return self;
+		}
+		self.copy = function () {
+			return angular.copy(state);
+		}
+		self.parseReference = function (reference) {
+			var parts = reference.split(":");
+			state = {
+				lang: parts[0],
+				book: parts[1],
+				chapter: parts[2],
+				verse: parts[3],
+			}
+			return self;
+		}
+		self.assembleReference = function () {
+			var book = state.book ? ":" + state.book : "",
+				chapter = state.chapter ? ":" + state.chapter : "",
+				verse = state.verse ? ":" + state.verse : "";
+			return state.lang + book + chapter + verse;
+		}
+		self.getReference = function () {
+			return self.assembleReference();
+		}
 	}
-	this.assembleReference = function () {
-		var book = state.book ? ":" + state.book : "",
-			chapter = state.chapter ? ":" + state.chapter : "",
-			verse = state.verse ? ":" + state.verse : "";
-		return state.lang + book + chapter + verse;
-	}
-	this.getReference = function () {
-		return self.assembleReference();
+	return new StateStorage;
+});
+*/
+
+angular.module("AS").service("instanceStateProvider", function () {
+	this.StateStorage = function () {
+		var self = this,
+			state = {};
+			
+		self.setLang = function (lang) {
+			state.lang = lang;
+			return self;
+		}
+		self.setBook = function (bookId) {
+			state.book = bookId;
+			return self;
+		}
+		self.setChapter = function (chapter) {
+			state.chapter = chapter;
+			return self;
+		}
+		self.setVerse= function (verse) {
+			state.verse = verse;
+			return self;
+		}
+		self.copy = function () {
+			return angular.copy(state);
+		}
+		self.parseReference = function (reference) {
+			var parts = reference.split(":");
+			state = {
+				lang: parts[0],
+				book: parts[1],
+				chapter: parts[2],
+				verse: parts[3],
+			}
+			return self;
+		}
+		self.assembleReference = function () {
+			var book = state.book ? ":" + state.book : "",
+				chapter = state.chapter ? ":" + state.chapter : "",
+				verse = state.verse ? ":" + state.verse : "";
+			return state.lang + book + chapter + verse;
+		}
+		self.getReference = function () {
+			return self.assembleReference();
+		}
 	}
 });
+
 angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMATRIX, asReaderModel) {
 	var manager = {};
 	manager.addBookmark = function (bookmark) {}
@@ -395,6 +471,11 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 	}
 	function loadBookModel (book) {
 		return $http.get("/scriptures/Bible_ru/" + book.alias + ".json");
+		/*.then(function (response) {
+			return response;
+		}, function (reason) {
+			throw new Error("Cannot get data book: " + book.alias + reason);
+		});*/
 	}
 });
 angular.module("AS").constant("asReaderModel", function () {

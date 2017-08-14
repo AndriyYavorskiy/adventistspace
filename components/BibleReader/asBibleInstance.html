@@ -6,13 +6,30 @@
 			<input type="text" placehoder="Біблійний текст" id="ref" ng-model="reference" 
 				class="inp txt sensation share">
 		</div>
-		<div class="select-book">
-			<input type="text" ng-model="bibleBook" id="bible-book"
-			placehoder="Біблійний текст" class="inp txt m sensation search">
-			<div class="autocomplete" as-autocomplete-for="#bible-book" 
-			bible-book="bibleBook" switch-to-book="switchToBook"></div>
+		<div class="navigation-box clearfix">
+			<div class="clearfix">
+				<div class="select-book">
+					<input type="text" ng-model="bibleBook" id="bible-book"
+					placehoder="Біблійний текст" class="inp txt m sensation search">
+					<div class="autocomplete" as-autocomplete-for="#bible-book" 
+					bible-book="bibleBook" switch-to-book="switchToBook"></div>
+				</div>
+				<button class="btn m go" ng-click="visitReference(reference)">Пройти</button>
+			</div>
+			<div class="navigation-agents">
+				<div class="agent" ng-repeat="chapter in currentBook.chapters"
+					 ng-if="currentBook.chapters.length > 1" 
+					  ng-click="navigate({chapter: $index + 1, verse: 1})">.
+					  <span class="pointer">{{$index + 1}}</span>
+				</div>
+			</div>
+			<div class="navigation-agents">
+				<div class="agent" ng-repeat="verse in currentBook.chapter" 
+					 ng-click="navigate({verse: $index + 1})">
+					.<span class="pointer">{{$index + 1}}</span>
+				</div>
+			</div>
 		</div>
-		<button class="btn m go" ng-click="visitReference(reference)">Пройти</button>
 	</div>
 	<div class="reader bible">
 		<div class="book" id="{{book.id}}"
