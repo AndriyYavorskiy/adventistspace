@@ -36,7 +36,6 @@
 	font-size: 36px;
 	text-align: center;
 	margin-bottom: 12px;
-	//background: rgba(0,0,0, .2);
 }
 .absolute{
 	position: absolute;
@@ -146,3 +145,6 @@ moby-scroll{
     margin-top: -2px;
 }
 
+.as-reader-link {
+	cursor: pointer;
+}

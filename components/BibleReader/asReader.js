@@ -549,8 +549,36 @@ angular.module("AS").constant("asReaderModel", function () {
 		]
 	}
 });
-angular.module("AS").filter("asBibleRef", function () {
-	
+angular.module("AS").filter("BibleReference", function (asReaderModel, asVocab) {
+	return function (reference){
+		var artefacts = reference.split(":"),
+			lang = artefacts[0],
+			bookId = artefacts[1],
+			chapter = artefacts[2] ? (" " + asVocab(lang)["chapter"] + " " + artefacts[2]) : "",
+			verse = artefacts[3] ? (" " + asVocab(lang)[artefacts[3].search(/(,|-)/gim) >= 0 ? "verses" : "verse"] + " " + artefacts[3]) : "",
+			bookName = asReaderModel()[lang].find(function (x) {
+				return x.id === bookId;
+			}).name;
+		return bookName + chapter + verse;
+	};
+});
+angular.module("AS").constant("asVocab", function (lang){
+	return {
+		ru: {
+			chapter: "глава",
+			chapters: "главы",
+			verse: "стих",
+			verses: "стихи"
+		},
+		en: {},
+		ua: {
+			chapter: "розділ",
+			chapters: "розділи",
+			verse: "вірш",
+			verses: "вірші"
+		},
+		it: {}
+	}[lang]
 });
 
 angular.module("AS").constant("BIBLEMATRIX", function () {

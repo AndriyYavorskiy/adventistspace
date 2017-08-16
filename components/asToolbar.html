@@ -6,12 +6,6 @@
 		<div mode class='gift church' ng-click='showGiftsModal = 4'></div>
 		<div mode class='gift infinity' ng-click='showGiftsModal = 5'></div>
 	</div>
-	<div class="readers-wrapper" ng-if="showGiftsModal === -1">
-		<div class="books-wrapper">
-			<div class="reader-toolbar"></div>
-			<div as-reader></div>
-		</div>
-	</div>
 	<div cloud class='modal ng-hide' ng-show="showGiftsModal > 0">
 		<div class='window'>
 			<div class='head'>
@@ -51,7 +45,7 @@
 						</div>
 					</div>
 					<div class=''>
-						<p class='origin'>Закон даний Богом через Моісея | книга Вихід 20 розділ</p>
+						<p class='origin' as-reader-link="ru:ex:20">Закон даний Богом через Моісея | книга Вихід 20 розділ</p>
 					</div>
 				</div>									
 				<div ng-show='showGiftsModal === 1'>
@@ -66,7 +60,7 @@
 					</div>
 					<div class='bible-verse w300'>
 						Ибо в Нем обитает вся полнота Божества телесно.
-						<div class='autor'>Слова Апостола Павла про Ісуса Христа | Послання до Колоссян розділ 2 вірш 9</div>
+						<div class='autor' as-reader-link="ru:col:2:9">Слова Апостола Павла про Ісуса Христа | Послання до Колоссян розділ 2 вірш 9</div>
 					</div>
 					<div class='expander collapsed'> i</div>
 					
@@ -94,7 +88,7 @@
 					<div>
 						И я говорю тебе, ты - Петр, и на сем камне...
 					</div>
-					<div class='autor'>
+					<div class='autor' as-reader-link="ru:matt:16:18">
 						Слова Ісуса Христа | Матвія 16:18
 					</div>
 					<div>
@@ -117,13 +111,13 @@
 						<p>
 							2 ибо долготы дней, лет жизни и мира они приложат тебе.
 						</p>
-						<p class='autor'>Слова Соломона | Притчі 3:1-2</p>
+						<p class='autor' as-reader-link="ru:prov:3:1-2">Слова Соломона | Притчі 3:1-2</p>
 					</div>
 				</div>
 				<div class='columns flex'>
 					<div class='col'>
 						<p>8 Мудрый сердцем принимает заповеди, а глупый устами преткнется.</p>
-						<p class='autor'>Слова Соломона | Притчі 10:8</p>
+						<p class='autor' as-reader-link="ru:prov:10:18">Слова Соломона | Притчі 10:8</p>
 					</div>
 				</div>
 				<div class='columns flex'>
@@ -139,38 +133,6 @@
 						<p class='autor' href="ru:john1:5:2">Перше послання від Іоанна 5:2</p>
 					</div>
 				</div>
-				
-			</div>
-		</div>
-	</div>
-	<div class='page-footer'>
-		<div class='columns flex'>
-			<div class='col'>
-				<p>
-					2 Что мы любим детей Божиих, узнаём из того, когда любим Бога и соблюдаем заповеди Его.
-				</p>
-				<p>
-					3 Ибо это есть любовь к Богу, чтобы мы соблюдали заповеди Его; и заповеди Его нетяжки.
-				</p>
-				<p class='autor'>1-е Іоанна розділ 5 вірш 2</p>
-			</div>
-			<div class='col'>
-				<p>
-					2 Что мы любим детей Божиих, узнаём из того, когда любим Бога и соблюдаем заповеди Его.
-				</p>
-				<p>
-					3 Ибо это есть любовь к Богу, чтобы мы соблюдали заповеди Его; и заповеди Его нетяжки.
-				</p>
-				<p class='autor'>1-е Іоанна розділ 5 вірш 2</p>
-			</div>
-			<div class='col'>
-				<p>
-					2 Что мы любим детей Божиих, узнаём из того, когда любим Бога и соблюдаем заповеди Его.
-				</p>
-				<p>
-					3 Ибо это есть любовь к Богу, чтобы мы соблюдали заповеди Его; и заповеди Его нетяжки.
-				</p>
-				<p class='autor'>1-е Іоанна розділ 5 вірш 2</p>
 			</div>
 		</div>
 	</div>

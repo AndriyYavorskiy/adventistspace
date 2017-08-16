@@ -1,5 +1,5 @@
 angular.module('AS')
-.controller('as-main', function ($scope, $window, $rootScope, asModal){
+.controller('as-main', function ($scope, $window, asModal){
 	if ($window.location.hash) {
 		asModal.open("as-reader");
 	}
