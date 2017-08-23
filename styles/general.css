@@ -26,6 +26,9 @@ body {
 .go-left {
 	float: left;
 }
+.go-right {
+	float: right;
+}
 .clearfix {
 	overflow: auto;
 	zoom: 1;

@@ -1,20 +1,42 @@
 
 	<div class="book-toolbar">
 		<button class="btn m blank remove-instance" ng-click="removeInstance()">✖</button>
-		<div class="share-box">
-			<div class="go-left">http://adventistspace/#</div>
-			<input type="text" placehoder="Біблійний текст" id="ref" ng-model="reference" 
-				class="inp txt sensation share">
+		<div class="toolbar-menu clearfix">
+			<div class="tab" ng-class="{active: currentTabIs('navigation')}" ng-click="switchToTab('navigation')">Навігація</div>
+			<div class="tab" ng-class="{active: currentTabIs('search')}" ng-click="switchToTab('search')">Пошук</div>
+			<div class="tab" ng-class="{active: currentTabIs('share')}" ng-click="switchToTab('share')">Поділитися</div>
 		</div>
-		<div class="navigation-box clearfix">
+		<div ng-if="currentTabIs('search')" class="search-box">
+			<input type="text" placeholder="Шукати в Біблії" id="search" ng-model="searchParam" 
+				class="inp txt m sensation search" ng-keyup="runSearch($event, searchParam)">
+			<button class="btn m primary find" ng-click="runSearch($event, searchParam)">Знайти</button>
+			<div class="search-settings">
+				<label for="in-checked-books">
+					<input type="radio" ng-model="booksToSearchIn.option" name="search-place" value="selected" id="in-checked-books">
+					В обраних
+				</label>
+				<label for="in-all-books">
+					<input type="radio" ng-model="booksToSearchIn.option" name="search-place" value="all" id="in-all-books">
+					В усіх
+				</label>
+				<span class="results-link" ng-if="searchResults.length" ng-click="displayResults(!showResults)">
+					Результати (<span ng-bind="searchResults.length"></span>)
+				</span>
+			</div>
+		</div>
+		<div ng-if="currentTabIs('share') === true" class="share-box">
+			<div class="summery" ng-bind="reference | BibleReference"></div>
+			<div class="share-link">{{'http://adventistspace/#' + reference}}</div>
+		</div>
+		<div ng-if="currentTabIs('navigation')" class="navigation-box clearfix">
 			<div class="clearfix">
 				<div class="select-book">
 					<input type="text" ng-model="bibleBook" id="bible-book"
-					placehoder="Біблійний текст" class="inp txt m sensation search">
+					placeholder="книга Біблії" class="inp txt m sensation search">
 					<div class="autocomplete" as-autocomplete-for="#bible-book" 
 					bible-book="bibleBook" switch-to-book="switchToBook"></div>
 				</div>
-				<button class="btn m go" ng-click="visitReference(reference)">Пройти</button>
+				<button class="btn m primary go" ng-click="visitReference(reference)">Пройти</button>
 			</div>
 			<div class="navigation-agents">
 				<div class="agent" ng-repeat="chapter in currentBook.chapters"
@@ -32,10 +54,23 @@
 		</div>
 	</div>
 	<div class="reader bible">
+		<div class="search-results" ng-if="searchResults.length && showResults && currentTabIs('search')">
+			<div class="result-item"
+				 ng-repeat="result in searchResults | orderBy: '-rate'" 
+				 ng-click="navigate(result.reference); displayResults(false);">
+				{{result.reference | BibleReference}} <span ng-bind="result.rate"></span>
+				<div class="scripture" ng-bind-html="result.scripture"></div>
+			</div>
+		</div>
 		<div class="book" id="{{book.id}}"
 			 ng-repeat="book in books track by $index"
 			 ng-class="{open: book.state}">
-			<div class="book-name" ng-click="toggleBook(book)">{{book.name}}</div>
+			<div class="book-name" ng-click="toggleBook(book)">
+				<span as-stop-prop class="book-checker go-left">
+					<input type="checkbox" ng-model="book.checked">
+				</span>
+				{{book.name}}
+			</div>
 			<div class="chapters">
 				<div class="chapter" ng-repeat="chapter in book.chapters track by $index">
 					<div class="chapter-number">

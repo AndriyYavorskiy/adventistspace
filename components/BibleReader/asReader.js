@@ -89,15 +89,19 @@ angular.module('AS')
 		ob.templateUrl = "/components/BibleReader/asBibleInstance.html";
 		ob.restrict = "EA";
 		ob.link = function (scope, element, attrs) {
-			var instanceState = new instanceStateProvider.StateStorage;
+			var instanceState = new instanceStateProvider.StateStorage,
+				tabManager = new TabManager("navigation");
+			
 			scope.bibleBook = "";
 			scope.toggleBook = toggleBook;
 			scope.visitReference = visitReference;
 			scope.handeleVerseManipulation = handeleVerseManipulation;
 			scope.removeInstance = removeInstance;
 			scope.switchToBook = switchToBook;
+			scope.switchToTab = switchToTab;
 			scope.referenceRegex = /^(ru|ua|en){1}(:\w{2,})?(:\d+)?(:\d+((-\d+)?|(,\d+)*)?)?$/gim;
-
+			scope.switchToTab("search");
+			
 			init("ru");
 			function init (lang, reference) {
 				instanceState.setLang(lang);
@@ -105,6 +109,8 @@ angular.module('AS')
 				$http.get('/components/BibleReader/asReader' + lang + '.json').then(function (response) {
 					var initialModel = response.data.map(function (book) {
 						book.state = false;
+						book.checked = false;
+						book.lang = lang;
 						return book;
 					});
 					
@@ -165,6 +171,50 @@ angular.module('AS')
 					scope.ACBooks = asBibleInstanceManager.helpToFindBook(scope.bibleBook);
 				}
 			}*/
+			scope.showResults = true;
+			scope.booksToSearchIn = {option: "selected"};
+			scope.searchParam = "";
+			scope.displayResults = function (state){
+				scope.showResults = state;
+			}
+			scope.runSearch = function (event, searchParam) {
+				if (event.which && event.which !== 13 && event.type !== "click") {return;}
+				scope.searchResults = [];
+				scope.books.forEach(function (book) {
+					if(scope.booksToSearchIn.option === "selected" && !book.checked && !book.state) {return;}
+					if (book.chapters.length) {
+						pushIfAnyData(asBibleInstanceManager.executeSearchInBook(book, searchParam));
+					} else {
+						asBibleInstanceManager.loadBookModel(book).then(function (response) {
+							book.chapters = response.data;
+							pushIfAnyData(asBibleInstanceManager.executeSearchInBook(book, searchParam));
+						});
+					}
+				});
+				scope.showResults = true;
+			};
+			function pushIfAnyData (chank) {
+				if (chank && chank.length) {
+					console.log(chank);
+					scope.searchResults = scope.searchResults.concat(chank);
+				}
+			}
+
+			function switchToTab (tab) {
+				tabManager.setTab(tab);
+			}
+			scope.currentTabIs = function (tab) {
+				return tabManager.checkTab(tab) === tab;
+			}
+			function TabManager (tab) {
+				var currentTab = tab || "";
+				this.setTab = function (tab) {
+					currentTab = tab;
+				}
+				this.checkTab = function () {
+					return currentTab;
+				}
+			}
 			function switchToBook (book) {
 				refreshState({book: book.id, chapter: 1});
 				scope.bibleBook = book.name;
@@ -241,10 +291,11 @@ angular.module('AS')
 				visitReference(scope.reference);
 			}
 			function toggleBook (targetBook) {
+				var promise = setBookState(targetBook.id, "toggle");
 				if (!targetBook.state) {
 					refreshState({book: targetBook.id, chapter: 1});
 				}
-				return setBookState(targetBook.id, "toggle");
+				return promise;
 			}
 			function openBook (targetBookId) {
 				return setBookState(targetBookId, "open");
@@ -284,7 +335,6 @@ angular.module('AS')
 					openBook(bookId).then(function (res) {
 						setTimeout(function () {goToDOMelement(selector)}, 0);
 					});
-					
 				} else {
 					goToDOMelement("#" + bookId);
 				}
@@ -403,7 +453,7 @@ angular.module("AS").service("instanceStateProvider", function () {
 	}
 });
 
-angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMATRIX, asReaderModel) {
+angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMATRIX, asReaderModel, $sce) {
 	var manager = {};
 	manager.addBookmark = function (bookmark) {}
 	manager.removeBookmark = function (bookmark) {}
@@ -429,6 +479,7 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 	manager.isValidReference = isValidReference;
 	manager.loadBookModel = loadBookModel;
 	manager.helpToFindBook = helpToFindBook;
+	manager.executeSearchInBook = executeSearchInBook;
 	return manager;
 	function helpToFindBook(searchText) {
 		var results = [];
@@ -476,6 +527,114 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 		}, function (reason) {
 			throw new Error("Cannot get data book: " + book.alias + reason);
 		});*/
+	}
+	function executeSearchInBook(book, searchParam) {
+		var param = searchParam.toLowerCase(), foundInBook = [],
+			words = param.replace(/(,|-|\.)/gim, "").split(" ");
+			
+		(book.chapters || []).forEach(function (chapter, chapterIndex) {
+			chapter.forEach(function (verse, verseIndex) {
+				var matchIndex = verse.toLowerCase().indexOf(param),
+					rate = 0,
+					coordenates = [];
+					
+				if (words.length > 1) {
+					if (matchIndex >= 0) {
+						rate += words.length * 3;
+						coordenates.push([matchIndex, matchIndex + param.length]);
+					} else {
+						words.forEach(function (word) {
+							var subMatchIndex = verse.toLowerCase().indexOf(word),
+								rateIncome = 1;
+							
+							if (subMatchIndex >= 0) {
+								rate += rateIncome - getPenalty(verse, subMatchIndex, word);
+								coordenates.push([subMatchIndex, subMatchIndex + word.length]);
+							}
+						});
+					}
+				} else {
+					if (matchIndex >= 0) {
+						rate = rate - getPenalty(verse, matchIndex, param) + 1;
+						coordenates.push([matchIndex, matchIndex + param.length]);
+					}
+				}
+				
+				if (rate) {
+					if (coordenates.length > 1) {
+						coordenates.sort(function (a, b) {
+							return a[0] > b[0];
+						});
+						rate += makeSecondaryCorrection(verse, coordenates);
+					}
+					foundInBook.push({
+						rate: rate,
+						coordenates: coordenates,
+						scripture: $sce.trustAsHtml(wrapMatches(verse, coordenates)),
+						reference: book.lang + ":" + book.id + ":" + (chapterIndex + 1) + ":" + (verseIndex + 1),
+						book: book.name,
+						chapter: chapterIndex + 1, 
+						verse: verseIndex + 1});						
+				}
+			});
+
+		});
+		
+		return foundInBook.length ? foundInBook : null;
+	}
+	function splitSearchResults (results, rigidity) {
+		
+	}
+	function makeSecondaryCorrection (text, coords) {
+		var grunt = 0,
+			regex = /[а-я]/i;
+		
+		coords.forEach(function (coord, index) {
+			if (!coords[index + 1]) {return;}
+			var stringBetween = text.substring(coord[1], coords[index + 1][0]);
+			if (stringBetween.match(/^(,?\s+[а-я]{1,4}\s+|,\s+|\s+-\s+|\s+)$/i || stringBetween.length < 4)) {
+				grunt += 0.75;
+				if (!regex.test(text.charAt(coord[0] - 1))) {
+					++grunt;
+				}
+				if (!regex.test(text.charAt(coords[index + 1][1]))) {
+					++grunt;
+				}
+			}
+		});
+		if (grunt < coords.length) {
+			if (grunt <= 1) {
+				grunt = 0;
+			} else {
+				grunt /= 2;
+			}
+		}
+		
+		return grunt;
+	}
+	function getPenalty (text, index, string) {
+		var penalty = 0,
+			regex = /[а-я]/i,
+			charBefore = text.charAt(index - 1),
+			charAfter = text.charAt(index + string.length);
+		
+		penalty += regex.test(charBefore) ? 0.75 : 0;
+		penalty += regex.test(charAfter) ? 0.25 : 0;
+		
+		return penalty === 0.75 ? 1 : penalty;
+	}
+	function wrapMatches (text, coords) {
+		var finalText = "",
+		checkPoint = 0;
+		
+		coords.forEach(function (pair) {
+			finalText += text.substring(checkPoint, pair[0]);
+			finalText += "<span class='match'>" + text.substring(pair[0], pair[1]) + "</span>";
+			checkPoint = pair[1];
+		});
+		finalText += text.substring(checkPoint, text.length);
+		
+		return finalText;
 	}
 });
 angular.module("AS").constant("asReaderModel", function () {

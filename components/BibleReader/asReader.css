@@ -33,10 +33,68 @@
 .book-wrapper:not(:last-of-type) {
 	margin-right: 12px;
 }
-.book-wrapper .share-box {
+.book-wrapper .toolbar-menu {
 	font-size: 14px;
 	position: absolute;
-	top: -16px;
+	top: -22px;
+}
+.toolbar-menu .tab {
+	background: #6383b5;
+	color: #fff;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    float: left;
+    margin-left: 4px;
+    padding: 2px 8px;
+}
+.toolbar-menu .tab.active {
+	background: #fff;
+	color: #6383b5;
+}
+.search-box {
+	padding: 8px;
+}
+.search-box .search-settings {
+	margin-top: 8px;
+}
+.search-box .search-settings label {
+	cursor: default;
+}
+.search-results {
+	background: #fff;
+	border-radius: 0 0 4px 4px;
+    bottom: 0;
+    height: calc(100% - 80px);
+    left: 0;
+	overflow: auto;
+	padding: 8px;
+	position: absolute;
+    width: 100%;
+}
+.result-item {
+	background: #fff;
+	cursor: pointer;
+	font-size: 14px;
+	margin-bottom: 16px;
+}
+.result-item .scripture {
+	color: #6383b5;
+	font-size: inherit;
+	text-align: justify;
+}
+.result-item .match {
+	color: #877063;
+	font-size: inherit;
+	font-weight: bold;
+}
+.results-link {
+	color: #6383b5;
+	cursor: pointer;
+	float: right;
+}
+
+.book-wrapper .share-box {
+	padding: 8px;
 }
 .book-wrapper .share-box * {
 	font-size: 14px;
@@ -57,25 +115,30 @@
 .book-toolbar .share-box {
 	width: 100%;
 }
-.book-toolbar .inp.share {
-	background: none;
-	border: 1px solid transparent;
-	float: left;
-	font-size: 14px;
-	width: 140px;
+.share-box .summery {
+	margin: auto;
+	text-align: center;
+	width: 80%;
 }
+
 .book-toolbar .inp.share:focus {
 	background: #fff;
 	border: 1px solid #fff;
 }
-.book-toolbar .search {
+.share-link {
+	box-shadow: 0 0 0 1px #eee;
+    margin: 4px auto;
+    padding: 4px 0;
+    text-align: center;
+}
+.book-toolbar input[type='text'].search {
 	border-radius: 2px 0 0 2px;
 	border-right: none;
 	margin-right: 0;
-	width: 100%;
+	width: 208px;
 }
 .book-toolbar .search:focus {
-	border-color: #9ea8c5;
+	border-color: #6383b5;
 	outline: none;
 }
 .book-toolbar .search:not(:focus) + .autocomplete {
@@ -109,10 +172,13 @@
 .book-toolbar .inp.ng-invalid-pattern {
 	color: #ff7777;
 }
-.book-toolbar .btn.go {
-	background: #9ea8c5;
+.book-toolbar .btn.primary {
+	background: #6383b5;
 	border-radius: 0 2px 2px 0;
     color: #fff;
+}
+.book-toolbar .btn.go,
+.book-toolbar .btn.find {
 	width: 76px
 }
 .book-toolbar .inp.search,
@@ -141,7 +207,7 @@
 .navigation-agents .agent:first-child {border-radius:4px 0 0 4px;}
 .navigation-agents .agent:last-child {border-radius: 0 4px 4px 0;}
 .navigation-agents .agent:hover {
-	background: #9ea8c5;
+	background: #6383b5;
 	color: #fff;
 }
 .navigation-agents .agent:hover .pointer {
@@ -149,9 +215,9 @@
 }
 .navigation-agents .agent .pointer {
     background: #fff;
-	border: 1px solid #9ea8c5;
+	border: 1px solid #6383b5;
     border-radius: 2px;
-    color: #9ea8c5;
+    color: #6383b5;
     display: none;
     font-size: 12px;
     height: 14px;
@@ -164,7 +230,7 @@
 }
 .navigation-agents .agent .pointer:after {
     border: 4px solid transparent;
-    border-top: 5px solid #9ea8c5;
+    border-top: 5px solid #6383b5;
     bottom: -9px;
     content: "";
     left: 5.5px;
@@ -183,7 +249,7 @@
 		height: 100%;
 	}
 	.bible.reader {
-		background: #9ea8c5;
+		background: #6383b5;
 		border-radius: 0 0 0 5px;
 		height: 100%;
 		overflow-y: auto;
@@ -197,7 +263,7 @@
 		padding-bottom: 28px;
 	}
 	.bible.reader .book.open .book-name {
-		color: #9ea8c5;
+		color: #6383b5;
 	}
 	.bible.reader .book-name {
 		color: #fff;
@@ -206,8 +272,11 @@
 		padding: 8px 0;
 		text-align: center;
 	}
+	.bible.reader .book-checker {
+		line-height: 19px;
+	}
 	.bible.reader .chapter-number {
-		color: #9ea8c5;
+		color: #6383b5;
 		font-size: 17px;
 		margin: 8px auto;
 		text-align: center;
@@ -227,13 +296,13 @@
 		text-align: justify;
 	}
 	.bible.reader .verse.spotlight {
-		background: #9ea8c5;
+		background: #6383b5;
 		border-radius: 2px;
 		color: #fff;
 	}
 	.bible.reader .esc {
 		border-radius: 50%;
-		color: #9ea8c5;
+		color: #6383b5;
 		cursor: pointer;
 		float: right;
 		font-size: 21px;
@@ -244,7 +313,7 @@
 		width: 16px;
 	}
 	.bible.reader .esc:hover {
-		background: #9ea8c5;
+		background: #6383b5;
 		color: #fff;
 	}
 	.close-modal {
