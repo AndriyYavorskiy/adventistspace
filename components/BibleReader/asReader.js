@@ -84,17 +84,17 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 });
 
 angular.module('AS')
-	.directive('asBibleInstance', function ($window, $http, asBibleInstanceManager, asReaderModel, $rootScope, instanceStateProvider, BIBLEMATRIX){
+	.directive('asBibleInstance', function ($window, $q, $http, asBibleInstanceManager, asReaderModel, $rootScope, instanceStateProvider, BIBLEMATRIX){
 		var ob = {};
 		ob.templateUrl = "/components/BibleReader/asBibleInstance.html";
 		ob.restrict = "EA";
 		ob.link = function (scope, element, attrs) {
 			var instanceState = new instanceStateProvider.StateStorage,
-				tabManager = new TabManager("navigation");
+				tabManager = asBibleInstanceManager.createTabManager("navigation");
 			
 			scope.bibleBook = "";
 			scope.toggleBook = toggleBook;
-			scope.visitReference = visitReference;
+			scope.visitPlace = visitPlace;
 			scope.handeleVerseManipulation = handeleVerseManipulation;
 			scope.removeInstance = removeInstance;
 			scope.switchToBook = switchToBook;
@@ -118,7 +118,8 @@ angular.module('AS')
 					refreshState(reference || getInitialReference());
 					setTimeout(function () {
 						var ref = scope.reference;
-						visitReference(ref)
+						//loadBookData(instanceState.copy().book).then(function (result) {
+							scope.navigate(ref);
 					}, 0);
 					/*ids = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","James","Pet1","Pet2","John1","John2","John3","Jude","Rev"];
 					idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];
@@ -206,17 +207,9 @@ angular.module('AS')
 			scope.currentTabIs = function (tab) {
 				return tabManager.checkTab(tab) === tab;
 			}
-			function TabManager (tab) {
-				var currentTab = tab || "";
-				this.setTab = function (tab) {
-					currentTab = tab;
-				}
-				this.checkTab = function () {
-					return currentTab;
-				}
-			}
+
 			function switchToBook (book) {
-				refreshState({book: book.id, chapter: 1});
+				refreshState({book: book.id, chapter: 0, verse: 0});
 				scope.bibleBook = book.name;
 			}
 			scope.navigate = function (route) {
@@ -264,40 +257,56 @@ angular.module('AS')
 					freshBookId = refreshParams.book || instanceState.copy().book;
 
 				if (Object.keys(refreshParams).indexOf("book") > -1) {
-					instanceState.setBook(refreshParams.book);
+					scope.reference = instanceState.setBook(refreshParams.book).getReference();
 					scope.currentBook = getBookModelById(refreshParams.book);
-					if (!scope.currentBook.chapters.length) {
-						asBibleInstanceManager.loadBookModel(scope.currentBook).then(function (response) {
-							scope.currentBook.chapters = response.data;
-							scope.reference = instanceState.getReference();
-							scope.currentBook.state = true;
-							refreshState(params)
-						});
-						return;
-					}
 				}
 				if (Object.keys(refreshParams).indexOf("chapter") > -1) {
+					scope.reference = instanceState.setChapter(refreshParams.chapter).getReference();
 					var map = new Array(BIBLEMATRIX()[freshBookId][refreshParams.chapter - 1]).fill(true);
 					map.forEach(function (item, index){
 						map[index] = index + 1;
 					});
 					scope.currentBook.chapter = map;
-					instanceState.setChapter(refreshParams.chapter);
 				}
 				if (Object.keys(refreshParams).indexOf("verse") > -1) {
-					instanceState.setVerse(refreshParams.verse);
+					scope.reference = instanceState.setVerse(refreshParams.verse).getReference();
 				}
+					if (!scope.currentBook.chapters.length) {
+						loadBookData(refreshParams.book).then(function (response) {
+							scope.currentBook.chapters = response.data;
+							scope.reference = instanceState.getReference();
+							scope.currentBook.state = true;
+							setTimeout(function () {
+								visitPlace(scope.reference);
+							}, 0);
+						});
+					} else {
+						scope.currentBook.state = true;
+						setTimeout(function () {
+							visitPlace(scope.reference);
+						}, 0);
+					}
 				scope.reference = instanceState.getReference();
-				visitReference(scope.reference);
 			}
-			function toggleBook (targetBook) {
-				var promise = setBookState(targetBook.id, "toggle");
-				if (!targetBook.state) {
-					refreshState({book: targetBook.id, chapter: 1});
+			function toggleBook (target) {
+				var book, stateCopy;
+				if (!target.state) {
+					refreshState({book: target.id, chapter: 0, verse: 0});
+				} else {
+					if (target.alias){
+						book = target;
+					} else {
+						book = getBookModelById(target)
+					}
+					book.state = false;
+					stateCopy = instanceState.copy();
+					//visitPlace(stateCopy.lang + ":" + stateCopy.book);
 				}
-				return promise;
 			}
-			function openBook (targetBookId) {
+			scope.closeBook = function (book) {
+				book.state = false;
+			}
+			/*function openBook (targetBookId) {
 				return setBookState(targetBookId, "open");
 			}
 			function setBookState (target, action) {
@@ -315,8 +324,27 @@ angular.module('AS')
 				}
 				book.state = action === "open" || !book.state;
 				return {then: function (f) {f()}};
+			}*/
+			function loadBookData (target) {
+				var book, promise = {then: function (f) {f({data: book.chapters})}}, 
+					deferred = $q.defer();
+					
+				if (target.alias){
+					book = target;
+				} else {
+					book = getBookModelById(target)
+				}
+				if (!book.chapters.length) {
+					promise =  asBibleInstanceManager.loadBookModel(book).then(function (response) {
+						book.chapters = response.data;
+						return deferred.resolve(response);
+					}, function (reason) {
+						return deferred.reject;
+					});
+				}
+				return deferred.promise;
 			}
-			function visitReference(ref) {
+			function visitPlace(ref) {
 				if (!ref) {
 					console.warn("No reference passed to visit!");
 					return;}
@@ -331,13 +359,7 @@ angular.module('AS')
 					verseNum = hashParts.length === 4 ? " .verse:nth-child(" + hashParts[3].split(/(-|,)/i)[0] + ")" : "",
 					selector = "#" + bookId + chapterNum + verseNum;
 				//console.info(selector);
-				if (chapterNum) {
-					openBook(bookId).then(function (res) {
-						setTimeout(function () {goToDOMelement(selector)}, 0);
-					});
-				} else {
-					goToDOMelement("#" + bookId);
-				}
+				goToDOMelement(selector);
 			}
 			function getBookModelById (id) {
 				if (scope.books.find) {
@@ -480,7 +502,10 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 	manager.loadBookModel = loadBookModel;
 	manager.helpToFindBook = helpToFindBook;
 	manager.executeSearchInBook = executeSearchInBook;
+	manager.createTabManager = createTabManager;
+	
 	return manager;
+	
 	function helpToFindBook(searchText) {
 		var results = [];
 		asReaderModel().ru.forEach(function (bookModel) {
@@ -577,9 +602,8 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 						verse: verseIndex + 1});						
 				}
 			});
-
 		});
-		
+			
 		return foundInBook.length ? foundInBook : null;
 	}
 	function splitSearchResults (results, rigidity) {
@@ -635,6 +659,18 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 		finalText += text.substring(checkPoint, text.length);
 		
 		return finalText;
+	}
+	function createTabManager (tab) {
+		return new TabManager(tab);
+	}
+	function TabManager (tab) {
+		var currentTab = tab || "";
+		this.setTab = function (tab) {
+			currentTab = tab;
+		}
+		this.checkTab = function () {
+			return currentTab;
+		}
 	}
 });
 angular.module("AS").constant("asReaderModel", function () {

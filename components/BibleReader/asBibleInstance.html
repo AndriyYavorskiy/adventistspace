@@ -41,7 +41,7 @@
 			<div class="navigation-agents">
 				<div class="agent" ng-repeat="chapter in currentBook.chapters"
 					 ng-if="currentBook.chapters.length > 1" 
-					  ng-click="navigate({chapter: $index + 1, verse: 1})">.
+					  ng-click="navigate({chapter: $index + 1, verse: 0})">.
 					  <span class="pointer">{{$index + 1}}</span>
 				</div>
 			</div>
