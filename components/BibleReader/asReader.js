@@ -1,31 +1,3 @@
-/*angular.module('AS').directive("asReader", function($compile){
-	var ob = {};
-	ob.restrict = "EA";
-	ob.template = `
-		<div class="readers-wrapper">
-			<div class="books-wrapper">
-				<div class="reader-toolbar">
-					<button class="btn m blank close-modal" ng-click="closeModal()">✖</button>
-				</div>
-				<div as-bible-instance="ru:ps:117:1" class="book-wrapper"></div>
-				<div as-bible-instance="{{instances[1]}}" class="book-wrapper"></div>
-			</div>
-		</div>
-	`;
-	ob.link = function (scope, element, attrs) {
-		init();
-		function init () {
-			scope.instances = [];
-			scope.instances.push(attrs.asReader);
-			scope.instances.push("ru:ps:117:1");
-		}
-		function addInstance (reference) {
-			
-		}
-	};
-	return ob;
-});*/
-
 angular.module('AS').directive("asReader", function($compile, $window, asBibleInstanceManager, $rootScope){
 	var ob = {};
 	ob.restrict = "EA";
@@ -89,7 +61,7 @@ angular.module('AS')
 		ob.templateUrl = "/components/BibleReader/asBibleInstance.html";
 		ob.restrict = "EA";
 		ob.link = function (scope, element, attrs) {
-			var instanceState = new instanceStateProvider.StateStorage,
+			var instanceState = instanceStateProvider.generateNewState(),
 				tabManager = asBibleInstanceManager.createTabManager("navigation");
 			
 			scope.bibleBook = "";
@@ -100,7 +72,7 @@ angular.module('AS')
 			scope.switchToBook = switchToBook;
 			scope.switchToTab = switchToTab;
 			scope.referenceRegex = /^(ru|ua|en){1}(:\w{2,})?(:\d+)?(:\d+((-\d+)?|(,\d+)*)?)?$/gim;
-			scope.switchToTab("search");
+			scope.switchToTab("navigation");
 			
 			init("ru");
 			function init (lang, reference) {
@@ -108,7 +80,7 @@ angular.module('AS')
 				scope.lang = lang;
 				$http.get('/components/BibleReader/asReader' + lang + '.json').then(function (response) {
 					var initialModel = response.data.map(function (book) {
-						book.state = false;
+						book.open = false;
 						book.checked = false;
 						book.lang = lang;
 						return book;
@@ -119,12 +91,12 @@ angular.module('AS')
 					setTimeout(function () {
 						var ref = scope.reference;
 						//loadBookData(instanceState.copy().book).then(function (result) {
-							scope.navigate(ref);
+						scope.navigate(ref);
 					}, 0);
 					/*ids = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","James","Pet1","Pet2","John1","John2","John3","Jude","Rev"];
 					idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];
 					var blank = angular.copy(scope.books.map(function (book, index) {
-						book.state = false;
+						book.open = false;
 						book.chapters = [];
 						book.id = idsRu[index].toLowerCase();
 						return book;
@@ -167,11 +139,6 @@ angular.module('AS')
 					console.table(bl);
 				}, 1000);
 			}*/
-			/*function searchForBook () {
-				if (scope.bibleBook.length > 2) {
-					scope.ACBooks = asBibleInstanceManager.helpToFindBook(scope.bibleBook);
-				}
-			}*/
 			scope.showResults = true;
 			scope.booksToSearchIn = {option: "selected"};
 			scope.searchParam = "";
@@ -182,7 +149,7 @@ angular.module('AS')
 				if (event.which && event.which !== 13 && event.type !== "click") {return;}
 				scope.searchResults = [];
 				scope.books.forEach(function (book) {
-					if(scope.booksToSearchIn.option === "selected" && !book.checked && !book.state) {return;}
+					if(scope.booksToSearchIn.option === "selected" && !book.checked && !book.open) {return;}
 					if (book.chapters.length) {
 						pushIfAnyData(asBibleInstanceManager.executeSearchInBook(book, searchParam));
 					} else {
@@ -258,73 +225,60 @@ angular.module('AS')
 
 				if (Object.keys(refreshParams).indexOf("book") > -1) {
 					scope.reference = instanceState.setBook(refreshParams.book).getReference();
-					scope.currentBook = getBookModelById(refreshParams.book);
+					scope.state = {};
+					scope.state.book = getBookModelById(refreshParams.book);
 				}
 				if (Object.keys(refreshParams).indexOf("chapter") > -1) {
 					scope.reference = instanceState.setChapter(refreshParams.chapter).getReference();
-					var map = new Array(BIBLEMATRIX()[freshBookId][refreshParams.chapter - 1]).fill(true);
+					var freshChapterNum = refreshParams.chapter > 0 ? refreshParams.chapter - 1 : 0,
+						map = new Array(BIBLEMATRIX()[freshBookId][freshChapterNum]).fill(true);
 					map.forEach(function (item, index){
 						map[index] = index + 1;
 					});
-					scope.currentBook.chapter = map;
+					scope.state.chapterMap = map;
+					scope.state.chapterIndex = freshChapterNum;
 				}
 				if (Object.keys(refreshParams).indexOf("verse") > -1) {
 					scope.reference = instanceState.setVerse(refreshParams.verse).getReference();
+					scope.state.verseIndex = refreshParams.verse - 1;
 				}
-					if (!scope.currentBook.chapters.length) {
-						loadBookData(refreshParams.book).then(function (response) {
-							scope.currentBook.chapters = response.data;
-							scope.reference = instanceState.getReference();
-							scope.currentBook.state = true;
-							setTimeout(function () {
-								visitPlace(scope.reference);
-							}, 0);
-						});
-					} else {
-						scope.currentBook.state = true;
+				if (!scope.state.book.chapters.length) {
+					loadBookData(refreshParams.book).then(function (response) {
+						scope.state.book.chapters = response.data;
+						scope.reference = instanceState.getReference();
+						scope.state.book.open = true;
 						setTimeout(function () {
 							visitPlace(scope.reference);
 						}, 0);
-					}
+					});
+				} else {
+					scope.state.book.open = true;
+					setTimeout(function () {
+						visitPlace(scope.reference);
+					}, 0);
+				}
 				scope.reference = instanceState.getReference();
 			}
 			function toggleBook (target) {
 				var book, stateCopy;
-				if (!target.state) {
-					refreshState({book: target.id, chapter: 0, verse: 0});
-				} else {
-					if (target.alias){
-						book = target;
-					} else {
-						book = getBookModelById(target)
-					}
-					book.state = false;
-					stateCopy = instanceState.copy();
-					//visitPlace(stateCopy.lang + ":" + stateCopy.book);
-				}
-			}
-			scope.closeBook = function (book) {
-				book.state = false;
-			}
-			/*function openBook (targetBookId) {
-				return setBookState(targetBookId, "open");
-			}
-			function setBookState (target, action) {
-				var book;
+				
 				if (target.alias){
 					book = target;
 				} else {
 					book = getBookModelById(target)
 				}
-				if (!book.chapters.length) {
-					return asBibleInstanceManager.loadBookModel(book).then(function (response) {
-						book.chapters = response.data;
-						book.state = true;
-					});
+				if (!book.open) {
+					refreshState({book: book.id, chapter: 0, verse: 0});
+				} else {
+					book.open = false;
+					/*stateCopy = instanceState.copy();
+					visitPlace(stateCopy.lang + ":" + stateCopy.book);*/
 				}
-				book.state = action === "open" || !book.state;
-				return {then: function (f) {f()}};
-			}*/
+			}
+			scope.closeBook = function (book) {
+				book.open = false;
+			}
+
 			function loadBookData (target) {
 				var book, promise = {then: function (f) {f({data: book.chapters})}}, 
 					deferred = $q.defer();
@@ -380,9 +334,9 @@ angular.module('AS')
 		}
 		return ob;
 	});
-	/*
-angular.module("AS").factory("instanceState", function () {
-	StateStorage = function () {
+
+angular.module("AS").service("instanceStateProvider", function () {
+	var StateStorage = function () {
 		var self = this,
 			state = {};
 			
@@ -419,59 +373,16 @@ angular.module("AS").factory("instanceState", function () {
 			var book = state.book ? ":" + state.book : "",
 				chapter = state.chapter ? ":" + state.chapter : "",
 				verse = state.verse ? ":" + state.verse : "";
+				if (verse && !chapter) {chapter = ":1"}
+				if (chapter && !book) {book = ":matt"}
 			return state.lang + book + chapter + verse;
 		}
 		self.getReference = function () {
 			return self.assembleReference();
 		}
 	}
-	return new StateStorage;
-});
-*/
-
-angular.module("AS").service("instanceStateProvider", function () {
-	this.StateStorage = function () {
-		var self = this,
-			state = {};
-			
-		self.setLang = function (lang) {
-			state.lang = lang;
-			return self;
-		}
-		self.setBook = function (bookId) {
-			state.book = bookId;
-			return self;
-		}
-		self.setChapter = function (chapter) {
-			state.chapter = chapter;
-			return self;
-		}
-		self.setVerse= function (verse) {
-			state.verse = verse;
-			return self;
-		}
-		self.copy = function () {
-			return angular.copy(state);
-		}
-		self.parseReference = function (reference) {
-			var parts = reference.split(":");
-			state = {
-				lang: parts[0],
-				book: parts[1],
-				chapter: parts[2],
-				verse: parts[3],
-			}
-			return self;
-		}
-		self.assembleReference = function () {
-			var book = state.book ? ":" + state.book : "",
-				chapter = state.chapter ? ":" + state.chapter : "",
-				verse = state.verse ? ":" + state.verse : "";
-			return state.lang + book + chapter + verse;
-		}
-		self.getReference = function () {
-			return self.assembleReference();
-		}
+	this.generateNewState = function () {
+		return new StateStorage();
 	}
 });
 
@@ -547,11 +458,6 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 	}
 	function loadBookModel (book) {
 		return $http.get("/scriptures/Bible_ru/" + book.alias + ".json");
-		/*.then(function (response) {
-			return response;
-		}, function (reason) {
-			throw new Error("Cannot get data book: " + book.alias + reason);
-		});*/
 	}
 	function executeSearchInBook(book, searchParam) {
 		var param = searchParam.toLowerCase(), foundInBook = [],
@@ -675,72 +581,72 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 });
 angular.module("AS").constant("asReaderModel", function () {
 	return {
-		ru: [{"name":"Бытие","alias":"Быт","id":"gen","state":false,"chapters":[]},
-			{"name":"Исход","alias":"Исх","id":"ex","state":false,"chapters":[]},
-			{"name":"Левит","alias":"Лев","id":"lev","state":false,"chapters":[]},
-			{"name":"Числа","alias":"Чис","id":"num","state":false,"chapters":[]},
-			{"name":"Второзаконие","alias":"Вт","id":"deut","state":false,"chapters":[]},
-			{"name":"Книга Иисуса Навина","alias":"Нав","id":"josh","state":false,"chapters":[]},
-			{"name":"Книга Судей Израилевых","alias":"Суд","id":"judg","state":false,"chapters":[]},
-			{"name":"Книга Руфь","alias":"Руфь","id":"ruth","state":false,"chapters":[]},
-			{"name":"Первая книга Царств","alias":"Цар1","id":"sam1","state":false,"chapters":[]},
-			{"name":"Вторая книга Царств","alias":"Цар2","id":"sam2","state":false,"chapters":[]},
-			{"name":"Третья книга Царств","alias":"Цар3","id":"kings1","state":false,"chapters":[]},
-			{"name":"Четвертая книга Царств","alias":"Цар4","id":"kings2","state":false,"chapters":[]},
-			{"name":"Первая книга Паралипоменон","alias":"Пар1","id":"chron1","state":false,"chapters":[]},
-			{"name":"Вторая книга Паралипоменон","alias":"Пар2","id":"chron2","state":false,"chapters":[]},
-			{"name":"Книга Ездры","alias":"Езд","id":"ezra","state":false,"chapters":[]},
-			{"name":"Неемия","alias":"Неем","id":"neh","state":false,"chapters":[]},
-			{"name":"Книга Есфирь","alias":"Есф","id":"est","state":false,"chapters":[]},
-			{"name":"Книга Иова","alias":"Иов","id":"job","state":false,"chapters":[]},
-			{"name":"Псалтырь","alias":"Пс","id":"ps","state":false,"chapters":[]},
-			{"name":"Притчи Соломона","alias":"Пр","id":"prov","state":false,"chapters":[]},
-			{"name":"Книга Екклесиаста","alias":"Ек","id":"eccles","state":false,"chapters":[]},
-			{"name":"Песни Песней","alias":"Песн","id":"song","state":false,"chapters":[]},
-			{"name":"Книга пророка Исаии","alias":"Ис","id":"isa","state":false,"chapters":[]},
-			{"name":"Книга пророка Иеремии","alias":"Иер","id":"jer","state":false,"chapters":[]},
-			{"name":"Плач Иеремии","alias":"Пл.Иер","id":"lam","state":false,"chapters":[]},
-			{"name":"Книга пророка Иезекииля","alias":"Иез","id":"ezek","state":false,"chapters":[]},
-			{"name":"Книга пророка Даниила","alias":"Дан","id":"dan","state":false,"chapters":[]},
-			{"name":"Книга пророка Осии","alias":"Ос","id":"hos","state":false,"chapters":[]},
-			{"name":"Книга пророка Иоиля","alias":"Иоиль","id":"joel","state":false,"chapters":[]},
-			{"name":"Книга пророка Амоса","alias":"Ам","id":"amos","state":false,"chapters":[]},
-			{"name":"Книга пророка Авдия","alias":"Авд","id":"obad","state":false,"chapters":[]},
-			{"name":"Книга пророка Ионы","alias":"Иона","id":"jonah","state":false,"chapters":[]},
-			{"name":"Книга пророка Михея","alias":"Мих","id":"mic","state":false,"chapters":[]},
-			{"name":"Книга пророка Наума","alias":"Наум","id":"nah","state":false,"chapters":[]},
-			{"name":"Книга пророка Аввакума","alias":"Авв","id":"hab","state":false,"chapters":[]},
-			{"name":"Книга пророка Софонии","alias":"Соф","id":"zeph","state":false,"chapters":[]},
-			{"name":"Книга пророка Аггея","alias":"Агг","id":"hag","state":false,"chapters":[]},
-			{"name":"Книга пророка Захарии","alias":"Зах","id":"zech","state":false,"chapters":[]},
-			{"name":"Книга пророка Малахии","alias":"Мал","id":"mal","state":false,"chapters":[]},
-			{"name":"Евангелие от Матфея","alias":"Мф","id":"matt","state":false,"chapters":[]},
-			{"name":"Евангелие от Марка","alias":"Мк","id":"mark","state":false,"chapters":[]},
-			{"name":"Евангелие от Луки","alias":"Лк","id":"luke","state":false,"chapters":[]},
-			{"name":"Евангелие от Иоанна","alias":"Ин","id":"john","state":false,"chapters":[]},
-			{"name":"Деяния","alias":"Деян","id":"acts","state":false,"chapters":[]},
-			{"name":"Послание Иакова","alias":"Иак","id":"james","state":false,"chapters":[]},
-			{"name":"Первое послание Петра","alias":"Пет1","id":"pet1","state":false,"chapters":[]},
-			{"name":"Второе послание Петра","alias":"Пет2","id":"pet2","state":false,"chapters":[]},
-			{"name":"Первое послание Иоанна","alias":"Ин1","id":"john1","state":false,"chapters":[]},
-			{"name":"Второе послание Иоанна","alias":"Ин2","id":"john2","state":false,"chapters":[]},
-			{"name":"Третье послание Иоанна","alias":"Ин3","id":"john3","state":false,"chapters":[]},
-			{"name":"Послание Иуды","alias":"Иуд","id":"jude","state":false,"chapters":[]},
-			{"name":"Послание к Римлянам","alias":"Рим","id":"rom","state":false,"chapters":[]},
-			{"name":"Первое послание к Коринфянам","alias":"Кор1","id":"cor1","state":false,"chapters":[]},
-			{"name":"Второе послание к Коринфянам","alias":"Кор2","id":"cor2","state":false,"chapters":[]},
-			{"name":"Послание к Галатам","alias":"Гал","id":"gal","state":false,"chapters":[]},
-			{"name":"Послание к Ефесянам","alias":"Еф","id":"eph","state":false,"chapters":[]},
-			{"name":"Послание к Филлиппийцам","alias":"Флп","id":"phil","state":false,"chapters":[]},
-			{"name":"Послание к Колоссянам","alias":"Кол","id":"col","state":false,"chapters":[]},
-			{"name":"Первое послание к Фессалоникийцам","alias":"Фес1","id":"thess1","state":false,"chapters":[]},
-			{"name":"Второе послание к Фессалоникийцам","alias":"Фес2","id":"thess2","state":false,"chapters":[]},
-			{"name":"Первое послание к Тимофею","alias":"Тим1","id":"tim1","state":false,"chapters":[]},
-			{"name":"Второе послание к Тимофею","alias":"Тим2","id":"tim2","state":false,"chapters":[]},
-			{"name":"Послание к Титу","alias":"Тит","id":"titus","state":false,"chapters":[]},
-			{"name":"Послание к Филимону","alias":"Флм","id":"philem","state":false,"chapters":[]},
-			{"name":"Послание к Евреям","alias":"Евр","id":"heb","state":false,"chapters":[]},
-			{"name":"Откровение Иоанна Богослова","alias":"Отк","id":"rev","state":false,"chapters":[]}
+		ru: [{"name":"Бытие","alias":"Быт","id":"gen","open":false,"chapters":[]},
+			{"name":"Исход","alias":"Исх","id":"ex","open":false,"chapters":[]},
+			{"name":"Левит","alias":"Лев","id":"lev","open":false,"chapters":[]},
+			{"name":"Числа","alias":"Чис","id":"num","open":false,"chapters":[]},
+			{"name":"Второзаконие","alias":"Вт","id":"deut","open":false,"chapters":[]},
+			{"name":"Книга Иисуса Навина","alias":"Нав","id":"josh","open":false,"chapters":[]},
+			{"name":"Книга Судей Израилевых","alias":"Суд","id":"judg","open":false,"chapters":[]},
+			{"name":"Книга Руфь","alias":"Руфь","id":"ruth","open":false,"chapters":[]},
+			{"name":"Первая книга Царств","alias":"Цар1","id":"sam1","open":false,"chapters":[]},
+			{"name":"Вторая книга Царств","alias":"Цар2","id":"sam2","open":false,"chapters":[]},
+			{"name":"Третья книга Царств","alias":"Цар3","id":"kings1","open":false,"chapters":[]},
+			{"name":"Четвертая книга Царств","alias":"Цар4","id":"kings2","open":false,"chapters":[]},
+			{"name":"Первая книга Паралипоменон","alias":"Пар1","id":"chron1","open":false,"chapters":[]},
+			{"name":"Вторая книга Паралипоменон","alias":"Пар2","id":"chron2","open":false,"chapters":[]},
+			{"name":"Книга Ездры","alias":"Езд","id":"ezra","open":false,"chapters":[]},
+			{"name":"Неемия","alias":"Неем","id":"neh","open":false,"chapters":[]},
+			{"name":"Книга Есфирь","alias":"Есф","id":"est","open":false,"chapters":[]},
+			{"name":"Книга Иова","alias":"Иов","id":"job","open":false,"chapters":[]},
+			{"name":"Псалтырь","alias":"Пс","id":"ps","open":false,"chapters":[]},
+			{"name":"Притчи Соломона","alias":"Пр","id":"prov","open":false,"chapters":[]},
+			{"name":"Книга Екклесиаста","alias":"Ек","id":"eccles","open":false,"chapters":[]},
+			{"name":"Песни Песней","alias":"Песн","id":"song","open":false,"chapters":[]},
+			{"name":"Книга пророка Исаии","alias":"Ис","id":"isa","open":false,"chapters":[]},
+			{"name":"Книга пророка Иеремии","alias":"Иер","id":"jer","open":false,"chapters":[]},
+			{"name":"Плач Иеремии","alias":"Пл.Иер","id":"lam","open":false,"chapters":[]},
+			{"name":"Книга пророка Иезекииля","alias":"Иез","id":"ezek","open":false,"chapters":[]},
+			{"name":"Книга пророка Даниила","alias":"Дан","id":"dan","open":false,"chapters":[]},
+			{"name":"Книга пророка Осии","alias":"Ос","id":"hos","open":false,"chapters":[]},
+			{"name":"Книга пророка Иоиля","alias":"Иоиль","id":"joel","open":false,"chapters":[]},
+			{"name":"Книга пророка Амоса","alias":"Ам","id":"amos","open":false,"chapters":[]},
+			{"name":"Книга пророка Авдия","alias":"Авд","id":"obad","open":false,"chapters":[]},
+			{"name":"Книга пророка Ионы","alias":"Иона","id":"jonah","open":false,"chapters":[]},
+			{"name":"Книга пророка Михея","alias":"Мих","id":"mic","open":false,"chapters":[]},
+			{"name":"Книга пророка Наума","alias":"Наум","id":"nah","open":false,"chapters":[]},
+			{"name":"Книга пророка Аввакума","alias":"Авв","id":"hab","open":false,"chapters":[]},
+			{"name":"Книга пророка Софонии","alias":"Соф","id":"zeph","open":false,"chapters":[]},
+			{"name":"Книга пророка Аггея","alias":"Агг","id":"hag","open":false,"chapters":[]},
+			{"name":"Книга пророка Захарии","alias":"Зах","id":"zech","open":false,"chapters":[]},
+			{"name":"Книга пророка Малахии","alias":"Мал","id":"mal","open":false,"chapters":[]},
+			{"name":"Евангелие от Матфея","alias":"Мф","id":"matt","open":false,"chapters":[]},
+			{"name":"Евангелие от Марка","alias":"Мк","id":"mark","open":false,"chapters":[]},
+			{"name":"Евангелие от Луки","alias":"Лк","id":"luke","open":false,"chapters":[]},
+			{"name":"Евангелие от Иоанна","alias":"Ин","id":"john","open":false,"chapters":[]},
+			{"name":"Деяния","alias":"Деян","id":"acts","open":false,"chapters":[]},
+			{"name":"Послание Иакова","alias":"Иак","id":"james","open":false,"chapters":[]},
+			{"name":"Первое послание Петра","alias":"Пет1","id":"pet1","open":false,"chapters":[]},
+			{"name":"Второе послание Петра","alias":"Пет2","id":"pet2","open":false,"chapters":[]},
+			{"name":"Первое послание Иоанна","alias":"Ин1","id":"john1","open":false,"chapters":[]},
+			{"name":"Второе послание Иоанна","alias":"Ин2","id":"john2","open":false,"chapters":[]},
+			{"name":"Третье послание Иоанна","alias":"Ин3","id":"john3","open":false,"chapters":[]},
+			{"name":"Послание Иуды","alias":"Иуд","id":"jude","open":false,"chapters":[]},
+			{"name":"Послание к Римлянам","alias":"Рим","id":"rom","open":false,"chapters":[]},
+			{"name":"Первое послание к Коринфянам","alias":"Кор1","id":"cor1","open":false,"chapters":[]},
+			{"name":"Второе послание к Коринфянам","alias":"Кор2","id":"cor2","open":false,"chapters":[]},
+			{"name":"Послание к Галатам","alias":"Гал","id":"gal","open":false,"chapters":[]},
+			{"name":"Послание к Ефесянам","alias":"Еф","id":"eph","open":false,"chapters":[]},
+			{"name":"Послание к Филлиппийцам","alias":"Флп","id":"phil","open":false,"chapters":[]},
+			{"name":"Послание к Колоссянам","alias":"Кол","id":"col","open":false,"chapters":[]},
+			{"name":"Первое послание к Фессалоникийцам","alias":"Фес1","id":"thess1","open":false,"chapters":[]},
+			{"name":"Второе послание к Фессалоникийцам","alias":"Фес2","id":"thess2","open":false,"chapters":[]},
+			{"name":"Первое послание к Тимофею","alias":"Тим1","id":"tim1","open":false,"chapters":[]},
+			{"name":"Второе послание к Тимофею","alias":"Тим2","id":"tim2","open":false,"chapters":[]},
+			{"name":"Послание к Титу","alias":"Тит","id":"titus","open":false,"chapters":[]},
+			{"name":"Послание к Филимону","alias":"Флм","id":"philem","open":false,"chapters":[]},
+			{"name":"Послание к Евреям","alias":"Евр","id":"heb","open":false,"chapters":[]},
+			{"name":"Откровение Иоанна Богослова","alias":"Отк","id":"rev","open":false,"chapters":[]}
 		]
 	}
 });

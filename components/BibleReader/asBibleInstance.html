@@ -2,9 +2,12 @@
 	<div class="book-toolbar">
 		<button class="btn m blank remove-instance" ng-click="removeInstance()">✖</button>
 		<div class="toolbar-menu clearfix">
-			<div class="tab" ng-class="{active: currentTabIs('navigation')}" ng-click="switchToTab('navigation')">Навігація</div>
-			<div class="tab" ng-class="{active: currentTabIs('search')}" ng-click="switchToTab('search')">Пошук</div>
-			<div class="tab" ng-class="{active: currentTabIs('share')}" ng-click="switchToTab('share')">Поділитися</div>
+			<div class="tab" ng-class="{active: currentTabIs('navigation')}" 
+				 ng-click="switchToTab('navigation')">Навігація</div>
+			<div class="tab" ng-class="{active: currentTabIs('search')}"
+				 ng-click="switchToTab('search')">Пошук</div>
+			<div class="tab" ng-class="{active: currentTabIs('share')}"
+				 ng-click="switchToTab('share')">Поділитися</div>
 		</div>
 		<div ng-if="currentTabIs('search')" class="search-box">
 			<input type="text" placeholder="Шукати в Біблії" id="search" ng-model="searchParam" 
@@ -12,14 +15,17 @@
 			<button class="btn m primary find" ng-click="runSearch($event, searchParam)">Знайти</button>
 			<div class="search-settings">
 				<label for="in-checked-books">
-					<input type="radio" ng-model="booksToSearchIn.option" name="search-place" value="selected" id="in-checked-books">
+					<input type="radio" ng-model="booksToSearchIn.option" 
+						   name="search-place" value="selected" id="in-checked-books">
 					В обраних
 				</label>
 				<label for="in-all-books">
-					<input type="radio" ng-model="booksToSearchIn.option" name="search-place" value="all" id="in-all-books">
+					<input type="radio" ng-model="booksToSearchIn.option"
+						   name="search-place" value="all" id="in-all-books">
 					В усіх
 				</label>
-				<span class="results-link" ng-if="searchResults.length" ng-click="displayResults(!showResults)">
+				<span class="results-link" ng-if="searchResults.length" 
+					  ng-click="displayResults(!showResults)">
 					Результати (<span ng-bind="searchResults.length"></span>)
 				</span>
 			</div>
@@ -39,14 +45,16 @@
 				<button class="btn m primary go" ng-click="visitReference(reference)">Пройти</button>
 			</div>
 			<div class="navigation-agents">
-				<div class="agent" ng-repeat="chapter in currentBook.chapters"
-					 ng-if="currentBook.chapters.length > 1" 
-					  ng-click="navigate({chapter: $index + 1, verse: 0})">.
+				<div class="agent" ng-repeat="chapter in state.book.chapters"
+					 ng-class="{active: state.chapterIndex === $index}"
+					 ng-if="state.book.chapters.length > 1" 
+					 ng-click="navigate({chapter: $index + 1, verse: 0})">.
 					  <span class="pointer">{{$index + 1}}</span>
 				</div>
 			</div>
 			<div class="navigation-agents">
-				<div class="agent" ng-repeat="verse in currentBook.chapter" 
+				<div class="agent" ng-repeat="verse in state.chapterMap"
+					 ng-class="{active: state.verseIndex === $index}"
 					 ng-click="navigate({verse: $index + 1})">
 					.<span class="pointer">{{$index + 1}}</span>
 				</div>
@@ -54,7 +62,8 @@
 		</div>
 	</div>
 	<div class="reader bible">
-		<div class="search-results" ng-if="searchResults.length && showResults && currentTabIs('search')">
+		<div class="search-results" 
+			 ng-if="searchResults.length && showResults && currentTabIs('search')">
 			<div class="result-item"
 				 ng-repeat="result in searchResults | orderBy: '-rate'" 
 				 ng-click="navigate(result.reference); displayResults(false);">
@@ -64,7 +73,7 @@
 		</div>
 		<div class="book" id="{{book.id}}"
 			 ng-repeat="book in books track by $index"
-			 ng-class="{open: book.state}">
+			 ng-class="{open: book.open}">
 			<div class="book-name" ng-click="toggleBook(book)">
 				<span as-stop-prop class="book-checker go-left">
 					<input type="checkbox" ng-model="book.checked">

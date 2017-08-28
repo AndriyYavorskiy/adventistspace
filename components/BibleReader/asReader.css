@@ -206,6 +206,9 @@
 }
 .navigation-agents .agent:first-child {border-radius:4px 0 0 4px;}
 .navigation-agents .agent:last-child {border-radius: 0 4px 4px 0;}
+.navigation-agents .agent.active {
+	background: #eee;
+}
 .navigation-agents .agent:hover {
 	background: #6383b5;
 	color: #fff;
