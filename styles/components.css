@@ -26,11 +26,12 @@
 	background-size: cover;
 	-webkit-filter: invert(0.1);
 }
-.message{
-	padding: 48px 24px;
+
+.slide .message {
+	//padding: 48px 24px;
 	margin: auto;
 }
-.message h1{
+.slide h1 {
 	color: #fff;
 	font-weight: 700;
 	font-size: 36px;
@@ -41,22 +42,24 @@
 	position: absolute;
 	z-index: -1;
 }
-.message p{
-	margin: 0 auto;
+.slide .message p{
 	color: #A0DE52;
     padding: 4px 12px;
-	width: 60%;
 }
-.message section {
+.slide .message section {
     background: rgba(0,0,0, .4);
 	border-radius: 3px;
+	margin: 0 auto;
+	width: 60%;
 }
-.message .source {
+.slide .message .source {
 	background: none;
 	color: #fff;
 	cursor: pointer;
 	text-align: right;
-	font-size: 16px;
+	font-size: 14px;
+	margin: auto;
+    width: 60%;
 }
 
 .fact{

@@ -137,3 +137,7 @@ header .name h1{
 	color: #BCAA70;
 	
 }
+
+.page-footer .col {
+	width: 33.33%;
+}

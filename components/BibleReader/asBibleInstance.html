@@ -32,7 +32,7 @@
 		</div>
 		<div ng-if="currentTabIs('share') === true" class="share-box">
 			<div class="summery" ng-bind="reference | BibleReference"></div>
-			<div class="share-link">{{'http://adventistspace/#' + reference}}</div>
+			<div class="share-link">{{'http://adventamo.com/#' + reference}}</div>
 		</div>
 		<div ng-if="currentTabIs('navigation')" class="navigation-box clearfix">
 			<div class="clearfix">
@@ -96,5 +96,7 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="reader-footer">
+		<div class="go-right" ng-click="navigate(reference)">{{reference}}</div>
+	</div>
 

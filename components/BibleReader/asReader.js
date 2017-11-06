@@ -289,7 +289,7 @@ angular.module('AS')
 					book = getBookModelById(target)
 				}
 				if (!book.chapters.length) {
-					promise =  asBibleInstanceManager.loadBookModel(book).then(function (response) {
+					promise = asBibleInstanceManager.loadBookModel(book).then(function (response) {
 						book.chapters = response.data;
 						return deferred.resolve(response);
 					}, function (reason) {
@@ -312,6 +312,9 @@ angular.module('AS')
 					chapterNum = hashParts.length >= 3 ? " .chapter:nth-child(" + parseInt(hashParts[2], 10) + ")" : "",
 					verseNum = hashParts.length === 4 ? " .verse:nth-child(" + hashParts[3].split(/(-|,)/i)[0] + ")" : "",
 					selector = "#" + bookId + chapterNum + verseNum;
+					if (verseNum) {
+						element[0].querySelector(selector).classList.add('spotlight');
+					}
 				//console.info(selector);
 				goToDOMelement(selector);
 			}
