@@ -17,15 +17,14 @@
 				<label for="in-checked-books">
 					<input type="radio" ng-model="booksToSearchIn.option" 
 						   name="search-place" value="selected" id="in-checked-books">
-					В обраних
+					в обраних
 				</label>
 				<label for="in-all-books">
 					<input type="radio" ng-model="booksToSearchIn.option"
 						   name="search-place" value="all" id="in-all-books">
-					В усіх
+					в усіх
 				</label>
-				<span class="results-link" ng-if="searchResults.length" 
-					  ng-click="displayResults(!showResults)">
+				<span class="results-link" ng-if="searchResults" ng-click="displayResults(!showResults)">
 					Результати (<span ng-bind="searchResults.length"></span>)
 				</span>
 			</div>
@@ -62,8 +61,7 @@
 		</div>
 	</div>
 	<div class="reader bible">
-		<div class="search-results" 
-			 ng-if="searchResults.length && showResults && currentTabIs('search')">
+		<div class="search-results" ng-if="searchResults.length && showResults && currentTabIs('search')">
 			<div class="result-item"
 				 ng-repeat="result in searchResults | orderBy: '-rate'" 
 				 ng-click="navigate(result.reference); displayResults(false);">

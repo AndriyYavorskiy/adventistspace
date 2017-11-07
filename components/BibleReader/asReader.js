@@ -143,15 +143,17 @@ angular.module('AS')
 					console.table(bl);
 				}, 1000);
 			}*/
-			scope.showResults = true;
+			scope.showResults = false;
 			scope.booksToSearchIn = {option: "selected"};
 			scope.searchParam = "";
 			scope.displayResults = function (state){
 				scope.showResults = state;
 			}
 			scope.runSearch = function (event, searchParam) {
+				scope.searchParam = searchParam;
 				if (event.which && event.which !== 13 && event.type !== "click") {return;}
 				scope.searchResults = [];
+				if (!searchParam) { return; }
 				scope.books.forEach(function (book) {
 					if(scope.booksToSearchIn.option === "selected" && !book.checked && !book.open) {return;}
 					if (book.chapters.length) {
@@ -167,7 +169,6 @@ angular.module('AS')
 			};
 			function pushIfAnyData (chank) {
 				if (chank && chank.length) {
-					console.log(chank);
 					scope.searchResults = scope.searchResults.concat(chank);
 				}
 			}
