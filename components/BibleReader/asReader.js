@@ -244,7 +244,7 @@ angular.module('AS')
 				}
 				if (Object.keys(refreshParams).indexOf("verse") > -1) {
 					scope.reference = instanceState.setVerse(refreshParams.verse).getReference();
-					scope.state.verseIndex = refreshParams.verse - 1;
+					//scope.state.verseIndex = refreshParams.verse - 1;
 				}
 				if (!scope.state.book.chapters.length) {
 					loadBookData(refreshParams.book).then(function (response) {
@@ -311,17 +311,20 @@ angular.module('AS')
 					return;
 				}
 				var hashParts = ref.replace("#").split(":"),
-					lang = hashParts[0],
-					bookId = hashParts.length >= 2 ? hashParts[1] : "",
-					chapterNum = hashParts.length >= 3 ? " .chapter:nth-child(" + parseInt(hashParts[2], 10) + ")" : "",
-					verseNum = hashParts.length === 4 ? " .verse:nth-child(" + hashParts[3].split(/(-|,)/i)[0] + ")" : "",
-					selector = "#" + bookId + chapterNum + verseNum;
-					if (verseNum) {
-						element[0].querySelector(selector).classList.add('spotlight');
+					lang = hashParts[0], versesList = [],
+					bookSelector = hashParts.length >= 2 ? hashParts[1] : "",
+					chapterSelector = hashParts.length >= 3 ? " .chapter:nth-child(" + parseInt(hashParts[2], 10) + ")" : "",
+					verseSelector = hashParts.length === 4 ? " .verse:nth-child(" + hashParts[3].split(/(-|,)/i)[0] + ")" : "",
+					targetSelector = "#" + bookSelector + chapterSelector + verseSelector;
+				if (verseSelector) {
+					versesList = asBibleInstanceManager.decodeVersesList(hashParts[3])
+					for (var i = 0, l = versesList.length; i < l; i++) {
+						element[0].querySelector("#" + bookSelector + chapterSelector + " .verse:nth-child(" + versesList[i] + ")").classList.add('spotlight');
 					}
-				//console.info(selector);
-				goToDOMelement(selector);
+				}
+				goToDOMelement(targetSelector);
 			}
+
 			function getBookModelById (id) {
 				if (scope.books.find) {
 					return scope.books.find(function (b) {  
@@ -421,9 +424,26 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 	manager.helpToFindBook = helpToFindBook;
 	manager.executeSearchInBook = executeSearchInBook;
 	manager.createTabManager = createTabManager;
+	manager.decodeVersesList = decodeVersesList;
 	
 	return manager;
 	
+	function decodeVersesList (bits) {
+		var list = [bits], artefacts;
+
+		if (bits.indexOf(",") >= 0) {
+			list = bits.split(",");
+		}
+		if (bits.indexOf("-") >= 0) {
+			list  = [];
+			artefacts = bits.split("-");
+			for (var i = parseInt(artefacts[0]), c = parseInt(artefacts[1]); i <= c; i++) {
+				list.push(i);
+			}
+		}
+
+		return list;
+	}
 	function helpToFindBook(searchText) {
 		var results = [];
 		asReaderModel().ru.forEach(function (bookModel) {
