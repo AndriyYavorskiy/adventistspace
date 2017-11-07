@@ -257,7 +257,7 @@ angular.module('AS')
 				}
 				if (Object.keys(refreshParams).indexOf("verse") > -1) {
 					scope.reference = instanceState.setVerse(refreshParams.verse).getReference();
-					//scope.state.verseIndex = refreshParams.verse - 1;
+					scope.state.verseIndex = refreshParams.verse.split(/(-|,)/i)[0] - 1; // this string is needed for navigation agents
 				}
 				if (!scope.state.book.chapters.length) {
 					loadBookData(refreshParams.book).then(function (response) {
