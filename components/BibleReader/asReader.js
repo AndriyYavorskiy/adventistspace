@@ -20,7 +20,11 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 			addInstance(ref);
 		});
 		scope.$on("appeal:remove-instance", function (event, node) {
+			var readersParent = node[0].parentNode;
 			node.remove();
+			if (!readersParent.querySelector(".book-wrapper")) {
+				scope.closeModal();
+			}
 		});
 		function init () {
 			var state = getLastState();
