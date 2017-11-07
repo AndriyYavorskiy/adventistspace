@@ -14,18 +14,18 @@
 				class="inp txt m sensation search" ng-keyup="runSearch($event, searchParam)">
 			<button class="btn m primary find" ng-click="runSearch($event, searchParam)">Знайти</button>
 			<div class="search-settings">
+				<input type="radio" ng-model="booksToSearchIn.option" 
+						name="search-place" value="selected" id="in-checked-books">
 				<label for="in-checked-books">
-					<input type="radio" ng-model="booksToSearchIn.option" 
-						   name="search-place" value="selected" id="in-checked-books">
-					в обраних
+					обрані книги
 				</label>
+				<input type="radio" ng-model="booksToSearchIn.option"
+						name="search-place" value="all" id="in-all-books">
 				<label for="in-all-books">
-					<input type="radio" ng-model="booksToSearchIn.option"
-						   name="search-place" value="all" id="in-all-books">
-					в усіх
+					усі книги
 				</label>
 				<span class="results-link" ng-if="searchResults" ng-click="displayResults(!showResults)">
-					Результати (<span ng-bind="searchResults.length"></span>)
+					результати <span class="amount" ng-bind="'('+searchResults.length+')'"></span>
 				</span>
 			</div>
 		</div>
@@ -60,11 +60,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="reader bible">
-		<div class="search-results" ng-if="searchResults.length && showResults && currentTabIs('search')">
+	<div class="reader bible slim-scroll">
+		<div class="search-results slim-scroll" ng-if="searchResults.length && showResults && currentTabIs('search')">
 			<div class="result-item"
 				 ng-repeat="result in searchResults | orderBy: '-rate'" 
-				 ng-click="navigate(result.reference); displayResults(false);">
+				 ng-mousedown="actionWithResultItem($event, result.reference)">
 				{{result.reference | BibleReference}} <span ng-bind="result.rate"></span>
 				<div class="scripture" ng-bind-html="result.scripture"></div>
 			</div>

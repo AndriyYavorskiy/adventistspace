@@ -167,6 +167,18 @@ angular.module('AS')
 				});
 				scope.showResults = true;
 			};
+			scope.actionWithResultItem = function (event, resultReference) {
+				if (event.which == 2 || event.button == 4) {
+					event.preventDefault();
+					scope.$emit("appeal:add-instance", resultReference);
+					return;
+				 }
+				 if (event.altKey) {
+					scope.$emit("appeal:add-instance", resultReference);
+				 }
+				scope.navigate(resultReference);
+				scope.displayResults(false);
+			}
 			function pushIfAnyData (chank) {
 				if (chank && chank.length) {
 					scope.searchResults = scope.searchResults.concat(chank);
