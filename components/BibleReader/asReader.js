@@ -143,6 +143,8 @@ angular.module('AS')
 					console.table(bl);
 				}, 1000);
 			}*/
+			
+			scope.inProcess = false;
 			scope.showResults = false;
 			scope.booksToSearchIn = {option: "selected"};
 			scope.searchParam = "";
@@ -150,23 +152,42 @@ angular.module('AS')
 				scope.showResults = state;
 			}
 			scope.runSearch = function (event, searchParam) {
+				var reports = 1;
 				scope.searchParam = searchParam;
-				if (event.which && event.which !== 13 && event.type !== "click") {return;}
+				if (event.which && event.which !== 13 && event.type !== "click") { return; }
+				scope.inProcess = true;
 				scope.searchResults = [];
 				if (!searchParam) { return; }
-				scope.books.forEach(function (book) {
-					if(scope.booksToSearchIn.option === "selected" && !book.checked && !book.open) {return;}
+				scope.books.forEach(function (book, index) {
+					if(scope.booksToSearchIn.option === "selected" && !book.checked && !book.open) {
+						if (++index === scope.books.length) {
+							scope.inProcess = false;
+						}
+
+						return;
+					}
 					if (book.chapters.length) {
 						pushIfAnyData(asBibleInstanceManager.executeSearchInBook(book, searchParam));
+						reactOnProcessEnd();
 					} else {
 						asBibleInstanceManager.loadBookModel(book).then(function (response) {
 							book.chapters = response.data;
 							pushIfAnyData(asBibleInstanceManager.executeSearchInBook(book, searchParam));
+							reactOnProcessEnd();
 						});
+					}
+					function reactOnProcessEnd() {
+						if (++reports === scope.books.length) {
+							reports = 1;
+							scope.inProcess = false;
+						}
 					}
 				});
 				scope.showResults = true;
 			};
+			scope.$on("appeal:process-end", function () {
+				scope.inProcess = false;
+			});
 			scope.actionWithResultItem = function (event, resultReference) {
 				if (event.which == 2 || event.button == 4) {
 					event.preventDefault();
@@ -257,7 +278,7 @@ angular.module('AS')
 				}
 				if (Object.keys(refreshParams).indexOf("verse") > -1) {
 					scope.reference = instanceState.setVerse(refreshParams.verse).getReference();
-					scope.state.verseIndex = refreshParams.verse.split(/(-|,)/i)[0] - 1; // this string is needed for navigation agents
+					scope.state.verseIndex = refreshParams.verse.toString().split(/(-|,)/i)[0] - 1; // this string is needed for navigation agents
 				}
 				if (!scope.state.book.chapters.length) {
 					loadBookData(refreshParams.book).then(function (response) {

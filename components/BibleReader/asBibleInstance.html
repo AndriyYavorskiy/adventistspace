@@ -60,6 +60,18 @@
 			</div>
 		</div>
 	</div>
+	<div class="spinner-wrapper" ng-if="inProcess">
+		<div class="loader">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</div>
 	<div class="reader bible slim-scroll">
 		<div class="search-results slim-scroll" ng-if="searchResults.length && showResults && currentTabIs('search')">
 			<div class="result-item"
