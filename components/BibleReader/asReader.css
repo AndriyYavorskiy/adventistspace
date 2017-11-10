@@ -275,11 +275,14 @@
 		width: 300px;
 	}
 	.bible.reader .book {
+		float: left;
 		padding: 0 16px;
+		width: 33.33%;
 	}
 	.bible.reader .book.open {
 		background: #fff;
 		padding-bottom: 28px;
+		width: 100%;
 	}
 	.bible.reader .book.open .book-name {
 		color: #6383b5;
@@ -287,12 +290,12 @@
 	.bible.reader .book-name {
 		color: #fff;
 		cursor: pointer;
-		font-size: 18px;
+		font-size: 14px;
 		padding: 8px 0;
-		text-align: center;
 	}
 	.bible.reader .book-checker {
 		line-height: 19px;
+		margin-right: 5px;
 	}
 	.bible.reader .chapter-number {
 		color: #6383b5;

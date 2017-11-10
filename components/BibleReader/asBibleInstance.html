@@ -83,12 +83,13 @@
 		</div>
 		<div class="book" id="{{book.id}}"
 			 ng-repeat="book in books track by $index"
-			 ng-class="{open: book.open}">
+			 ng-class="{open: book.open}"
+			 title="{{book.name}}">
 			<div class="book-name" ng-click="toggleBook(book)">
 				<span as-stop-prop class="book-checker go-left">
 					<input type="checkbox" ng-model="book.checked">
 				</span>
-				{{book.name}}
+				{{book.alias}}
 			</div>
 			<div class="chapters">
 				<div class="chapter" ng-repeat="chapter in book.chapters track by $index">
