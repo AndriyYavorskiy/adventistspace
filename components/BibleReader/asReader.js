@@ -152,28 +152,31 @@ angular.module('AS')
 				scope.showResults = state;
 			}
 			scope.runSearch = function (event, searchParam) {
-				var reports = 1;
+				if (event.which && event.which !== 13 && event.type !== "click" || !searchParam) { return; }
+				var reports = 1, numOfPromices = 0;
 				scope.searchParam = searchParam;
-				if (event.which && event.which !== 13 && event.type !== "click") { return; }
 				scope.inProcess = true;
 				scope.searchResults = [];
-				if (!searchParam) { return; }
 				scope.books.forEach(function (book, index) {
+					if (index + 1 === scope.books.length && !numOfPromices) {
+						scope.inProcess = false;
+					}
 					if(scope.booksToSearchIn.option === "selected" && !book.checked && !book.open) {
-						if (++index === scope.books.length) {
-							scope.inProcess = false;
-						}
-
 						return;
 					}
 					if (book.chapters.length) {
 						pushIfAnyData(asBibleInstanceManager.executeSearchInBook(book, searchParam));
-						reactOnProcessEnd();
+						//reactOnProcessEnd();
 					} else {
+						numOfPromices++;
 						asBibleInstanceManager.loadBookModel(book).then(function (response) {
+							numOfPromices--;
 							book.chapters = response.data;
 							pushIfAnyData(asBibleInstanceManager.executeSearchInBook(book, searchParam));
-							reactOnProcessEnd();
+							//reactOnProcessEnd();
+							if (!numOfPromices) {
+								scope.inProcess = false;
+							}
 						});
 					}
 					function reactOnProcessEnd() {
