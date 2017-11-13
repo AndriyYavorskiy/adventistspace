@@ -89,7 +89,8 @@
 				<span as-stop-prop class="book-checker go-left">
 					<input type="checkbox" ng-model="book.checked">
 				</span>
-				{{book.alias}}
+				<span class="alias">{{book.alias}}</span>
+				<span class="name">{{book.name}}</span>
 			</div>
 			<div class="chapters">
 				<div class="chapter" ng-repeat="chapter in book.chapters track by $index">
