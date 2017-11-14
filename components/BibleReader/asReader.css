@@ -112,6 +112,15 @@
 	cursor: pointer;
 	float: right;
 }
+.more-results {
+	color: #ccc;
+	cursor: default;
+    font-size: 14px;
+	text-align: center;
+}
+.more-results:hover {
+    color: #877063;
+}
 
 .book-wrapper .share-box {
 	padding: 8px;

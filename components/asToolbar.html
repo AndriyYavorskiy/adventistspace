@@ -2,7 +2,7 @@
 	<div class='gifts flex'>
 		<div mode class='gift word' ng-click='showGiftsModal = 1'></div>
 		<div mode class='gift low' ng-click='showGiftsModal = 2'></div>
-		<div mode class='gift bible' ng-click='mainCtrl.showBibleReader()'></div>
+		<div mode class='gift bible' ng-click='mainCtrl.showBibleReader(); showGiftsModal = 0'></div>
 		<div mode class='gift church' ng-click='showGiftsModal = 4'></div>
 		<div mode class='gift infinity' ng-click='showGiftsModal = 5'></div>
 	</div>

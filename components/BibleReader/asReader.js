@@ -148,12 +148,14 @@ angular.module('AS')
 			scope.showResults = false;
 			scope.booksToSearchIn = {option: "selected"};
 			scope.searchParam = "";
+			scope.searchResultsLimit = 24;
 			scope.displayResults = function (state){
 				scope.showResults = state;
 			}
 			scope.runSearch = function (event, searchParam) {
 				if (event.which && event.which !== 13 && event.type !== "click" || !searchParam) { return; }
 				var reports = 1, numOfPromices = 0;
+				scope.searchResultsLimit = 24;
 				scope.searchParam = searchParam;
 				scope.inProcess = true;
 				scope.searchResults = [];
@@ -166,24 +168,16 @@ angular.module('AS')
 					}
 					if (book.chapters.length) {
 						pushIfAnyData(asBibleInstanceManager.executeSearchInBook(book, searchParam));
-						//reactOnProcessEnd();
 					} else {
 						numOfPromices++;
 						asBibleInstanceManager.loadBookModel(book).then(function (response) {
 							numOfPromices--;
 							book.chapters = response.data;
 							pushIfAnyData(asBibleInstanceManager.executeSearchInBook(book, searchParam));
-							//reactOnProcessEnd();
 							if (!numOfPromices) {
 								scope.inProcess = false;
 							}
 						});
-					}
-					function reactOnProcessEnd() {
-						if (++reports === scope.books.length) {
-							reports = 1;
-							scope.inProcess = false;
-						}
 					}
 				});
 				scope.showResults = true;
@@ -525,33 +519,35 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 	}
 	function executeSearchInBook(book, searchParam) {
 		var param = searchParam.toLowerCase(), foundInBook = [],
-			words = param.replace(/(,|-|\.)/gim, "").split(" ");
+			words = param.replace(/(,|-|\.)/gim, "").split(" "),
+			lettersRegex = /[а-я]/i;
 			
 		(book.chapters || []).forEach(function (chapter, chapterIndex) {
-			chapter.forEach(function (verse, verseIndex) {
-				var matchIndex = verse.toLowerCase().indexOf(param),
+
+			chapter.forEach(_scanVerse);
+			function _scanVerse (verse, verseIndex) {
+				var fullMatchIndex = verse.toLowerCase().indexOf(param),
 					rate = 0,
 					coordenates = [];
 					
 				if (words.length > 1) {
-					if (matchIndex >= 0) {
+					if (fullMatchIndex >= 0) {
 						rate += words.length * 3;
-						coordenates.push([matchIndex, matchIndex + param.length]);
+						coordenates.push([fullMatchIndex, fullMatchIndex + param.length]);
 					} else {
-						words.forEach(function (word) {
-							var subMatchIndex = verse.toLowerCase().indexOf(word),
-								rateIncome = 1;
-							
-							if (subMatchIndex >= 0) {
-								rate += rateIncome - getPenalty(verse, subMatchIndex, word);
-								coordenates.push([subMatchIndex, subMatchIndex + word.length]);
-							}
-						});
+						words.forEach(_registerWordMatch);
 					}
 				} else {
-					if (matchIndex >= 0) {
-						rate = rate - getPenalty(verse, matchIndex, param) + 1;
-						coordenates.push([matchIndex, matchIndex + param.length]);
+					_registerWordMatch(words[0]);
+				}
+				function _registerWordMatch (word) {
+					var allMatchesCoordenates = _detectSubStr(verse, word);
+					if (allMatchesCoordenates.length > 0) {
+						rate++;
+						allMatchesCoordenates.forEach(function (pair) {
+							rate += _getMatchPurityBonus(verse, pair[0], word);
+							coordenates.push(pair);
+						});
 					}
 				}
 				
@@ -560,7 +556,7 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 						coordenates.sort(function (a, b) {
 							return a[0] > b[0];
 						});
-						rate += makeSecondaryCorrection(verse, coordenates);
+						rate += _getProximityBonus(verse, coordenates);
 					}
 					foundInBook.push({
 						rate: rate,
@@ -571,7 +567,8 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 						chapter: chapterIndex + 1, 
 						verse: verseIndex + 1});						
 				}
-			});
+			}
+			
 		});
 			
 		return foundInBook.length ? foundInBook : null;
@@ -579,7 +576,16 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 	function splitSearchResults (results, rigidity) {
 		
 	}
-	function makeSecondaryCorrection (text, coords) {
+	function _detectSubStr (text, subStr) {
+		var match, matches = [], regexp = new RegExp(subStr, "gim");
+	
+		while ((match = regexp.exec(text)) != null) {
+			  matches.push([match.index, match.index + subStr.length]);
+		}
+	
+		return matches;
+	}
+	function _getProximityBonus (text, coords) {
 		var grunt = 0,
 			regex = /[а-я]/i;
 		
@@ -587,35 +593,22 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 			if (!coords[index + 1]) {return;}
 			var stringBetween = text.substring(coord[1], coords[index + 1][0]);
 			if (stringBetween.match(/^(,?\s+[а-я]{1,4}\s+|,\s+|\s+-\s+|\s+)$/i || stringBetween.length < 4)) {
-				grunt += 0.75;
-				if (!regex.test(text.charAt(coord[0] - 1))) {
-					++grunt;
-				}
-				if (!regex.test(text.charAt(coords[index + 1][1]))) {
-					++grunt;
-				}
+				grunt += 2;
 			}
 		});
-		if (grunt < coords.length) {
-			if (grunt <= 1) {
-				grunt = 0;
-			} else {
-				grunt /= 2;
-			}
-		}
 		
 		return grunt;
 	}
-	function getPenalty (text, index, string) {
-		var penalty = 0,
+	function _getMatchPurityBonus (text, index, string) {
+		var bonus = 0,
 			regex = /[а-я]/i,
 			charBefore = text.charAt(index - 1),
 			charAfter = text.charAt(index + string.length);
 		
-		penalty += regex.test(charBefore) ? 0.75 : 0;
-		penalty += regex.test(charAfter) ? 0.25 : 0;
+			bonus += regex.test(charBefore) ? 0 : 0.75;
+			bonus += regex.test(charAfter) ? 0 : 0.25;
 		
-		return penalty === 0.75 ? 1 : penalty;
+		return bonus;
 	}
 	function wrapMatches (text, coords) {
 		var finalText = "",

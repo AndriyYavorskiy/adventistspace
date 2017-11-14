@@ -75,11 +75,13 @@
 	<div class="reader bible slim-scroll">
 		<div class="search-results slim-scroll" ng-if="searchResults.length && showResults && currentTabIs('search')">
 			<div class="result-item"
-				 ng-repeat="result in searchResults | orderBy: '-rate'" 
+				 ng-repeat="result in searchResults | orderBy: '-rate' | limitTo: searchResultsLimit" 
 				 ng-mousedown="actionWithResultItem($event, result.reference)">
-				{{result.reference | BibleReference}} <span ng-bind="result.rate"></span>
+				{{result.reference | BibleReference}} <!--span ng-bind="result.rate"></span-->
 				<div class="scripture" ng-bind-html="result.scripture"></div>
 			</div>
+			<div class="more-results" ng-show="searchResultsLimit < searchResults.length"
+				 ng-click="searchResultsLimit = searchResultsLimit + 24">Показати більше</div>
 		</div>
 		<div class="book" id="{{book.id}}"
 			 ng-repeat="book in books track by $index"
