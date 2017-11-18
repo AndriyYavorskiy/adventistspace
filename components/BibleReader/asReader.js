@@ -60,7 +60,13 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 });
 
 angular.module('AS')
-	.directive('asBibleInstance', function ($window, $q, $http, asBibleInstanceManager, asReaderModel, $rootScope, instanceStateProvider, BIBLEMATRIX){
+	.directive('asBibleInstance', function ($window,
+											$q, $http,
+											asBibleInstanceManager,
+											asReaderModel,
+											$rootScope,
+											instanceStateProvider,
+											BIBLEMATRIX){
 		var ob = {};
 		ob.templateUrl = "/components/BibleReader/asBibleInstance.html";
 		ob.restrict = "EA";
@@ -74,11 +80,36 @@ angular.module('AS')
 			scope.handeleVerseManipulation = handeleVerseManipulation;
 			scope.removeInstance = removeInstance;
 			scope.switchToBook = switchToBook;
-			scope.switchToTab = switchToTab;
+			scope.glideInHistory = glideInHistory;
+			scope.switchToTab = function switchToTab (tab) { tabManager.setTab(tab); };
+			scope.navigate = function (route) { navigate(route); };
+			scope.runSearch = function (event, searchParam) { runSearch(event, searchParam); }
+			scope.actionWithResultItem = function (event, resultReference) { actionWithResultItem(event, resultReference); }
+			scope.displayResults = function (state){
+				scope.showResults = state;
+			}
+			scope.currentTabIs = function (tab) {
+				return tabManager.checkTab(tab) === tab;
+			}
+			scope.closeBook = function (book) {
+				book.open = false;
+			}
+			scope.$on("appeal:process-end", function () {
+				scope.inProcess = false;
+			});
+			element.on("click", selectText);
+			scope.$on("$destroy", function () {
+				scope.$emit("appeal:add-bookmark", scope.reference);
+			});
 			scope.referenceRegex = /^(ru|ua|en){1}(:\w{2,})?(:\d+)?(:\d+((-\d+)?|(,\d+)*)?)?$/gim;
-			scope.switchToTab("navigation");
-			
+			scope.history = [];
+			scope.inProcess = false;
+			scope.showResults = false;
+			scope.booksToSearchIn = {option: "selected"};
+			scope.searchParam = "";
+			scope.searchResultsLimit = 24;
 			init("ru");
+			scope.switchToTab("navigation");
 			function init (lang, reference) {
 				instanceState.setLang(lang);
 				scope.lang = lang;
@@ -91,11 +122,10 @@ angular.module('AS')
 					});
 					
 					scope.books = response.data;
-					refreshState(reference || getInitialReference());
 					setTimeout(function () {
 						var ref = scope.reference;
-						//loadBookData(instanceState.copy().book).then(function (result) {
-						scope.navigate(ref);
+
+						navigate(reference || getInitialReference());
 					}, 0);
 					/*ids = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","James","Pet1","Pet2","John1","John2","John3","Jude","Rev"];
 					idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];
@@ -111,12 +141,8 @@ angular.module('AS')
 						console.log('-');
 					}
 					console.table(bl);*/
-					
 				});
 			}
-			scope.$on("$destroy", function () {
-				scope.$emit("appeal:add-bookmark", scope.reference);
-			});
 			/*function PREPAREMATRIX() {
 				var idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];
 				var blank = {};
@@ -143,16 +169,44 @@ angular.module('AS')
 					console.table(bl);
 				}, 1000);
 			}*/
-			
-			scope.inProcess = false;
-			scope.showResults = false;
-			scope.booksToSearchIn = {option: "selected"};
-			scope.searchParam = "";
-			scope.searchResultsLimit = 24;
-			scope.displayResults = function (state){
-				scope.showResults = state;
+			function discardIrrelevantHistory () {
+				scope.history.forEach(function (histItem, index) {
+					if (histItem.isCurrent) {
+						scope.history = scope.history.slice(index, scope.history.length);
+						return;
+					}
+				});
 			}
-			scope.runSearch = function (event, searchParam) {
+			function glideInHistory (dest) {
+				if (typeof dest === "object") {
+					var destIndex = scope.history.indexOf(dest);
+
+					scope.history.forEach(function (dst) {
+						if (dst.isCurrent) { dst.isCurrent = false; }
+					});
+					dest.isCurrent = true;
+					_fitToTheRef(dest.ref);
+					return;
+				}
+				var shiftDirect = dest,
+					destination;
+
+				if ((scope.history[0].isCurrent && (shiftDirect === 1)) || (scope.history[scope.history.length - 1].isCurrent && !shiftDirect)) {
+					console.log(!!(scope.history[0].isCurrent && shiftDirect));
+					console.log(scope.history[scope.history.length - 1].isCurrent && !shiftDirect);
+					return;
+				}
+				for (var i = 0, l = scope.history.length; i < l; i++) {
+					if (scope.history[i].isCurrent) {
+						scope.history[i].isCurrent = false;
+						destination = scope.history[i - shiftDirect];
+						i = l;
+					}
+				}
+				destination.isCurrent = true;
+				_fitToTheRef(destination.ref);
+			} 
+			function runSearch (event, searchParam) {
 				if (event.which && event.which !== 13 && event.type !== "click" || !searchParam) { return; }
 				var reports = 1, numOfPromices = 0;
 				scope.searchResultsLimit = 24;
@@ -182,10 +236,7 @@ angular.module('AS')
 				});
 				scope.showResults = true;
 			};
-			scope.$on("appeal:process-end", function () {
-				scope.inProcess = false;
-			});
-			scope.actionWithResultItem = function (event, resultReference) {
+			function actionWithResultItem (event, resultReference) {
 				if (event.which == 2 || event.button == 4) {
 					event.preventDefault();
 					scope.$emit("appeal:add-instance", resultReference);
@@ -194,7 +245,7 @@ angular.module('AS')
 				 if (event.altKey) {
 					scope.$emit("appeal:add-instance", resultReference);
 				 }
-				scope.navigate(resultReference);
+				navigate(resultReference);
 				scope.displayResults(false);
 			}
 			function pushIfAnyData (chank) {
@@ -202,23 +253,10 @@ angular.module('AS')
 					scope.searchResults = scope.searchResults.concat(chank);
 				}
 			}
-
-			function switchToTab (tab) {
-				tabManager.setTab(tab);
-			}
-			scope.currentTabIs = function (tab) {
-				return tabManager.checkTab(tab) === tab;
-			}
-
 			function switchToBook (book) {
-				refreshState({book: book.id, chapter: 0, verse: 0});
+				navigate({book: book.id, chapter: 0, verse: 0});
 				scope.bibleBook = book.name;
 			}
-			scope.navigate = function (route) {
-				refreshState(route);
-			};
-
-			element.on("click", selectText);
 			function selectText(e) {
 				if (e.target.classList.contains('verse')) {
 					angular.element(e.target).toggleClass("spotlight");
@@ -234,7 +272,7 @@ angular.module('AS')
 					notifyReader();
 				}
 				if (event.ctrlKey) {
-					refreshState(reference);
+					navigate(reference);
 				}
 				function notifyReader() {
 					scope.$emit("appeal:add-instance", reference);
@@ -254,31 +292,61 @@ angular.module('AS')
 					return lastBookmark ? lastBookmark : "ru:matt:1";
 				}
 			}
-			function refreshState (params) {
-				var refreshParams = (typeof params === "string") ? instanceState.parseReference(params).copy() : params, 
-					freshBookId = refreshParams.book || instanceState.copy().book;
+			function navigate (route) {
+				var relevantRef = scope.reference,
+					routeParams = (typeof route === "string") ?
+								  instanceState.parseReference(route).copy() :
+								  instanceState.extendWith(route).copy(),
+					newReference = instanceState.getReference();
 
-				if (Object.keys(refreshParams).indexOf("book") > -1) {
-					scope.reference = instanceState.setBook(refreshParams.book).getReference();
-					scope.state = {};
-					scope.state.book = getBookModelById(refreshParams.book);
+				try {
+					_fitToTheRef(routeParams);
+				} catch (error) {
+					console.error("Navigation failed to navigate reference: " + scope.reference, error);
+					instanceState.parseReference(relevantRef);
+					_fitToTheRef(relevantRef);
+
+					return;
 				}
-				if (Object.keys(refreshParams).indexOf("chapter") > -1) {
-					scope.reference = instanceState.setChapter(refreshParams.chapter).getReference();
-					var freshChapterNum = refreshParams.chapter > 0 ? refreshParams.chapter - 1 : 0,
-						map = new Array(BIBLEMATRIX()[freshBookId][freshChapterNum]).fill(true);
+				scope.reference = newReference;
+				var lastPlace = scope.history[0];
+				if (lastPlace && !lastPlace.isCurrent) {
+					discardIrrelevantHistory();
+				}
+				if (scope.history[0]) {
+					scope.history[0].isCurrent = false;
+				}
+				scope.history.unshift({ref: newReference, timeStamp: new Date().valueOf(), isCurrent: true});
+			}
+			function _fitToTheRef (routeParams) {
+				var route;
+				
+				if (typeof routeParams === "string") {
+					route = instanceState.parseReference(routeParams).copy();
+				} else {
+					route = instanceState.extendWith(routeParams).copy();
+				}
+				if (Object.keys(route).indexOf("book") > -1) {
+					scope.reference = instanceState.setBook(route.book).getReference();
+					scope.state = {};
+					scope.state.book = getBookModelById(route.book);
+				}
+				if (Object.keys(route).indexOf("chapter") > -1) {
+					scope.reference = instanceState.setChapter(route.chapter).getReference();
+					var freshChapterNum = route.chapter > 0 ? route.chapter - 1 : 0,
+						map = new Array(BIBLEMATRIX()[instanceState.copy().book][freshChapterNum]).fill(true);
 					map.forEach(function (item, index){
 						map[index] = index + 1;
 					});
 					scope.state.chapterMap = map;
 					scope.state.chapterIndex = freshChapterNum;
 				}
-				if (Object.keys(refreshParams).indexOf("verse") > -1) {
-					scope.reference = instanceState.setVerse(refreshParams.verse).getReference();
-					scope.state.verseIndex = refreshParams.verse.toString().split(/(-|,)/i)[0] - 1; // this string is needed for navigation agents
+				if (Object.keys(route).indexOf("verse") > -1) {
+					scope.reference = instanceState.setVerse(route.verse).getReference();
+					scope.state.verseIndex = route.verse.toString().split(/(-|,)/i)[0] - 1; // this string is needed for navigation agents
 				}
 				if (!scope.state.book.chapters.length) {
-					loadBookData(refreshParams.book).then(function (response) {
+					loadBookData(route.book).then(function (response) {
 						scope.state.book.chapters = response.data;
 						scope.reference = instanceState.getReference();
 						scope.state.book.open = true;
@@ -292,7 +360,6 @@ angular.module('AS')
 						visitPlace(scope.reference);
 					}, 0);
 				}
-				scope.reference = instanceState.getReference();
 			}
 			function toggleBook (target) {
 				var book, stateCopy;
@@ -303,17 +370,13 @@ angular.module('AS')
 					book = getBookModelById(target)
 				}
 				if (!book.open) {
-					refreshState({book: book.id, chapter: 0, verse: 0});
+					navigate({book: book.id, chapter: 0, verse: 0});
 				} else {
 					book.open = false;
 					/*stateCopy = instanceState.copy();
 					visitPlace(stateCopy.lang + ":" + stateCopy.book);*/
 				}
 			}
-			scope.closeBook = function (book) {
-				book.open = false;
-			}
-
 			function loadBookData (target) {
 				var book, promise = {then: function (f) {f({data: book.chapters})}}, 
 					deferred = $q.defer();
@@ -355,7 +418,6 @@ angular.module('AS')
 				}
 				goToDOMelement(targetSelector);
 			}
-
 			function getBookModelById (id) {
 				if (scope.books.find) {
 					return scope.books.find(function (b) {  
@@ -382,19 +444,31 @@ angular.module("AS").service("instanceStateProvider", function () {
 			state = {};
 			
 		self.setLang = function (lang) {
-			state.lang = lang;
+			if (lang) {
+				state.lang = lang;
+			}
+			
 			return self;
 		}
 		self.setBook = function (bookId) {
-			state.book = bookId;
+			if (bookId) {
+				state.book = bookId;
+			}
+			
 			return self;
 		}
 		self.setChapter = function (chapter) {
-			state.chapter = chapter;
+			if (chapter || chapter === 0) {
+				state.chapter = chapter;
+			}
+			
 			return self;
 		}
-		self.setVerse= function (verse) {
-			state.verse = verse;
+		self.setVerse = function (verse) {
+			if (verse || verse === 0) {
+				state.verse = verse;
+			}
+			
 			return self;
 		}
 		self.copy = function () {
@@ -402,24 +476,39 @@ angular.module("AS").service("instanceStateProvider", function () {
 		}
 		self.parseReference = function (reference) {
 			var parts = reference.split(":");
-			state = {
-				lang: parts[0],
-				book: parts[1],
-				chapter: parts[2],
-				verse: parts[3],
+
+			self.setLang(parts[0]);
+			self.setBook(parts[1]);
+			self.setChapter(parts[2]);
+			self.setVerse(parts[3]);
+			if (!parts[2]) {
+				delete state.chapter;
+				delete state.verse;
 			}
+			if (!parts[3]) {
+				delete state.verse;
+			}
+
 			return self;
 		}
-		self.assembleReference = function () {
+		self.getReference = function () {
+			return assembleReference();
+		}
+		self.extendWith = function (form) {
+			self.setLang(form.lang);
+			self.setBook(form.book);
+			self.setChapter(form.chapter);
+			self.setVerse(form.verse);
+
+			return self;
+		}
+		function assembleReference () {
 			var book = state.book ? ":" + state.book : "",
 				chapter = state.chapter ? ":" + state.chapter : "",
 				verse = state.verse ? ":" + state.verse : "";
 				if (verse && !chapter) {chapter = ":1"}
 				if (chapter && !book) {book = ":matt"}
 			return state.lang + book + chapter + verse;
-		}
-		self.getReference = function () {
-			return self.assembleReference();
 		}
 	}
 	this.generateNewState = function () {

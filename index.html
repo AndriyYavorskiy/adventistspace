@@ -11,7 +11,9 @@
 		<link rel='stylesheet' href='components/BibleReader/asReader.css'>
 		<link href='http://fonts.googleapis.com/css?family=Philosopher:400,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 		<script src='scripts/angular.js'></script>
-		<script>angular.module('AS', []);</script>
+		<script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+		<script src='libs/ngclipboard.js'></script>
+		<script>angular.module('AS', ['ngclipboard']);</script>
 		<script src='scripts/asMainCtrl.js'></script>
 		<script src='components/asToolbar.js'></script>
 		<script src='components/BibleReader/asReader.js'></script>
@@ -52,6 +54,10 @@
 					<div class="col">
 						<p> Исследуйте Писания, ибо вы думаете чрез них иметь жизнь вечную; а они свидетельствуют о Мне</p>
 						<p class='autor' as-reader-link="ru:john:5:39" auto-text></p>
+					</div>
+					<div class="col">
+						<p>Кто приносит в жертву хвалу, тот чтит Меня, и кто наблюдает за путем своим, тому явлю Я спасение Божие".</p>
+						<p class='autor' as-reader-link="ru:ps:49:24" auto-text></p>
 					</div>
 				</div>
 			</div>
@@ -100,6 +106,12 @@
 						<br>
 						<p>...Если же хочешь войти в жизнь вечную, соблюди заповеди</p>
 						<p class='autor' as-reader-link="ru:matt:19:17" auto-text></p>
+					</div>
+					<div class='col'>
+						<p>
+							...соблюсти заповедь чисто и неукоризненно, даже до явления Господа нашего Иисуса Христа
+						</p>
+						<p class='autor' as-reader-link="ru:tim1:6:14" auto-text></p>
 					</div>
 				</div>
 			</div>
@@ -186,6 +198,10 @@
 					<div class='col'>
 						<p>И сказал Бог: сотворим человека по образу Нашему и по подобию Нашему, и да владычествуют они над рыбами морскими, и над птицами небесными, и над зверями, и над скотом, и над всею землею, и над всеми гадами, пресмыкающимися по земле</p>
 						<p class='autor' as-reader-link="ru:gen:1:26" auto-text></p>
+					<br>
+						<p>Ибо в вас должны быть те же чувствования, какие и во Христе Иисусе:</p>
+						<p>Он, будучи образом Божиим, не почитал хищением быть равным Богу;</p>
+						<p class='autor' as-reader-link="ru:phil:2:5,6" auto-text></p>
 					</div>
 				</div>
 			</div>

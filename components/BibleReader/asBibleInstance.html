@@ -17,12 +17,12 @@
 				<input type="radio" ng-model="booksToSearchIn.option" 
 						name="search-place" value="selected" id="in-checked-books">
 				<label for="in-checked-books">
-					обрані книги
+					в обраних книгах
 				</label>
 				<input type="radio" ng-model="booksToSearchIn.option"
 						name="search-place" value="all" id="in-all-books">
 				<label for="in-all-books">
-					усі книги
+					в усіх
 				</label>
 				<span class="results-link" ng-if="searchResults" ng-click="displayResults(!showResults)">
 					результати <span class="amount" ng-bind="'('+searchResults.length+')'"></span>
@@ -30,8 +30,12 @@
 			</div>
 		</div>
 		<div ng-if="currentTabIs('share') === true" class="share-box">
+			<input type="text" id="link-to-share" class="inp txt m sensation share" readonly value="{{'http://adventamo.com/#' + reference}}">
+			<button class="btn m primary copy" ngclipboard data-clipboard-target="#link-to-share">
+				Ctrl + C</button>
+			<br>
+			<br>
 			<div class="summery" ng-bind="reference | BibleReference"></div>
-			<div class="share-link">{{'http://adventamo.com/#' + reference}}</div>
 		</div>
 		<div ng-if="currentTabIs('navigation')" class="navigation-box clearfix">
 			<div class="clearfix">
@@ -73,7 +77,7 @@
 		</div>
 	</div>
 	<div class="reader bible slim-scroll">
-		<div class="search-results slim-scroll" ng-if="searchResults.length && showResults && currentTabIs('search')">
+		<div class="cover search-results slim-scroll" ng-if="searchResults.length && showResults && currentTabIs('search')">
 			<div class="result-item"
 				 ng-repeat="result in searchResults | orderBy: '-rate' | limitTo: searchResultsLimit" 
 				 ng-mousedown="actionWithResultItem($event, result.reference)">
@@ -83,27 +87,32 @@
 			<div class="more-results" ng-show="searchResultsLimit < searchResults.length"
 				 ng-click="searchResultsLimit = searchResultsLimit + 24">Показати більше</div>
 		</div>
+		<div class="cover history slim-scroll" ng-if="currentTabIs('share')">
+			<div ng-repeat="place in history" class="history-item" 
+				 ng-class="{current: place.isCurrent}" ng-click="glideInHistory(place)">
+				{{place.ref | BibleReference}}
+			</div>
+		</div>
 		<div class="book" id="{{book.id}}"
 			 ng-repeat="book in books track by $index"
-			 ng-class="{open: book.open}"
-			 title="{{book.name}}">
+			 ng-class="{open: book.open, 'with-data': book.chapters.length}">
 			<div class="book-name" ng-click="toggleBook(book)">
 				<span as-stop-prop class="book-checker go-left">
 					<input type="checkbox" ng-model="book.checked">
 				</span>
-				<span class="alias">{{book.alias}}</span>
+				<span class="alias" title="{{book.name}}">{{book.alias}}</span>
 				<span class="name">{{book.name}}</span>
 			</div>
 			<div class="chapters">
 				<div class="chapter" ng-repeat="chapter in book.chapters track by $index">
-					<div class="chapter-number">
+					<div class="chapter-number" title="{{book.name + ' розділ ' + ($index + 1)}}">
 						<span class="esc" ng-click="toggleBook(book)">-</span>
 						{{book.alias + " " + ($index + 1)}}
 					</div>
 					<div class="verses">
-						<p class="verse" ng-repeat="verse in chapter track by $index" 
+						<p class="verse" ng-repeat="verse in chapter track by $index" ng-dblclick="navigate(lang + ':' + book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))"
 						   ng-mousedown="handeleVerseManipulation($event, book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))">
-							{{$index + 1 + " " + verse}}
+							<span class="verse-num">{{$index + 1}}</span>{{" " + verse}}
 						</p>
 					</div>
 				</div>
@@ -111,6 +120,14 @@
 		</div>
 	</div>
 	<div class="reader-footer">
+		<div class="history-gliders go-left">
+			<button class="btn xs solid history-glider back"
+					ng-disabled="history[history.length - 1].isCurrent"
+					ng-click="glideInHistory(-1)"><</button>
+			<button class="btn xs solid history-glider ahead"
+					ng-disabled="history[0].isCurrent"
+					ng-click="glideInHistory(1)">></button>
+		</div>
 		<div class="go-right" ng-click="navigate(reference)">{{reference}}</div>
 	</div>
 
