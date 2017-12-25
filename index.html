@@ -11,9 +11,8 @@
 		<link rel='stylesheet' href='components/BibleReader/asReader.css'>
 		<link href='http://fonts.googleapis.com/css?family=Philosopher:400,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 		<script src='scripts/angular.js'></script>
-		<script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
-		<script src='libs/ngclipboard.js'></script>
 		<script>angular.module('AS', ['ngclipboard']);</script>
+		<script src='scripts/rightClickDirective.js'></script>
 		<script src='scripts/asMainCtrl.js'></script>
 		<script src='components/asToolbar.js'></script>
 		<script src='components/BibleReader/asReader.js'></script>
@@ -22,6 +21,8 @@
 		<script src='components/asReaderLink/asReaderLink.js'></script>
 		<script src='scripts/asCommon.js'></script>
 		<link rel="shortcut icon" href="images/Fish3.png" type="image/x-icon">
+		<script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+		<script src='libs/ngclipboard.js'></script>
 	</head>
 	<body ng-controller="as-main as mainCtrl">
 		<main>

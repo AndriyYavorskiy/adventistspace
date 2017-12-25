@@ -1,5 +1,16 @@
 
 	<div class="book-toolbar">
+		<div class="reader-meta">
+			<div class="history-gliders go-left">
+				<button class="btn xs solid history-glider back"
+						ng-disabled="history[history.length - 1].isCurrent"
+						ng-click="glideInHistory(-1)"><</button>
+				<button class="btn xs solid history-glider ahead"
+						ng-disabled="history[0].isCurrent"
+						ng-click="glideInHistory(1)">></button>
+			</div>
+			<div class="go-right relevant-ref" ng-click="navigate(reference)">{{reference}}</div>
+		</div>
 		<button class="btn m blank remove-instance" ng-click="removeInstance()">✖</button>
 		<div class="toolbar-menu clearfix">
 			<div class="tab" ng-class="{active: currentTabIs('navigation')}" 
@@ -33,8 +44,6 @@
 			<input type="text" id="link-to-share" class="inp txt m sensation share" readonly value="{{'http://adventamo.com/#' + reference}}">
 			<button class="btn m primary copy" ngclipboard data-clipboard-target="#link-to-share">
 				Ctrl + C</button>
-			<br>
-			<br>
 			<div class="summery" ng-bind="reference | BibleReference"></div>
 		</div>
 		<div ng-if="currentTabIs('navigation')" class="navigation-box clearfix">
@@ -110,7 +119,10 @@
 						{{book.alias + " " + ($index + 1)}}
 					</div>
 					<div class="verses">
-						<p class="verse" ng-repeat="verse in chapter track by $index" ng-dblclick="navigate(lang + ':' + book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))"
+						<p class="verse" ng-repeat="verse in chapter track by $index"
+						   ng-right-click="setCandidate(lang + ':' + book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))"
+						   menu-items="verseActions" menu-class="verse-actions"
+						   ng-dblclick="navigate(lang + ':' + book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))"
 						   ng-mousedown="handeleVerseManipulation($event, book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))">
 							<span class="verse-num">{{$index + 1}}</span>{{" " + verse}}
 						</p>
@@ -120,14 +132,6 @@
 		</div>
 	</div>
 	<div class="reader-footer">
-		<div class="history-gliders go-left">
-			<button class="btn xs solid history-glider back"
-					ng-disabled="history[history.length - 1].isCurrent"
-					ng-click="glideInHistory(-1)"><</button>
-			<button class="btn xs solid history-glider ahead"
-					ng-disabled="history[0].isCurrent"
-					ng-click="glideInHistory(1)">></button>
-		</div>
-		<div class="go-right" ng-click="navigate(reference)">{{reference}}</div>
+
 	</div>
 

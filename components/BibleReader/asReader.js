@@ -108,6 +108,56 @@ angular.module('AS')
 			scope.booksToSearchIn = {option: "selected"};
 			scope.searchParam = "";
 			scope.searchResultsLimit = 24;
+			scope.verseActions = [
+				{
+					text: "Відкрити у новиму вікні",
+					callback: openNewWindow
+				},
+				{
+					text: "Поділитися",
+					callback: shareReference
+				}
+			];
+			function shareReference () {
+				navigate(scope.candidate);
+				scope.switchToTab('share');
+			} 
+			/*
+			  ,
+			  {
+				text:"Зберегти", 
+				callback: saveRef,
+				disabled: false
+			  },
+			  {
+				text:"Копіювати посилання", 
+				callback: saveRef,
+				disabled: false
+			  },
+			  {
+				text:"Копіювати текст", 
+				callback: saveRef,
+				disabled: false
+			  },
+			  {
+				text:"Закрити книгу", 
+				callback: saveRef,
+				disabled: false
+			  },
+			  {
+				text:"Копіювати текст", 
+				callback: saveRef,
+				disabled: false
+			  }
+			*/
+			function openNewWindow () {
+				scope.$emit("appeal:add-instance", scope.candidate);
+			}
+			function saveRef () {}
+			scope.setCandidate = setCandidate;
+			function setCandidate (ref) {
+				scope.candidate = ref;
+			}
 			init("ru");
 			scope.switchToTab("navigation");
 			function init (lang, reference) {
@@ -192,8 +242,6 @@ angular.module('AS')
 					destination;
 
 				if ((scope.history[0].isCurrent && (shiftDirect === 1)) || (scope.history[scope.history.length - 1].isCurrent && !shiftDirect)) {
-					console.log(!!(scope.history[0].isCurrent && shiftDirect));
-					console.log(scope.history[scope.history.length - 1].isCurrent && !shiftDirect);
 					return;
 				}
 				for (var i = 0, l = scope.history.length; i < l; i++) {
