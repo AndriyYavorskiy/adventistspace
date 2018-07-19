@@ -30,7 +30,7 @@
 	content: '';
     position: absolute;
     border: 5px solid transparent;
-    bottom: -10px;
+    bottom: -11px;
     left: calc(50% - 2.5px);
     border-top-color: #fff;
 }
@@ -61,7 +61,7 @@
 .book-wrapper .toolbar-menu {
 	font-size: 14px;
 	position: absolute;
-	top: -22px;
+	top: -21.5px;
 }
 .toolbar-menu .tab {
 	background: #6383b5;
