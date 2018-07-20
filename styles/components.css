@@ -28,13 +28,12 @@
 }
 
 .slide .message {
-	//padding: 48px 24px;
 	margin: auto;
 }
 .slide h1 {
 	color: #fff;
 	font-weight: 700;
-	font-size: 36px;
+	font-size: 2.2em;
 	text-align: center;
 	margin-bottom: 12px;
 }
@@ -44,10 +43,10 @@
 }
 .slide .message p{
 	color: #A0DE52;
-    padding: 4px 12px;
+  padding: 4px 12px;
 }
 .slide .message section {
-    background: rgba(0,0,0, .4);
+  background: rgba(0,0,0, .4);
 	border-radius: 3px;
 	margin: 0 auto;
 	width: 60%;
@@ -57,20 +56,16 @@
 	color: #fff;
 	cursor: pointer;
 	text-align: right;
-	font-size: 14px;
+	font-size: 0.9em;
 	margin: auto;
-    width: 60%;
+  width: 60%;
 }
 
-.fact{
-	//margin: auto;
-}
 .facts{
 	width: 30%;
 }
 .facts a.active:after{
 	content: '',
-	
 }
 .facts a.active{
 	background: #93e42d;
@@ -109,7 +104,6 @@ moby-scroll{
 .expander {
 	background: linear-gradient(#fff, #eee);
 	border-bottom: 1px solid #BCAA70;
-	//border-top: 1px solid #BCAA70;
 	margin: 8px 0 12px 0;
 	overflow: hidden;
 }
@@ -117,7 +111,6 @@ moby-scroll{
 .expander.collapsed{
 	height: 24px;
 	padding: 24px 0 0 0 !important;
-	//width: auto;
 }
 .colp:hover{
 	background: rgba(0,0,0, .1);

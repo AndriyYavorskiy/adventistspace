@@ -6,7 +6,6 @@
 	padding: 0 8px;
 }
 .inp.m {
-	font-size: 16px;
 	height: 36px;
 	padding: 0 12px;
 }
@@ -20,17 +19,16 @@
 	cursor: pointer;
 }
 .btn.m {
-	font-size: 16px;
 	height: 36px;
 	padding: 0 12px;
 }
 .btn.s {
-	font-size: 14px;
+	font-size: 0.9em;
 	height: 24px;
 	padding: 0 8px;
 }
 .btn.xs {
-	font-size: 14px;
+	font-size: 0.9em;
     height: 20px;
     padding: 0 6px;
 }

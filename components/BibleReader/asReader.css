@@ -59,7 +59,7 @@
 	margin-left: 12px;
 }
 .book-wrapper .toolbar-menu {
-	font-size: 14px;
+	font-size: 0.9em;
 	position: absolute;
 	top: -21.5px;
 }
@@ -69,7 +69,6 @@
     border-radius: 4px 4px 0 0;
     cursor: pointer;
 	float: left;
-    font-size: 15px;
     line-height: 18px;
     margin-left: 4px;
     padding: 2px 8px;
@@ -94,7 +93,7 @@
 }
 .search-settings .results-link,
 .search-settings label {
-	font-size: 14px;
+  font-size: 0.9em;
 }
 .search-settings input[type='radio'] {
 	display: none;
@@ -116,11 +115,11 @@
 .result-item {
 	background: #fff;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 0.9em;
 	margin-bottom: 16px;
 }
 .result-item .amount {
-	font-size: 14px;
+	font-size: 0.9em;
 }
 .result-item .scripture {
 	color: #6383b5;
@@ -140,7 +139,7 @@
 .more-results {
 	color: #ccc;
 	cursor: default;
-    font-size: 14px;
+    font-size: 0.9em;
 	text-align: center;
 }
 .more-results:hover {
@@ -151,13 +150,12 @@
 	padding: 8px;
 }
 .book-wrapper .share-box * {
-	font-size: 14px;
+  font-size: 0.9em;
 }
 .book-toolbar {
 	background: #fff;
 	border-radius: 5px 5px 0 0;
     box-shadow: 0 3px 16px -3px rgba(0, 0, 0, .04);
-	font-size: 16px;
 	height: 80px;
 	position: absolute;
 	top: 0;
@@ -280,7 +278,7 @@
 .navigation-agents .agent .pointer:after {
     border: 4px solid transparent;
     border-top: 5px solid #6383b5;
-    bottom: -9px;
+    bottom: -10px;
     content: "";
     left: 5.5px;
     position: absolute;
@@ -297,7 +295,7 @@
     border-radius: 2px;
     color: #6383b5;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.9em;
     padding: 2px 6px;
 }
 .history-item.current {
@@ -331,7 +329,7 @@
 	.bible.reader .book-name {
 		color: #fff;
 		cursor: pointer;
-		font-size: 14px;
+		font-size: 0.9em;
 		padding: 8px 0;
 	}
 	.book .book-name .name {
@@ -354,7 +352,6 @@
 	}
 	.bible.reader .chapter-number {
 		color: #6383b5;
-		font-size: 17px;
 		margin: 8px auto;
 		text-align: center;
 		width: 50%;
@@ -367,7 +364,6 @@
 	}
 	.bible.reader .verse {
 		cursor: default;
-		font-size: 16px;
 		margin-bottom: 1px;
 		padding: 1.5px 12px;
 		text-align: justify;
