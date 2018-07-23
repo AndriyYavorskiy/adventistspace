@@ -13,8 +13,13 @@
 	font-family: 'advent';
 	src: url('../fonts/advent-pro.light.ttf');
 }
+html {
+	overflow-x: hidden;
+}
 body {
 	background: #fff;
+	overflow: hidden;
+	width: 100%;
 }
 .mt-400px {
 	height: 400px;
