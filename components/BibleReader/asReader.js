@@ -81,6 +81,7 @@ angular.module('AS')
 			scope.removeInstance = removeInstance;
 			scope.switchToBook = switchToBook;
 			scope.glideInHistory = glideInHistory;
+			scope.openFullScreen = openFullScreen;
 			scope.switchToTab = function switchToTab (tab) { tabManager.setTab(tab); };
 			scope.navigate = function (route) { navigate(route); };
 			scope.runSearch = function (event, searchParam) { runSearch(event, searchParam); }
@@ -192,6 +193,12 @@ angular.module('AS')
 					}
 					console.table(bl);*/
 				});
+			}
+
+			function openFullScreen (ref) {
+				var id = instanceState.parseReference(ref).copy().book;
+				$scope.fullScreenModel = getBookModelById(id);
+				console.log(getBookModelById(id));
 			}
 			/*function PREPAREMATRIX() {
 				var idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];

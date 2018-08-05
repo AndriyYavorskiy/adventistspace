@@ -1,9 +1,9 @@
 
 	angular.module('AS')
 	.service("asModal", function($document, $compile, $rootScope) {
-		this.open = function (component) {
-			var template = angular.element("<div as-modal " + component + "></div>");
-				angular.element($document[0].body).append(template);
+		this.open = function (component, parent) {
+			var template = component.indexOf('<') > -1 ? component : angular.element("<div as-modal " + component + "></div>");
+				angular.element(parent || $document[0].body).append(template);
 				$compile(template)($rootScope.$new(true));
 		}
 	});
@@ -18,19 +18,4 @@
 		}
 		return ob;
 	});
-	angular.module('AS').value("asModalState", {
-		$trust: function () {
-			var state = {};
-			this.get = function () {}
-			return this;
-		},
-		get: function (name) {
-			return this[name];
-		},
-		set: function (name, value) {
-			this[name] = value;
-		},
-		clear: function (){
-			
-		}
-	});
+	
