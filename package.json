@@ -1,12 +1,21 @@
 {
-  "name": "''",
+  "name": "adventistspace",
   "version": "1.0.0",
   "description": "''",
   "main": "pastor.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	 "start": "http-server -o"
+    "start": "http-server -o"
   },
   "author": "''\u001b[DAnrrii",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "\u001b[2~\u001b[2~\u001b[2~\u001b[2~https://github.com/AndriyYavorskiy/adventistspace"
+  },
+  "keywords": [
+    "bible"
+  ]
 }
