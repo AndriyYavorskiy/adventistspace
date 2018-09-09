@@ -9,6 +9,10 @@
 						ng-disabled="history[0].isCurrent"
 						ng-click="glideInHistory(1)">></button>
 			</div>
+			<div class="fullscreen-trigger go-right" title="Читати в повноекранному режимі"
+				ng-click="openFullScreen(reference)" onclick="amoGoFullScreen();">
+				<svg fill="#fff" width="20" height="20" viewBox="0 0 18 18"><path d="M4.5 11H3v4h4v-1.5H4.5V11zM3 7h1.5V4.5H7V3H3v4zm10.5 6.5H11V15h4v-4h-1.5v2.5zM11 3v1.5h2.5V7H15V3h-4z"/></svg>
+			</div>
 			<div class="go-right relevant-ref" ng-click="navigate(reference)">{{reference}}</div>
 		</div>
 		<button class="btn m blank remove-instance" ng-click="removeInstance()">✖</button>
@@ -132,7 +136,5 @@
 		</div>
 	</div>
 	<div class="reader-footer">
-		<div ng-click="openFullScreen(reference)">На весь екран</div>
+		
 	</div>
-	<full-screen book="" ng-if="fullScreenModel"></full-screen>
-

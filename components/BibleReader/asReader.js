@@ -63,8 +63,7 @@ angular.module('AS')
 	.directive('asBibleInstance', function ($window,
 											$q, $http,
 											asBibleInstanceManager,
-											asReaderModel,
-											$rootScope,
+											asModal,
 											instanceStateProvider,
 											BIBLEMATRIX){
 		var ob = {};
@@ -164,7 +163,7 @@ angular.module('AS')
 			function init (lang, reference) {
 				instanceState.setLang(lang);
 				scope.lang = lang;
-				$http.get('/components/BibleReader/asReader' + lang + '.json').then(function (response) {
+				$http.get('/components/BibleReader/asReader_' + lang + '.json').then(function (response) {
 					var initialModel = response.data.map(function (book) {
 						book.open = false;
 						book.checked = false;
@@ -196,9 +195,10 @@ angular.module('AS')
 			}
 
 			function openFullScreen (ref) {
-				var id = instanceState.parseReference(ref).copy().book;
-				$scope.fullScreenModel = getBookModelById(id);
-				console.log(getBookModelById(id));
+				var id = instanceState.parseReference(ref).copy().book,
+				  data = { book: getBookModelById(id), reference: scope.reference };
+
+				asModal.open('<full-screen></full-screen>', element, data);
 			}
 			/*function PREPAREMATRIX() {
 				var idsRu = ["Gen","Ex","Lev","Num","Deut","Josh","Judg","Ruth","Sam1","Sam2","Kings1","Kings2","Chron1","Chron2","Ezra","Neh","Est","Job","Ps","Prov","Eccles","Song","Isa","Jer","Lam","Ezek","Dan","Hos","Joel","Amos","Obad","Jonah","Mic","Nah","Hab","Zeph","Hag","Zech","Mal","Matt","Mark","Luke","John","Acts","James","Pet1","Pet2","John1","John2","John3","Jude","Rom","Cor1","Cor2","Gal","Eph","Phil","Col","Thess1","Thess2","Tim1","Tim2","Titus","Philem","Heb","Rev"];

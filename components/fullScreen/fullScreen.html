@@ -1,19 +1,107 @@
-<div class="full-screen-container">
-  <pre>
-    {{fullScreen.model}}
-  </pre>
+<div class="full-screen-container" id="full-screen-container">
+  <div class="full-screen-header clearfix">
+    <div class="leave-full-screen" onclick="amoLeaveFullScreen();" ng-click="fullScreen.leaveFullScreen(); closeModal();">
+      <svg fill="#fff" width="32px" height="32px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;">
+        <path d="M256,0C114.609,0,0,114.609,0,256c0,141.391,114.609,256,256,256c141.391,0,256-114.609,256-256
+          C512,114.609,397.391,0,256,0z M256,472c-119.297,0-216-96.703-216-216S136.703,40,256,40s216,96.703,216,216S375.297,472,256,472z
+          "/>
+        <path d="M305.312,148.688c-6.25-6.25-16.375-6.25-22.625,0l-96,96c-6.25,6.25-6.25,16.375,0,22.625l96,96
+          C285.812,366.438,289.906,368,294,368s8.188-1.562,11.312-4.688c6.25-6.25,6.25-16.375,0-22.625L220.625,256l84.688-84.688
+          C311.562,165.062,311.562,154.938,305.312,148.688z"/>
+      </svg>
+    </div>
+    <div class="full-screen-title">
+      {{ fullScreen.model.name }} 
+      <span class="entry-point inherit color" ng-click="fullScreen.scrollTo(fullScreen.reference)">
+        ({{ fullScreen.reference }})
+      </span>
+    </div>
+  </div>
+  <div class="full-screen-read-area slim-scroll">
+    <div class="container">
+      <div class="row">
+        <div class="full-screen-chapters">
+          <div class="full-screen-chapter"
+            id="{{ ::fullScreen.createID(fullScreen.model, $index) }}"
+            ng-repeat="chapter in fullScreen.model.chapters">
+            <div class="full-screen-chapter-title" ng-bind="::'Розділ ' + ($index + 1)"></div>
+            <div class="full-screen-verses">
+              <div class="full-screen-varse" ng-repeat="verse in chapter track by $index" ng-dblclick="fullScreen.navigate($event)"
+                id="{{ ::fullScreen.createID(fullScreen.model, $parent.$index, $index) }}">
+                <span ng-bind="::($index + 1) + ' '"></span>
+                <span ng-bind="::verse"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <style>
   .full-screen-container {
-    display: none;
+    background: #fff;
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
     overflow: auto;
-    padding: 0 20%;
     width: 100%;
     z-index: 999999;
+  }
+  .full-screen-header {
+    background: #6383b5;
+    left: 0;
+    line-height: 32px;
+    padding: 16px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+  .entry-point {
+    cursor: pointer;
+    opacity: 0.4;
+  }
+  .entry-point:hover {
+    opacity: 1;
+  }
+  .full-screen-read-area {
+    height: calc(100% - 64px);
+    margin-top: 64px;
+    overflow-y: auto;
+  }
+  .full-screen-title {
+    color: #fff;
+    float: left;
+  }
+  .full-screen-chapters {
+    margin: 16px auto;
+    width: 255px;
+  }
+  .full-screen-chapter {
+    margin-bottom: 16px;
+  }
+  .full-screen-chapter-title {
+    color: #6383b5;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .full-screen-varse {
+    margin-bottom: 8px;
+    text-align: justify;
+  }
+  .leave-full-screen {
+    color: #6383b5;
+    cursor: pointer;
+    float: left;
+    font-size: 20px;
+    height: 32px;
+    margin-right: 16px;
+  }
+  .spotlight {
+    background: #e8e5d4;
+    box-shadow: 0 0 0 6px #e8e5d4;
   }
 </style>

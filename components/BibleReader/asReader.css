@@ -35,6 +35,7 @@
     border-top-color: #fff;
 }
 .relevant-ref {
+	color: #fff;
 	margin-top: 2px;
 }
 .reader-toolbar {
@@ -423,4 +424,10 @@
 .verse-actions li:hover {
 	background: #6383b5;
 	color: #fff;
+}
+.fullscreen-trigger {
+  color: #6383b5;
+  cursor: pointer;
+  height: 20px;
+  margin-left: 8px;
 }

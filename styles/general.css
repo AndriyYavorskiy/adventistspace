@@ -60,6 +60,10 @@ body {
 	text-align: center;
 }
 
+.inherit.color {
+	color: inherit;
+}
+
 .slim-scroll::-webkit-scrollbar-track {
 	background: #F5F5F5;
 	border: 1px solid #dadada;
