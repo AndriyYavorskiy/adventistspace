@@ -1,4 +1,4 @@
-angular.module('AS').component('fullScreen', {
+angular.module('AMO').component('fullScreen', {
   styles: ['./components/fullScreen/fullScreen.css'],
   templateUrl: './components/fullScreen/fullScreen.html',
   bindings: {
@@ -62,7 +62,7 @@ angular.module('AS').component('fullScreen', {
   controllerAs: 'fullScreen'
 });
 
-angular.module('AS').factory('fullScreenAPI', ['browser', function (browser) {
+angular.module('AMO').factory('fullScreenAPI', ['browser', function (browser) {
   var exitFullscreen = 'exitFullscreen',
   fullscreenchangeEvent = 'fullscreenchange';
   fullscreenElement = 'fullscreenElement';
@@ -90,7 +90,7 @@ angular.module('AS').factory('fullScreenAPI', ['browser', function (browser) {
   };
 }]);
 
-angular.module('AS').factory('browser', function () {
+angular.module('AMO').factory('browser', function () {
   var name,
   isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0,
   isIE = /*@cc_on!@*/false || !!document.documentMode,

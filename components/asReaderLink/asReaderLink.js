@@ -1,4 +1,4 @@
-angular.module('AS').directive('asReaderLink', function (asModal, $filter){
+angular.module('AMO').directive('asReaderLink', function (asModal, $filter){
 	var object = {};
 	object.restrict = "A";
 	object.link = function (s, e, a) {

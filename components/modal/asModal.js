@@ -1,5 +1,5 @@
 
-	angular.module('AS')
+	angular.module('AMO')
 	.service("asModal", function($document, $compile, $rootScope) {
 		this.open = function (component, parent, data) {
 			var template = angular.element(component.indexOf('<') > -1 ? component : "<div as-modal " + component + "></div>")[0],
@@ -9,7 +9,7 @@
 			$compile(template)(scope);
 		}
 	});
-	angular.module("AS").directive("asModal", function () {
+	angular.module('AMO').directive("asModal", function () {
 		var ob = {};
 		ob.restrict = "A";
 		ob.link = function (s, e, a) {

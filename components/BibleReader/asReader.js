@@ -1,4 +1,4 @@
-angular.module('AS').directive("asReader", function($compile, $window, asBibleInstanceManager, $rootScope){
+angular.module('AMO').directive("asReader", function($compile, $window, asBibleInstanceManager, $rootScope){
 	var ob = {};
 	ob.restrict = "EA";
 	ob.template = `
@@ -59,7 +59,7 @@ angular.module('AS').directive("asReader", function($compile, $window, asBibleIn
 	return ob;
 });
 
-angular.module('AS')
+angular.module('AMO')
 	.directive('asBibleInstance', function ($window,
 											$q, $http,
 											asBibleInstanceManager,
@@ -519,7 +519,7 @@ angular.module('AS')
 		return ob;
 	});
 
-angular.module("AS").service("instanceStateProvider", function () {
+angular.module('AMO').service("instanceStateProvider", function () {
 	var StateStorage = function () {
 		var self = this,
 			state = {};
@@ -597,7 +597,7 @@ angular.module("AS").service("instanceStateProvider", function () {
 	}
 });
 
-angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMATRIX, asReaderModel, $sce) {
+angular.module('AMO').factory("asBibleInstanceManager", function ($http, BIBLEMATRIX, asReaderModel, $sce) {
 	var manager = {};
 	manager.addBookmark = function (bookmark) {}
 	manager.removeBookmark = function (bookmark) {}
@@ -806,7 +806,7 @@ angular.module("AS").factory("asBibleInstanceManager", function ($http, BIBLEMAT
 		}
 	}
 });
-angular.module("AS").constant("asReaderModel", function () {
+angular.module('AMO').constant("asReaderModel", function () {
 	return {
 		ru: [{"name":"Бытие","alias":"Быт","id":"gen","open":false,"chapters":[]},
 			{"name":"Исход","alias":"Исх","id":"ex","open":false,"chapters":[]},
@@ -877,7 +877,7 @@ angular.module("AS").constant("asReaderModel", function () {
 		]
 	}
 });
-angular.module("AS").filter("BibleReference", function (asReaderModel, asVocab) {
+angular.module('AMO').filter("BibleReference", function (asReaderModel, asVocab) {
 	return function (reference){
 		var artefacts = reference.split(":"),
 			lang = artefacts[0],
@@ -890,7 +890,7 @@ angular.module("AS").filter("BibleReference", function (asReaderModel, asVocab) 
 		return bookName + chapter + verse;
 	};
 });
-angular.module("AS").constant("asVocab", function (lang){
+angular.module('AMO').constant("asVocab", function (lang){
 	return {
 		ru: {
 			chapter: "глава",
@@ -909,7 +909,7 @@ angular.module("AS").constant("asVocab", function (lang){
 	}[lang]
 });
 
-angular.module("AS").constant("BIBLEMATRIX", function () {
+angular.module('AMO').constant("BIBLEMATRIX", function () {
 	return {"gen":[31,25,24,26,32,22,24,21,29,32,32,20,17,23,20,16,27,33,37,18,34,24,20,67,34,35,45,22,35,43,55,32,20,31,29,43,36,30,23,23,57,38,34,34,28,33,31,22,33,26],
 			"ex":[22,25,22,31,23,30,24,32,35,29,10,51,22,31,27,36,16,27,25,26,36,31,33,18,40,37,21,43,46,38,18,34,23,35,35,38,29,31,43,38],
 			"lev":[17,16,17,35,19,30,38,36,24,20,47,8,59,56,32,34,16,30,37,27,24,33,43,23,55,46,34],

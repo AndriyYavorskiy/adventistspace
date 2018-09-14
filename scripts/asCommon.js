@@ -1,4 +1,4 @@
-angular.module('AS')
+angular.module('AMO')
 .directive('asStopProp', function (){
 	return {
 		link: function (s, e, a) {

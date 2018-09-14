@@ -1,4 +1,4 @@
-angular.module('AS')
+angular.module('AMO')
 	.directive('close', function ($window){
 		var ob = {};
 		
@@ -27,7 +27,7 @@ angular.module('AS')
 		}
 		return ob;
 	});
-angular.module('AS').directive("asToolbar", function ($templateRequest, $compile) {
+angular.module('AMO').directive("asToolbar", function ($templateRequest, $compile) {
 		var object = {};
 		object.restrict = 'EA';
 		object.scope = '@';

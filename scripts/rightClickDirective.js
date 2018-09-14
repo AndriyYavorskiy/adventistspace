@@ -1,4 +1,4 @@
-angular.module("AS").directive('ngRightClick', ["$compile", "$parse", "$timeout", function ($compile, $parse, $timeout) {
+angular.module('AMO').directive('ngRightClick', ["$compile", "$parse", "$timeout", function ($compile, $parse, $timeout) {
 	return {
 
 		restrict: 'A',

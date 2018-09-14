@@ -1,4 +1,4 @@
-angular.module('AS')
+angular.module('AMO')
 .controller('as-main', function ($scope, $window, asModal){
   asModal.open("as-reader");
 	this.showBibleReader = function (ref) {

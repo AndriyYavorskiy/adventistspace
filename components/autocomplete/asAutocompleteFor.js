@@ -1,4 +1,4 @@
-angular.module('AS')
+angular.module('AMO')
 	.directive('asAutocompleteFor', function (asBibleInstanceManager){
 		var object = {};
 		object.scope = {
