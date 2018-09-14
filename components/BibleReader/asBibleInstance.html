@@ -51,14 +51,23 @@
 			<div class="summery" ng-bind="reference | BibleReference"></div>
 		</div>
 		<div ng-if="currentTabIs('navigation')" class="navigation-box clearfix">
-			<div class="clearfix">
-				<div class="select-book">
-					<input type="text" ng-model="bibleBook" id="bible-book"
-					placeholder="книга Біблії" class="inp txt m sensation search">
-					<div class="autocomplete" as-autocomplete-for="#bible-book" 
-					bible-book="bibleBook" switch-to-book="switchToBook"></div>
+			<div class="select-book clearfix">
+				<button class="btn m sensation collapse-books" ng-click="collapseBooks(reference)">
+					<svg width="24" height="24" viewBox="-256 -384 2048 2048">
+						<g transform="scale(1 -1) translate(0 -1280)"><path d="M1536 192v-128q0 -26 -19 -45t-45 -19h-1408q-26 0 -45 19t-19 45v128q0 26 19 45t45 19h1408q26 0 45 -19t19 -45zM1536 704v-128q0 -26 -19 -45t-45 -19h-1408q-26 0 -45 19t-19 45v128q0 26 19 45t45 19h1408q26 0 45 -19t19 -45zM1536 1216v-128q0 -26 -19 -45 t-45 -19h-1408q-26 0 -45 19t-19 45v128q0 26 19 45t45 19h1408q26 0 45 -19t19 -45z"/></g>
+					</svg>
+				</button>
+				<input type="text" ng-model="bibleBook" id="bible-book"
+					placeholder="книга Біблії" class="inp txt m sensation find-book">
+				<div class="autocomplete" as-autocomplete-for="#bible-book" bible-book="bibleBook" switch-to-book="switchToBook"></div>
+				<div class="go-left" ng-if="state">
+					<button class="btn m sensation go-neighbor-book" ng-bind="getPrevBook(reference).alias"
+					  ng-click="navigate(getPrevBook(reference).lang + ':' + getPrevBook(reference).id)">									
+					</button>
+					<button class="btn m sensation go-neighbor-book" ng-bind="getNextBook().alias"
+					  ng-click="navigate(getNextBook(reference).lang + ':' + getNextBook(reference).id)">											
+					</button>
 				</div>
-				<button class="btn m primary go" ng-click="visitReference(reference)">Пройти</button>
 			</div>
 			<div class="navigation-agents">
 				<div class="agent" ng-repeat="chapter in state.book.chapters"

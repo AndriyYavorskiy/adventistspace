@@ -40,6 +40,22 @@
 	background: #6383b5;
 	color: #fff;
 }
+.btn.sensation {
+  background: none;
+  border: 1px solid #eee;
+}
+.btn.sensation svg {
+  vertical-align: middle;
+  fill: #b7d3ff;
+}
+.btn.sensation:hover {
+  background: #6383b5;
+  border-color: #6383b5;
+  color: #fff;
+}
+.btn.sensation:hover svg {
+  fill: #fff;
+}
 .btn.blank {
     background: none;
 	border: none;

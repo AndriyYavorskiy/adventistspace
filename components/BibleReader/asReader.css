@@ -18,7 +18,7 @@
 
 .reader-meta {
 	border-radius: 4px;
-    /* background: #fff; */
+    background: rgba(224, 220, 197, 0.75);
     border: 1px solid #fff;
     top: -80px;
     position: absolute;
@@ -35,8 +35,12 @@
     border-top-color: #fff;
 }
 .relevant-ref {
-	color: #fff;
-	margin-top: 2px;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 2px;
+}
+.relevant-ref:hover {
+  text-decoration: underline;
 }
 .reader-toolbar {
 	border-radius: 5px 5px 0 0;
@@ -183,16 +187,31 @@
 	margin-right: 0;
 	width: 208px;
 }
+.find-book {
+  float: left;
+  margin-right: 6px;
+  width: 137px;
+}
+.select-book {
+  margin-bottom: 6px;
+  overflow-x: hidden;
+}
+.select-book .btn:not(:last-child) {
+  margin-right: 6px;
+}
+.select-book .btn {
+  float: left;
+}
 .book-toolbar .inp.txt:focus {
 	border-color: #6383b5;
 	outline: none;
 }
-.book-toolbar .search:not(:focus) + .autocomplete {
+.book-toolbar #bible-book:not(:focus) + .autocomplete {
 	display: none;
 }
 .book-toolbar .select-book {
 	float: left;
-	min-width: 208px;
+	min-width: 150px;
 }
 .autocomplete {
 	background: #fff;
@@ -201,7 +220,7 @@
     left: 8px;
 	position: absolute;
     top: 44px;
-	width: 209px;
+	width: 269px;
 	z-index: 9;
 }
 .autocomplete .item:hover {
@@ -223,7 +242,15 @@
 	border-radius: 0 2px 2px 0;
     color: #fff;
 }
-.book-toolbar .btn.go,
+.book-toolbar .btn.collapse-books {
+  padding: 0;
+  width: 36px;
+}
+.btn.go-neighbor-book {
+  font-size: 14px;
+  padding: 0;
+  width: 46px;
+}
 .book-toolbar .btn.copy,
 .book-toolbar .btn.find {
 	width: 76px

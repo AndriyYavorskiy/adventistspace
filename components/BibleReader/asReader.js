@@ -75,6 +75,9 @@ angular.module('AS')
 			
 			scope.bibleBook = "";
 			scope.toggleBook = toggleBook;
+			scope.getPrevBook = getPrevBook;
+			scope.getNextBook = getNextBook;
+			scope.collapseBooks = collapseBooks;
 			scope.visitPlace = visitPlace;
 			scope.handeleVerseManipulation = handeleVerseManipulation;
 			scope.removeInstance = removeInstance;
@@ -415,6 +418,29 @@ angular.module('AS')
 						visitPlace(scope.reference);
 					}, 0);
 				}
+			}
+			function collapseBooks () {
+				this.books.forEach(function (book) {
+					book.open = false;
+				});
+			}
+			function getPrevBook (reference) {
+				var prevBook;
+				scope.books.forEach(function (book, index) {
+					if (book.id === scope.state.book.id){
+						prevBook = scope.books[(index || 1) - 1];
+					}
+				});
+				return prevBook;
+			}
+			function getNextBook (reference) {
+				var nextBook;
+				scope.books.forEach(function (book, index) {
+					if (book.id === scope.state.book.id){
+						nextBook = scope.books[(index < 65 ? index : 64) + 1];
+					}
+				});
+				return nextBook;
 			}
 			function toggleBook (target) {
 				var book, stateCopy;

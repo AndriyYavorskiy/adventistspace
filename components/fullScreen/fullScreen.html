@@ -12,10 +12,10 @@
     </div>
     <div class="full-screen-title">
       {{ fullScreen.model.name }} 
-      <span class="entry-point inherit color" ng-click="fullScreen.scrollTo(fullScreen.reference)">
-        ({{ fullScreen.reference }})
-      </span>
     </div>
+    <span class="entry-point" ng-click="fullScreen.scrollTo(fullScreen.reference)">
+      ({{ fullScreen.reference }})
+    </span>
   </div>
   <div class="full-screen-read-area slim-scroll">
     <div class="container">
@@ -60,21 +60,21 @@
     top: 0;
     width: 100%;
   }
+  .full-screen-read-area {
+    height: calc(100% - 64px);
+    margin-top: 64px;
+    overflow-y: auto;
+  }
+  .full-screen-title, .entry-point {
+    color: #fff;
+    float: left;
+  }
   .entry-point {
     cursor: pointer;
     opacity: 0.4;
   }
   .entry-point:hover {
     opacity: 1;
-  }
-  .full-screen-read-area {
-    height: calc(100% - 64px);
-    margin-top: 64px;
-    overflow-y: auto;
-  }
-  .full-screen-title {
-    color: #fff;
-    float: left;
   }
   .full-screen-chapters {
     margin: 16px auto;
