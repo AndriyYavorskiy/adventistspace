@@ -3,7 +3,7 @@ angular.module('AMO')
 		var object = {};
 		object.scope = {
 			bibleBook: "=",
-			switchToBook: "="
+			switchToBook: "<"
 		};
 		object.template = `<div class="item" ng-repeat="candidate in candidates" ng-mousedown="switchToBook(candidate)">
 							  {{candidate.name}}
