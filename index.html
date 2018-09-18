@@ -17,24 +17,25 @@
 		<link rel='stylesheet' href='styles/general.css'>
 		<link rel='stylesheet' href='styles/components.css'>
 		<link rel='stylesheet' href='styles/inputs.css'>
-		<link rel='stylesheet' href='components/BibleReader/asReader.css'>
+		<link rel='stylesheet' href='components/amoBibleReader/amoReader.css'>
 		<link href='http://fonts.googleapis.com/css?family=Philosopher:400,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 		<script src='scripts/angular.js'></script>
 		<script>angular.module('AMO', ['ngclipboard']);</script>
-		<script src='scripts/asMainCtrl.js'></script>
-		<script src='components/asToolbar.js'></script>
-		<script src='components/BibleReader/asReader.js'></script>
-		<script src='components/modal/asModal.js'></script>
-		<script src='components/autocomplete/asAutocompleteFor.js'></script>
-		<script src='components/asReaderLink/asReaderLink.js'></script>
-		<script src='scripts/asCommon.js'></script>
+		<script src='scripts/amoMainCtrl.js'></script>
+		<script src='components/amoToolbar.js'></script>
+		<script src='components/amoBibleReader/amoReader.js'></script>
+		<script src='components/amoBibleReader/amoReaderTools.js'></script>
+		<script src='components/amoModal/amoModal.js'></script>
+		<script src='components/amoAutocomplete/amoAutocompleteFor.js'></script>
+		<script src='components/amoReaderLink/amoReaderLink.js'></script>
+		<script src='scripts/amoCommon.js'></script>
 		<script src='scripts/rightClickDirective.js'></script>
 		<link rel="shortcut icon" href="images/Fish3.png" type="image/x-icon">
 		<script src='libs/ngclipboard.js'></script>
-		<script src='components/fullScreen/fullScreen.js'></script>
+		<script src='components/amoFullScreen/amoFullScreen.js'></script>
 		<link rel='stylesheet' href='styles/bootstrap-grid.css'>
 	</head>
-	<body ng-controller="as-main as mainCtrl">
+	<body ng-controller="amoMain as mainCtrl">
 		<main>
 			<div class='module'>
 				<div class='slide column'>
@@ -45,7 +46,7 @@
 								Вникай в себя и в учение; занимайся сим постоянно: ибо, так поступая, и себя спасешь и слушающих тебя
 							</p>
 						</section>
-						<p class='source' as-reader-link="ru:tim1:4:16" auto-text></p>
+						<p class='source' amo-reader-link="ru:tim1:4:16" auto-text></p>
 					</div>
 				</div>
 				<div class='slide learn mt-400px absolute'></div>
@@ -55,24 +56,24 @@
 							<p>
 								7 Главное — мудрость: приобретай мудрость, и всем имением твоим приобретай разум. 
 							</p>
-							<p class='autor' as-reader-link="ru:prov:4:7">Соломон | Притчі 4:7</p>
+							<p class='autor' amo-reader-link="ru:prov:4:7">Соломон | Притчі 4:7</p>
 							<br>
 						</div>
 						<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 							<p> Исследуйте Писания, ибо вы думаете чрез них иметь жизнь вечную; а они свидетельствуют о Мне</p>
-							<p class='autor' as-reader-link="ru:john:5:39" auto-text></p>
+							<p class='autor' amo-reader-link="ru:john:5:39" auto-text></p>
 							<br>
 						</div>
 						<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 							<p>Кто приносит в жертву хвалу, тот чтит Меня, и кто наблюдает за путем своим, тому явлю Я спасение Божие".</p>
-							<p class='autor' as-reader-link="ru:ps:49:24" auto-text></p>
+							<p class='autor' amo-reader-link="ru:ps:49:24" auto-text></p>
 							<br>
 						</div>
 						<div class='col-lg-3 col-md-12 col-sm-6 col-xs-12'>
 							<p>
 								Слово Христово да вселяется в вас обильно, со всякою премудростью; научайте и вразумляйте друг друга псалмами, славословием и духовными песнями, во благодати воспевая в сердцах ваших Господу.. 
 							</p>
-							<p class='autor' as-reader-link="ru:col:3:16">Слова апостола Павла | Послання до Колоссян розділ 3 вірш 16</p>
+							<p class='autor' amo-reader-link="ru:col:3:16">Слова апостола Павла | Послання до Колоссян розділ 3 вірш 16</p>
 							<br>
 						</div>
 					</div>
@@ -90,7 +91,7 @@
 								Ибо истинно говорю вам: доколе не прейдет небо и земля, ни одна иота или ни одна черта не прейдет из закона, пока не исполнится все</p>
 							</p>
 						</section>
-						<p class='source' as-reader-link="ru:matt:5:17-18">Ісус Христос | Евангеліє від Матвія 5:17</p>
+						<p class='source' amo-reader-link="ru:matt:5:17-18">Ісус Христос | Евангеліє від Матвія 5:17</p>
 					</div>
 				</div>
 				<div class='slide law mt-400px absolute'></div>
@@ -103,36 +104,36 @@
 							<p>
 								3 Ибо это есть любовь к Богу, чтобы мы соблюдали заповеди Его; и заповеди Его нетяжки.
 							</p>
-							<p class='autor' as-reader-link="ru:john1:5:2,3" auto-text>1-е Іоанна розділ 5 вірш 2 - 3</p>
+							<p class='autor' amo-reader-link="ru:john1:5:2,3" auto-text>1-е Іоанна розділ 5 вірш 2 - 3</p>
 							<br>
 						</div>
 						<div class='col-lg-3 col-md-4 col-sm-6'>
 							<p>
 								6 Любовь же состоит в том, чтобы мы поступали по заповедям Его.
 							</p>
-							<p class='autor' as-reader-link="ru:john2:1:6" auto-text>2-е Іоанна розділ 1 вірш 6</p>
+							<p class='autor' amo-reader-link="ru:john2:1:6" auto-text>2-е Іоанна розділ 1 вірш 6</p>
 							<br>
 							<p>
 								2 Кто говорит: «я познал Его», но заповедей Его не соблюдает, тот лжец, и нет в нем истины;	
 							</p>
-							<p class='autor' as-reader-link="ru:john1:2:4" auto-text></p>
+							<p class='autor' amo-reader-link="ru:john1:2:4" auto-text></p>
 							<br>
 						</div>
 						<div class='col-lg-3 col-md-4 col-sm-6'>
 							<p>
 								3 А что мы познали Его, узнаем из того, что соблюдаем Его заповеди
 							</p>
-							<p class='autor' as-reader-link="ru:john1:2:3" auto-text></p>
+							<p class='autor' amo-reader-link="ru:john1:2:3" auto-text></p>
 							<br>
 							<p>...Если же хочешь войти в жизнь вечную, соблюди заповеди</p>
-							<p class='autor' as-reader-link="ru:matt:19:17" auto-text></p>
+							<p class='autor' amo-reader-link="ru:matt:19:17" auto-text></p>
 							<br>
 						</div>
 						<div class='col-lg-3 col-md-12 col-sm-6'>
 							<p>
 								...соблюсти заповедь чисто и неукоризненно, даже до явления Господа нашего Иисуса Христа
 							</p>
-							<p class='autor' as-reader-link="ru:tim1:6:14" auto-text></p>
+							<p class='autor' amo-reader-link="ru:tim1:6:14" auto-text></p>
 							<br>
 						</div>
 					</div>
@@ -147,7 +148,7 @@
 								И беспрекословно - великая благочестия тайна: Бог явился во плоти, оправдал Себя в Духе, показал Себя Ангелам, проповедан в народах, принят верою в мире, вознесся во славе.
 							</p>
 						</section>
-						<p class='source' as-reader-link="ru:tim1:3:16" auto-text></p>
+						<p class='source' amo-reader-link="ru:tim1:3:16" auto-text></p>
 					</div>
 				</div>
 				<div class='slide mediator mt-400px absolute'></div>
@@ -163,7 +164,7 @@
 								<p>
 									7 Побеждающий наследует все, и буду ему Богом, и он будет Мне сыном.
 								</p>
-								<p class='autor' as-reader-link="ru:rev:21:5-7" auto-text></p>
+								<p class='autor' amo-reader-link="ru:rev:21:5-7" auto-text></p>
 								<br>
 							</div>
 							<div class='col-lg-4 col-md-4 col-sm-6'>
@@ -171,14 +172,14 @@
 								<p>
 									9 Ты возлюбил правду и возненавидел беззакония; посему помазав Тебя, Боже, Бог твой елеем радости более соучастников твоих"
 								</p>
-								<p class='autor' as-reader-link="ru:heb:1:8" auto-text>
+								<p class='autor' amo-reader-link="ru:heb:1:8" auto-text>
 									Послание к Евреям глава 1 стихи 8 и 9
 								</p>
 								<br>
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-6">
 								<p>Иисус сказал ему: столько времени Я с вами, и ты не знаешь Меня, Филипп? Видевший Меня видел Отца; как же ты говоришь: покажи нам Отца?</p>
-								<p class='autor' as-reader-link="ru:john:14:9" auto-text></p>
+								<p class='autor' amo-reader-link="ru:john:14:9" auto-text></p>
 								<br>
 							</div>
 						</div>
@@ -209,35 +210,35 @@
 							<p>
 								Блаженны вы, когда будут поносить вас и гнать и всячески неправедно злословить за Меня.
 							</p>
-							<p class='autor' as-reader-link="ru:matt:5:3-11" auto-text></p>
+							<p class='autor' amo-reader-link="ru:matt:5:3-11" auto-text></p>
 							<br>
 							<p>тем, которые постоянством в добром деле ищут славы, чести и бессмертия, жизнь вечную</p>
-							<p class='autor' as-reader-link="ru:rom:2:7" auto-text></p>
+							<p class='autor' amo-reader-link="ru:rom:2:7" auto-text></p>
 						</div>
 						<div class='col col-lg-4 col-md-4 col-sm-6'>
 							<p>шесть дней делайте дела, а день седьмой должен быть у вас святым, суббота покоя Господу: всякий, кто будет делать в нее дело, предан будет смерти</p>
-							<p class='autor' as-reader-link="ru:ex:35:2" auto-text></p>
+							<p class='autor' amo-reader-link="ru:ex:35:2" auto-text></p>
 							<br>
 							<p>И благословил Бог седьмой день, и освятил его, ибо в оный почил от всех дел Своих, которые Бог творил и созидал.</p>
-							<p class='autor' as-reader-link="ru:gen:2:3" auto-text></p>
+							<p class='autor' amo-reader-link="ru:gen:2:3" auto-text></p>
 							<br>
 							<p>и пусть хранят сыны Израилевы субботу, празднуя субботу в роды свои, как завет вечный;</p>
 							<p>это - знамение между Мною и сынами Израилевыми навеки, потому что в шесть дней сотворил Господь небо и землю, а в день седьмой почил и покоился.</p>
-							<p class='autor' as-reader-link="ru:ex:31:16,17" auto-text></p>
+							<p class='autor' amo-reader-link="ru:ex:31:16,17" auto-text></p>
 						</div>
 						<div class='col col-lg-4 col-md-4 col-sm-6'>
 							<p>И сказал Бог: сотворим человека по образу Нашему и по подобию Нашему, и да владычествуют они над рыбами морскими, и над птицами небесными, и над зверями, и над скотом, и над всею землею, и над всеми гадами, пресмыкающимися по земле</p>
-							<p class='autor' as-reader-link="ru:gen:1:26" auto-text></p>
+							<p class='autor' amo-reader-link="ru:gen:1:26" auto-text></p>
 						<br>
 							<p>Ибо в вас должны быть те же чувствования, какие и во Христе Иисусе:</p>
 							<p>Он, будучи образом Божиим, не почитал хищением быть равным Богу;</p>
-							<p class='autor' as-reader-link="ru:phil:2:5,6" auto-text></p>
+							<p class='autor' amo-reader-link="ru:phil:2:5,6" auto-text></p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</main>
-		<div as-toolbar></div>
+		<amo-toolbar></amo-toolbar>
 		<script src='scripts/amoFullScreen.js'></script>
 	</body>
 </html>

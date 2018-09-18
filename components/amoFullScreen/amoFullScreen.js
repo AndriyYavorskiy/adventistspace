@@ -1,21 +1,22 @@
-angular.module('AMO').component('fullScreen', {
-  styles: ['./components/fullScreen/fullScreen.css'],
-  templateUrl: './components/fullScreen/fullScreen.html',
+angular.module('AMO').component('amoFullScreen', {
+  templateUrl: './components/amoFullScreen/amoFullScreen.html',
   bindings: {
-
+    closeModal: '<',
+    data: '<'
   },
+  controllerAs: 'fullScreen',
   controller: ['$scope', '$element', 'fullScreenAPI', function ($scope, $element, fullScreenAPI) {
+    var html = document.querySelector('html'),
+        fullScreen = this;
 
-    var html = document.querySelector('html'), self = this;
-
-    this.model = angular.copy($scope.$parent.modalData.book);
-    this.reference = $scope.$parent.modalData.reference;
-
+    fullScreen.$onInit =function () {
+      fullScreen.model = angular.copy(fullScreen.data.book);
+      fullScreen.reference = fullScreen.data.reference;
+    };
     setTimeout(function () {
-      var target = document.getElementById(self.reference);
+      var target = document.getElementById(fullScreen.reference.split('-')[0]);
       if (target) {
-        target.classList.add('spotlight');
-        scrollTo(self.reference);
+        scrollTo(fullScreen.reference.split('-')[0]).classList.add('spotlight');
       }
     }, 0);
 
@@ -23,11 +24,7 @@ angular.module('AMO').component('fullScreen', {
 
     document.addEventListener(fullScreenAPI.fullscreenchangeEvent, escCallback);
 
-    this.leaveFullScreen = function () {
-      $scope.$destroy();
-      angular.element($element).remove();
-      html.style.overflow = '';
-    }
+    this.leaveFullScreen = leaveFullScreen;
 
     this.createID = function (model, chapterIndex, verseIndex) {
       var vi = verseIndex ? ':' + (++verseIndex) : '';
@@ -46,17 +43,25 @@ angular.module('AMO').component('fullScreen', {
       if (target) {
         target.scrollIntoView();
       }
+      return target;
     }
     
     function escCallback ( event ) {
       setTimeout(function () {
         if (!document[fullScreenAPI.fullscreenElement]) {
           $scope.$destroy();
-          angular.element($element).remove();
+          // angular.element($element).remove();
           html.style.overflow = '';
           document.removeEventListener(fullScreenAPI.fullscreenchangeEvent, escCallback);
+          fullScreen.closeModal();
         }
       });
+    }
+    function leaveFullScreen () {
+      html.style.overflow = '';
+      $scope.$destroy();
+      // angular.element($element).remove();
+      fullScreen.closeModal();
     }
   }],
   controllerAs: 'fullScreen'

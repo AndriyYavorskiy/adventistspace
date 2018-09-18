@@ -27,20 +27,16 @@ angular.module('AMO')
 		}
 		return ob;
 	});
-angular.module('AMO').directive("asToolbar", function ($templateRequest, $compile) {
-		var object = {};
-		object.restrict = 'EA';
-		object.scope = '@';
-		object.link = function (scope, el, attrs) {
-			scope.showGiftsModal = 0;
-			$templateRequest('components/asToolbar.html').then(function(html){
-				// Convert the html to an actual DOM node
+angular.module('AMO').component("amoToolbar", {
+		controllerAs: '$ctrl',
+		controller: ['$scope', '$element', '$templateRequest', '$compile',
+		  function ($scope, $element, $templateRequest, $compile) {
+			$scope.showGiftsModal = 0;
+			$templateRequest('components/amoToolbar.html').then(function(html){
 				var template = angular.element(html);
-				// Append it to the directive element
-				el.append(template);
-				// And let Angular $compile it
-				$compile(template)(scope);
+				$element.append(template);
+				$compile(template)($scope);
 			});
-		}
-		return object;
-	});
+		}]
+	}
+);

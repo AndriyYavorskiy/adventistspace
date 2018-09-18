@@ -1,23 +1,23 @@
 <div>
 	<div class='gifts flex'>
-		<div mode class='gift word' ng-click='showGiftsModal = 1'></div>
-		<div mode class='gift low' ng-click='showGiftsModal = 2'></div>
-		<div mode class='gift bible' ng-click='mainCtrl.showBibleReader(); showGiftsModal = 0'></div>
-		<div mode class='gift church' ng-click='showGiftsModal = 4'></div>
-		<div mode class='gift infinity' ng-click='showGiftsModal = 5'></div>
+		<div mode class='gift word' ng-click='$ctrl.showGiftsModal = 1'></div>
+		<div mode class='gift low' ng-click='$ctrl.showGiftsModal = 2'></div>
+		<div mode class='gift bible' ng-click='mainCtrl.showBibleReader("ru:rev:17:10"); $ctrl.showGiftsModal = 0'></div>
+		<div mode class='gift church' ng-click='$ctrl.showGiftsModal = 4'></div>
+		<div mode class='gift infinity' ng-click='$ctrl.showGiftsModal = 5'></div>
 	</div>
-	<div cloud class='modal ng-hide' ng-show="showGiftsModal > 0">
+	<div cloud class='modal ng-hide' ng-show="$ctrl.showGiftsModal > 0">
 		<div class='window'>
 			<div class='head'>
-				<span ng-show='showGiftsModal === 1'>Ісус Христос - Cпаситель усього світу.</span>
-				<span ng-show='showGiftsModal === 2'>Десятислівний Божий Закон</span>
-				<span ng-click="showGiftsModal === 3">Біблія - Слово Боже</span>
-				<span ng-show='showGiftsModal === 4'>Божа Церква</span>
-				<span ng-show='showGiftsModal === 5'>Спасіння та вічне життя</span>
-				<div close class='close' ng-click='showGiftsModal = 0'>✖</div>
+				<span ng-show='$ctrl.showGiftsModal === 1'>Ісус Христос - Cпаситель усього світу.</span>
+				<span ng-show='$ctrl.showGiftsModal === 2'>Десятислівний Божий Закон</span>
+				<span ng-show="$ctrl.showGiftsModal === 3">Біблія - Слово Боже</span>
+				<span ng-show='$ctrl.showGiftsModal === 4'>Божа Церква</span>
+				<span ng-show='$ctrl.showGiftsModal === 5'>Спасіння та вічне життя</span>
+				<div close class='close' ng-click='$ctrl.showGiftsModal = 0'>✖</div>
 			</div>
 			<div class='body'>
-				<div ng-show='showGiftsModal === 2'>
+				<div ng-show='$ctrl.showGiftsModal === 2'>
 					<div class='columns flex'>
 						<div class='col'>
 							<p>1 Я Господь, Бог твой, Который вывел тебя из земли Египетской, из дома рабства.
@@ -45,10 +45,10 @@
 						</div>
 					</div>
 					<div class=''>
-						<p class='origin' as-reader-link="ru:ex:20">Закон даний Богом через Моісея | книга Вихід 20 розділ</p>
+						<p class='origin' amo-reader-link="ru:ex:20">Закон даний Богом через Моісея | книга Вихід 20 розділ</p>
 					</div>
 				</div>									
-				<div ng-show='showGiftsModal === 1'>
+				<div ng-show='$ctrl.showGiftsModal === 1'>
 					<!--
 					<p>
 						Завдяки Його жертві, яку Він проявив, прийшовши на Землю як людина, ми отримали примирення з Богом.
@@ -62,7 +62,7 @@
 					-->
 					<div class='bible-verse w300'>
 						Ибо в Нем обитает вся полнота Божества телесно.
-						<div class='autor' as-reader-link="ru:col:2:9">Слова Апостола Павла про Ісуса Христа | Послання до Колоссян розділ 2 вірш 9</div>
+						<div class='autor' amo-reader-link="ru:col:2:9">Слова Апостола Павла про Ісуса Христа | Послання до Колоссян розділ 2 вірш 9</div>
 					</div>
 					<div class='expander collapsed'> i</div>
 					
@@ -74,7 +74,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show='showGiftsModal === 3'>
+				<div ng-show='$ctrl.showGiftsModal === 3'>
 					<!--Біблія - Слово Боже. Ця велика книга, хоча й написана руками вірних божих людей, але її автором є сам Бог.
 					<div class='bible-verse w300 expander collapsed'>
 						<div class='message'>
@@ -83,7 +83,7 @@
 						</div>
 					</div>-->
 				</div>
-				<div ng-show='showGiftsModal === 4'>
+				<div ng-show='$ctrl.showGiftsModal === 4'>
 					<!--
 					В період до потопу Бог не засновував на Землі церкву, як організацію, але Бог підтримував спілкування з людством.
 					В часи Моісея, церква набуча чіткої структури...
@@ -91,7 +91,7 @@
 					<div>
 						И я говорю тебе, ты - Петр, и на сем камне...
 					</div>
-					<div class='autor' as-reader-link="ru:matt:16:18">
+					<div class='autor' amo-reader-link="ru:matt:16:18">
 						Слова Ісуса Христа | Матвія 16:18
 					</div>
 					<div>
@@ -104,9 +104,9 @@
 					</div>
 					-->
 				</div>
-				<div ng-show='showGiftsModal === 5'>5</div>
+				<div ng-show='$ctrl.showGiftsModal === 5'>5</div>
 			</div>
-			<div class='footer' ng-show='showGiftsModal === 2'>
+			<div class='footer' ng-show='$ctrl.showGiftsModal === 2'>
 				<div class='columns flex'>
 					<div class='col'>
 						<p>
@@ -115,13 +115,13 @@
 						<p>
 							2 ибо долготы дней, лет жизни и мира они приложат тебе.
 						</p>
-						<p class='autor' as-reader-link="ru:prov:3:1-2">Слова Соломона | Притчі 3:1-2</p>
+						<p class='autor' amo-reader-link="ru:prov:3:1-2">Слова Соломона | Притчі 3:1-2</p>
 					</div>
 				</div>
 				<div class='columns flex'>
 					<div class='col'>
 						<p>8 Мудрый сердцем принимает заповеди, а глупый устами преткнется.</p>
-						<p class='autor' as-reader-link="ru:prov:10:18">Слова Соломона | Притчі 10:8</p>
+						<p class='autor' amo-reader-link="ru:prov:10:18">Слова Соломона | Притчі 10:8</p>
 					</div>
 				</div>
 				<div class='columns flex'>

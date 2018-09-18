@@ -330,7 +330,7 @@
 	background: #6383b5;
     color: white;
 }
-	[as-reader] {
+	[amo-reader] {
 		height: 100%;
 	}
 	.bible.reader {

@@ -1,5 +1,5 @@
 angular.module('AMO')
-.directive('asStopProp', function (){
+.directive('amoStopProp', function (){
 	return {
 		link: function (s, e, a) {
 			e.on("click", function (event) {

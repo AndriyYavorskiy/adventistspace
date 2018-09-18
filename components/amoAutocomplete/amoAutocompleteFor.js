@@ -1,5 +1,5 @@
 angular.module('AMO')
-	.directive('asAutocompleteFor', function (asBibleInstanceManager){
+	.directive('amoAutocompleteFor', function (amoBibleInstanceManager){
 		var object = {};
 		object.scope = {
 			bibleBook: "=",
@@ -9,12 +9,12 @@ angular.module('AMO')
 							  {{candidate.name}}
 						   </div>`;
 		object.link = function (s, e, a) {
-			var input = angular.element(e[0].parentNode)[0].querySelector(a.asAutocompleteFor);
+			var input = angular.element(e[0].parentNode)[0].querySelector(a.amoAutocompleteFor);
 			s.candidates = [];
 			angular.element(input).on("keyup", searchForBook);
 			function searchForBook () {
 				if (s.bibleBook.length > 2) {
-					s.candidates = asBibleInstanceManager.helpToFindBook(s.bibleBook);
+					s.candidates = amoBibleInstanceManager.helpToFindBook(s.bibleBook);
 				} else {
 					s.candidates = [];
 				}

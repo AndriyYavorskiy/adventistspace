@@ -59,7 +59,7 @@
 				</button>
 				<input type="text" ng-model="bibleBook" id="bible-book"
 					placeholder="книга Біблії" class="inp txt m sensation find-book">
-				<div class="autocomplete" as-autocomplete-for="#bible-book" bible-book="bibleBook" switch-to-book="switchToBook"></div>
+				<div class="autocomplete" amo-autocomplete-for="#bible-book" bible-book="bibleBook" switch-to-book="switchToBook"></div>
 				<div class="go-left" ng-if="state">
 					<button class="btn m sensation go-neighbor-book" ng-bind="getPrevBook(reference).alias"
 					  ng-click="navigate(getPrevBook(reference).lang + ':' + getPrevBook(reference).id)">									
@@ -119,7 +119,7 @@
 			 ng-repeat="book in books track by $index"
 			 ng-class="{open: book.open, 'with-data': book.chapters.length}">
 			<div class="book-name" ng-click="toggleBook(book)">
-				<span as-stop-prop class="book-checker go-left">
+				<span amo-stop-prop class="book-checker go-left">
 					<input type="checkbox" ng-model="book.checked">
 				</span>
 				<span class="alias" title="{{book.name}}">{{book.alias}}</span>
