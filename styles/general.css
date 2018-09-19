@@ -38,9 +38,13 @@ body {
 	overflow: auto;
 	zoom: 1;
 }
+.verse-text {
+	text-align: justify;
+}
 .autor {
-	text-align: right;
 	font-size: 0.9em;
+	margin: 4px 0 16px 0;
+	text-align: right;
 }
 .bible-verse .message {
 	color: #BCAA70;

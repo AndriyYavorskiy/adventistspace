@@ -106,19 +106,11 @@
 
 
 .columns {
-	padding: 32px 0;
+	padding: 32px 0 0 0;
 }
-/*.columns .col:not(:first-child){
-	margin-left: 64px;
-}*/
 .page-footer {
 	background: #3f3f40;
 }
-.page-footer .col p {
+.page-footer .verse-text {
 	color: #BCAA70;
-	
-}
-
-.page-footer .col {
-	width: 33.33%;
 }
