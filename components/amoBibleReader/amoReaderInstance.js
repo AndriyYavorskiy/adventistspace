@@ -89,7 +89,6 @@ angular.module('AMO').component('amoBibleInstance', {
 			function openNewWindow () {
 				$scope.$emit("appeal:add-instance", $ctrl.candidate);
 			}
-			function saveRef () {}
 			$ctrl.setCandidate = setCandidate;
 			function setCandidate (ref) {
 				$ctrl.candidate = ref;
@@ -100,17 +99,15 @@ angular.module('AMO').component('amoBibleInstance', {
 				instanceState.setLang(lang);
 				$ctrl.lang = lang;
 				$http.get('/components/amoBibleReader/amoReader_' + lang + '.json').then(function (response) {
-					var initialModel = response.data.map(function (book) {
+					$ctrl.books = response.data.map(function (book) {
 						book.open = false;
 						book.checked = false;
-						book.lang = lang;
+            book.lang = lang;
+            book.state = false;
+            book.chapters = [];
 						return book;
 					});
-					
-					$ctrl.books = response.data;
 					setTimeout(function () {
-						var ref = $ctrl.reference;
-
 						navigate(reference || getInitialReference());
 					}, 0);
 				});
@@ -132,8 +129,6 @@ angular.module('AMO').component('amoBibleInstance', {
 			}
 			function glideInHistory (dest) {
 				if (typeof dest === "object") {
-					var destIndex = $ctrl.history.indexOf(dest);
-
 					$ctrl.history.forEach(function (dst) {
 						if (dst.isCurrent) { dst.isCurrent = false; }
 					});
@@ -159,7 +154,7 @@ angular.module('AMO').component('amoBibleInstance', {
 			} 
 			function runSearch (event, searchParam) {
 				if (event.which && event.which !== 13 && event.type !== "click" || !searchParam) { return; }
-				var reports = 1, numOfPromices = 0;
+				var numOfPromices = 0;
 				$ctrl.searchResultsLimit = 24;
 				$ctrl.searchParam = searchParam;
 				$ctrl.inProcess = true;
