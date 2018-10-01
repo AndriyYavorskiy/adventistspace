@@ -19,7 +19,18 @@
 		<link rel='stylesheet' href='components/amoBibleReader/amoReader.css'>
 		<link href='http://fonts.googleapis.com/css?family=Philosopher:400,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 		<script src='scripts/angular.js'></script>
-		<script>angular.module('AMO', ['ngclipboard']);</script>
+		<script src="libs/angular-translate.min.js"></script>
+		<script src="https://cdn.rawgit.com/angular-translate/bower-angular-translate-loader-static-files/2.18.1/angular-translate-loader-static-files.js"></script>
+		<script>
+			angular.module('AMO', ['ngclipboard', 'pascalprecht.translate'])
+			.config(function($translateProvider) {
+				$translateProvider.useStaticFilesLoader({
+					files: [{ prefix: 'locals/', suffix: '.json' }]
+				});
+				$translateProvider.preferredLanguage(window.localStorage.getItem('amo-lang') || 'en');
+				$translateProvider.useSanitizeValueStrategy('escape');
+			});
+		</script>
 		<script src='scripts/amoMainCtrl.js'></script>
 		<script src='components/amoToolbar.js'></script>
 		<script src='components/amoBibleReader/amoReader.js'></script>
@@ -28,6 +39,8 @@
 		<script src='components/amoModal/amoModal.js'></script>
 		<script src='components/amoAutocomplete/amoAutocompleteFor.js'></script>
 		<script src='components/amoReaderLink/amoReaderLink.js'></script>
+		<script src='components/amoLangSwitcher/amoLangSwitcher.js'></script>
+		<script src='components/amoChangeLangTrigger.js'></script>
 		<script src='scripts/amoCommon.js'></script>
 		<script src='scripts/rightClickDirective.js'></script>
 		<link rel="shortcut icon" href="images/Fish3.png" type="image/x-icon">
@@ -36,6 +49,7 @@
 		<link rel='stylesheet' href='styles/bootstrap-grid.css'>
 	</head>
 	<body ng-controller="amoMain as mainCtrl">
+		<amo-change-lang-trigger></amo-change-lang-trigger>
 		<main>
 			<div class='module'>
 				<div class='slide column'>
@@ -85,7 +99,6 @@
 							</p>
 							<p class="verse-text">
 								Ибо истинно говорю вам: доколе не прейдет небо и земля, ни одна иота или ни одна черта не прейдет из закона, пока не исполнится все</p>
-							</p>
 						</section>
 						<p class='source' amo-reader-link="ru:matt:5:17-18">Ісус Христос | Евангеліє від Матвія 5:17</p>
 					</div>
@@ -203,8 +216,10 @@
 					</div>
 				</div>
 			</div>
+			<amo-change-lang-trigger></amo-change-lang-trigger>
 		</main>
 		<amo-toolbar></amo-toolbar>
 		<script src='scripts/amoFullScreen.js'></script>
+		<script src='locals/helper.js'></script>
 	</body>
 </html>

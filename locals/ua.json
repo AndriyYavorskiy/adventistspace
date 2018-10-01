@@ -1,0 +1,20 @@
+{
+  "reader": {
+    "read_in_fuullscreen": "Читати в повноекранному режимі",
+    "find_in_Bible": "Шукати в Біблії",
+    "navigation": "Навігація",
+    "search": "Пошук",
+    "share": "Поділитися",
+    "find": "Знайти",
+    "in_selected_books": "в обраних книгах",
+    "in_all": "в усіх",
+    "results": "результати",
+    "Bible_book": "книга Біблії",
+    "show_more": "Показати більше",
+    "chapter": "розділ"
+  },
+  "langSwitcher": {
+    "select_lang": "Оберіть мову",
+    "x_lang": "Українська мова"
+  }
+}

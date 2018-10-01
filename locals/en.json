@@ -1,0 +1,20 @@
+{
+  "reader": {
+    "read_in_fuullscreen": "Read in fullscreen mode",
+    "find_in_Bible": "Find in the Bible",
+    "navigation": "Navigation",
+    "search": "Search",
+    "share": "Share",
+    "find": "Find",
+    "in_selected_books": "in selected books",
+    "in_all": "in all",
+    "results": "results",
+    "Bible_book": "Bible book",
+    "show_more": "Show more",
+    "chapter": "chapter"
+  },
+  "langSwitcher": {
+    "select_lang": "Select language",
+    "x_lang": "English language"
+  }
+}

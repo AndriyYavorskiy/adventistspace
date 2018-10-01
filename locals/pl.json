@@ -1,0 +1,20 @@
+{
+  "reader": {
+    "read_in_fuullscreen": "Czytaj w trybie pełnoekranowym",
+    "find_in_Bible": "Przeszukaj Biblię",
+    "navigation": "Nawigacja",
+    "search": "Wyszukiwanie",
+    "share": "Udostępnianie",
+    "find": "Wyszukiwanie",
+    "in_selected_books": "w wybranych książkach",
+    "in_all": "we wszystkich",
+    "results": "wyniki",
+    "Bible_book": "księga Biblii",
+    "show_more": "Pokaż więcej",
+    "chapter": "sekcja"
+  },
+  "langSwitcher": {
+    "select_lang": "Wybierz język",
+    "x_lang": "Język polski"
+  }
+}

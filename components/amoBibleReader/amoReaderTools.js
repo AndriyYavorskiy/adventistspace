@@ -357,18 +357,21 @@ angular.module('AMO').constant("amoReaderModel", function () {
 		]
 	}
 });
-angular.module('AMO').filter("BibleReference", function (amoReaderModel, amoVocab) {
+angular.module('AMO').filter("BibleReference", function (amoReaderModel, amoVocab, $window) {
 	return function (reference){
 		var artefacts = reference.split(":"),
 			lang = artefacts[0],
 			bookId = artefacts[1],
-			chapter = artefacts[2] ? (" " + amoVocab(lang)["chapter"] + " " + artefacts[2]) : "",
-			verse = artefacts[3] ? (" " + amoVocab(lang)[artefacts[3].search(/(,|-)/gim) >= 0 ? "verses" : "verse"] + " " + artefacts[3]) : "",
+			chapter = artefacts[2] ? (" " + amoVocab(getLang())["chapter"] + " " + artefacts[2]) : "",
+			verse = artefacts[3] ? (" " + amoVocab(getLang())[artefacts[3].search(/(,|-)/gim) >= 0 ? "verses" : "verse"] + " " + artefacts[3]) : "",
 			bookName = amoReaderModel()[lang].find(function (x) {
 				return x.id === bookId;
 			}).name;
 		return bookName + chapter + verse;
 	};
+	function getLang () {
+		return $window.localStorage.getItem('amo-lang') || 'en';
+	}
 });
 angular.module('AMO').constant("amoVocab", function (lang){
 	return {
@@ -378,14 +381,30 @@ angular.module('AMO').constant("amoVocab", function (lang){
 			verse: "стих",
 			verses: "стихи"
 		},
-		en: {},
+		en: {
+			chapter: "chapter",
+			chapters: "chpters",
+			verse: "verse",
+			verses: "verses"
+		},
 		ua: {
 			chapter: "розділ",
 			chapters: "розділи",
 			verse: "вірш",
 			verses: "вірші"
 		},
-		it: {}
+		it: {
+			chapter: "sezioni",
+			chapters: "sezione",
+			verse: "versetto",
+			verses: "versi"
+		},
+		pl: {
+			chapter: "sekcja",
+			chapters: "sekcje",
+			verse: "werset",
+			verses: "wersety"
+		}
 	}[lang]
 });
 

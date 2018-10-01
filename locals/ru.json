@@ -1,0 +1,20 @@
+{
+  "reader": {
+    "read_in_fuullscreen": "Читать в полноэкранном режиме",
+    "find_in_Bible": "Искать в Библии",
+    "navigation": "Навигация",
+    "search": "Поиск",
+    "share": "Поделиться",
+    "find": "Найти",
+    "in_selected_books": "в выбранных книгах",
+    "in_all": "во всех",
+    "results": "результаты",
+    "Bible_book": "книга Библии",
+    "show_more": "Показать больше",
+    "chapter": "глава"
+  },
+  "langSwitcher": {
+    "select_lang": "Выберите язык",
+    "x_lang": "Русский язык"
+  }
+}

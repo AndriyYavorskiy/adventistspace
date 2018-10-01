@@ -24,7 +24,9 @@
           <div class="full-screen-chapter"
             id="{{ ::fullScreen.createID(fullScreen.model, $index) }}"
             ng-repeat="chapter in fullScreen.model.chapters">
-            <div class="full-screen-chapter-title" ng-bind="::'Розділ ' + ($index + 1)"></div>
+            <div class="full-screen-chapter-title">
+              <span class="inherit color" ng-bind="::('reader.chapter' | translate) + ' ' + ($index + 1)"></span>
+            </div>
             <div class="full-screen-verses">
               <div class="full-screen-varse" ng-repeat="verse in chapter track by $index" ng-dblclick="fullScreen.navigate($event)"
                 id="{{ ::fullScreen.createID(fullScreen.model, $parent.$index, $index) }}">
@@ -88,6 +90,7 @@
     color: #6383b5;
     margin-bottom: 4px;
     text-align: center;
+    text-transform: capitalize;
   }
   .full-screen-varse {
     margin-bottom: 8px;

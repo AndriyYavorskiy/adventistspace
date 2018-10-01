@@ -9,7 +9,7 @@
 						ng-disabled="$ctrl.history[0].isCurrent"
 						ng-click="$ctrl.glideInHistory(1)">></button>
 			</div>
-			<div class="fullscreen-trigger go-right" title="Читати в повноекранному режимі"
+			<div class="fullscreen-trigger go-right" title="{{'reader.read_in_fuullscreen' | translate}}"
 				ng-click="$ctrl.openFullScreen($ctrl.reference)" onclick="amoGoFullScreen();">
 				<svg fill="#fff" width="20" height="20" viewBox="0 0 18 18"><path d="M4.5 11H3v4h4v-1.5H4.5V11zM3 7h1.5V4.5H7V3H3v4zm10.5 6.5H11V15h4v-4h-1.5v2.5zM11 3v1.5h2.5V7H15V3h-4z"/></svg>
 			</div>
@@ -18,29 +18,27 @@
 		<button class="btn m blank remove-instance" ng-click="$ctrl.removeInstance()">✖</button>
 		<div class="toolbar-menu clearfix">
 			<div class="tab" ng-class="{active: $ctrl.currentTabIs('navigation')}" 
-				 ng-click="$ctrl.switchToTab('navigation')">Навігація</div>
+				 ng-click="$ctrl.switchToTab('navigation')" ng-bind="'reader.navigation' | translate"></div>
 			<div class="tab" ng-class="{active: $ctrl.currentTabIs('search')}"
-				 ng-click="$ctrl.switchToTab('search')">Пошук</div>
+				 ng-click="$ctrl.switchToTab('search')" ng-bind="'reader.search' | translate"></div>
 			<div class="tab" ng-class="{active: $ctrl.currentTabIs('share')}"
-				 ng-click="$ctrl.switchToTab('share')">Поділитися</div>
+				 ng-click="$ctrl.switchToTab('share')" ng-bind="'reader.share' | translate"></div>
 		</div>
 		<div ng-if="$ctrl.currentTabIs('search')" class="search-box">
-			<input type="text" placeholder="Шукати в Біблії" id="search" ng-model="$ctrl.searchParam" 
+			<input type="text" placeholder="{{'reader.find_in_Bible' | translate}}" id="search" ng-model="$ctrl.searchParam" 
 				class="inp txt m sensation search" ng-keyup="$ctrl.runSearch($event, $ctrl.searchParam)">
-			<button class="btn m primary find" ng-click="$ctrl.runSearch($event, $ctrl.searchParam)">Знайти</button>
+			<button class="btn m primary find" ng-click="$ctrl.runSearch($event, $ctrl.searchParam)"
+			  ng-bind="'reader.find' | translate"></button>
 			<div class="search-settings">
 				<input type="radio" ng-model="$ctrl.booksToSearchIn.option" 
 						name="search-place" value="selected" id="in-checked-books">
-				<label for="in-checked-books">
-					в обраних книгах
-				</label>
+				<label for="in-checked-books" ng-bind="'reader.in_selected_books' | translate"></label>
 				<input type="radio" ng-model="$ctrl.booksToSearchIn.option"
 						name="search-place" value="all" id="in-all-books">
-				<label for="in-all-books">
-					в усіх
-				</label>
+				<label for="in-all-books" ng-bind="'reader.in_all' | translate">				</label>
 				<span class="results-link" ng-if="$ctrl.searchResults" ng-click="$ctrl.displayResults(!$ctrl.showResults)">
-					результати <span class="amount" ng-bind="'('+$ctrl.searchResults.length+')'"></span>
+					<span ng-bind="'reader.results' | translate"></span>
+					<span class="amount" ng-bind="' (' + $ctrl.searchResults.length + ')'"></span>
 				</span>
 			</div>
 		</div>
@@ -58,7 +56,7 @@
 					</svg>
 				</button>
 				<input type="text" ng-model="$ctrl.bibleBookName" id="bible-book"
-					placeholder="книга Біблії" class="inp txt m sensation find-book">
+					placeholder="{{'reader.Bible_book' | translate}}" class="inp txt m sensation find-book">
 				<div class="autocomplete" amo-autocomplete-for="#bible-book" bible-book="$ctrl.bibleBookName" switch-to-book="$ctrl.switchToBook"></div>
 				<div class="go-left" ng-if="$ctrl.state && $ctrl.books">
 					<button class="btn m sensation go-neighbor-book" ng-bind="$ctrl.getPrevBook($ctrl.reference).alias"
@@ -100,7 +98,7 @@
 				<div class="scripture" ng-bind-html="result.scripture"></div>
 			</div>
 			<div class="more-results" ng-show="$ctrl.searchResultsLimit < $ctrl.searchResults.length"
-				 ng-click="$ctrl.searchResultsLimit = $ctrl.searchResultsLimit + 24">Показати більше</div>
+				 ng-click="$ctrl.searchResultsLimit = $ctrl.searchResultsLimit + 24" ng-bind="'reader.show_more' | translate"></div>
 		</div>
 		<div class="cover history slim-scroll" ng-if="$ctrl.currentTabIs('share')">
 			<div ng-repeat="place in $ctrl.history" class="history-item" 
@@ -120,7 +118,7 @@
 			</div>
 			<div class="chapters">
 				<div class="chapter" ng-repeat="chapter in book.chapters track by $index">
-					<div class="chapter-number" title="{{book.name + ' розділ ' + ($index + 1)}}">
+					<div class="chapter-number" title="{{book.name + ' ' + ('reader.chapter' | translate) + ' ' + ($index + 1)}}">
 						<span class="esc" ng-click="$ctrl.toggleBook(book)">-</span>
 						{{book.alias + " " + ($index + 1)}}
 					</div>
