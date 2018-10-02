@@ -119,8 +119,17 @@
 			<div class="chapters">
 				<div class="chapter" ng-repeat="chapter in book.chapters track by $index">
 					<div class="chapter-number" title="{{book.name + ' ' + ('reader.chapter' | translate) + ' ' + ($index + 1)}}">
-						<span class="esc" ng-click="$ctrl.toggleBook(book)">-</span>
+						<span class="move-to-chapter go-left" ng-click="$ctrl.navigate({verse: 0, chapter: ($index === 0 ? book.chapters.length : $index) })">
+							<svg style="margin-left: -2px;" width="21px" height="21px" role="img" viewBox="0 0 192 512">
+								<path d="M4.2 247.5L151 99.5c4.7-4.7 12.3-4.7 17 0l19.8 19.8c4.7 4.7 4.7 12.3 0 17L69.3 256l118.5 119.7c4.7 4.7 4.7 12.3 0 17L168 412.5c-4.7 4.7-12.3 4.7-17 0L4.2 264.5c-4.7-4.7-4.7-12.3 0-17z"></path>
+							</svg>
+						</span>
 						{{book.alias + " " + ($index + 1)}}
+						<span class="move-to-chapter go-right" ng-click="$ctrl.navigate({verse: 0, chapter: ($index + 2 > book.chapters.length ? 1 : $index + 2)})">
+							<svg width="21px" height="21px" style="margin-right: -2px;" role="img" viewBox="0 0 192 512">
+								<path d="M187.8 264.5L41 412.5c-4.7 4.7-12.3 4.7-17 0L4.2 392.7c-4.7-4.7-4.7-12.3 0-17L122.7 256 4.2 136.3c-4.7-4.7-4.7-12.3 0-17L24 99.5c4.7-4.7 12.3-4.7 17 0l146.8 148c4.7 4.7 4.7 12.3 0 17z" class=""></path>
+							</svg>
+						</span>
 					</div>
 					<div class="verses">
 						<p class="verse" ng-repeat="verse in chapter track by $index"

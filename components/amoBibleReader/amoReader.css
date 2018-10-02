@@ -380,7 +380,7 @@
 	}
 	.bible.reader .chapter-number {
 		color: #6383b5;
-		margin: 8px auto;
+		margin: 0 auto 4px;
 		text-align: center;
 		width: 50%;
 	}
@@ -389,6 +389,9 @@
 	}
 	.bible.reader .book.open .chapters {
 		display: block;
+	}
+	.bible.reader .chapter {
+		padding-top: 8px;
 	}
 	.bible.reader .verse {
 		cursor: default;
@@ -407,19 +410,22 @@
 		border-radius: 2px;
 		color: #fff;
 	}
-	.bible.reader .esc {
-		border-radius: 50%;
-		color: #6383b5;
-		cursor: pointer;
-		float: right;
-		font-size: 21px;
-		height: 16px;
-		line-height: 14px;
-		margin-left: -16px;
-		margin-top: 2px;
-		width: 16px;
+	.bible.reader .move-to-chapter {
+    border-radius: 50%;
+    color: #6383b5;
+    cursor: pointer;
+    height: 21px;
+    line-height: 22px;
+    margin-top: -2px;
+    width: 21px;
 	}
-	.bible.reader .esc:hover {
+	.bible.reader .move-to-chapter svg {
+		fill: #6383b5;
+	}
+	.bible.reader .move-to-chapter:hover svg {
+		fill: #fff;
+	}
+	.bible.reader .move-to-chapter:hover {
 		background: #6383b5;
 		color: #fff;
 	}
