@@ -125,9 +125,9 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 
 		return list;
 	}
-	function helpToFindBook(searchText) {
+	function helpToFindBook(searchText, lang) {
 		var results = [];
-		amoReaderModel().ru.forEach(function (bookModel) {
+		amoReaderModel(lang || 'ru').forEach(function (bookModel) {
 			var bookNameIsSimilar = bookModel.name.toLowerCase().indexOf(searchText.toLowerCase()) >= 0;
 			if (bookNameIsSimilar) {
 				results.push(bookModel);
@@ -286,7 +286,7 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 		}
 	}
 });
-angular.module('AMO').constant("amoReaderModel", function () {
+angular.module('AMO').constant("amoReaderModel", function (lang) {
 	return {
 		ru: [{"name":"Бытие","alias":"Быт","id":"gen","open":false,"chapters":[]},
 			{"name":"Исход","alias":"Исх","id":"ex","open":false,"chapters":[]},
@@ -355,7 +355,7 @@ angular.module('AMO').constant("amoReaderModel", function () {
 			{"name":"Послание к Евреям","alias":"Евр","id":"heb","open":false,"chapters":[]},
 			{"name":"Откровение Иоанна Богослова","alias":"Отк","id":"rev","open":false,"chapters":[]}
 		]
-	}
+	}[lang]
 });
 angular.module('AMO').filter("BibleReference", function (amoReaderModel, amoVocab, $window) {
 	return function (reference){
@@ -364,7 +364,7 @@ angular.module('AMO').filter("BibleReference", function (amoReaderModel, amoVoca
 			bookId = artefacts[1],
 			chapter = artefacts[2] ? (" " + amoVocab(getLang())["chapter"] + " " + artefacts[2]) : "",
 			verse = artefacts[3] ? (" " + amoVocab(getLang())[artefacts[3].search(/(,|-)/gim) >= 0 ? "verses" : "verse"] + " " + artefacts[3]) : "",
-			bookName = amoReaderModel()[lang].find(function (x) {
+			bookName = amoReaderModel(lang).find(function (x) {
 				return x.id === bookId;
 			}).name;
 		return bookName + chapter + verse;

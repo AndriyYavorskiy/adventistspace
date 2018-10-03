@@ -420,7 +420,7 @@
     width: 21px;
 	}
 	.bible.reader .move-to-chapter svg {
-		fill: #6383b5;
+		fill: #eee;
 	}
 	.bible.reader .move-to-chapter:hover svg {
 		fill: #fff;

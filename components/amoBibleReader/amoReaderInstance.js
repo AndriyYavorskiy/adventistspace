@@ -1,11 +1,11 @@
 angular.module('AMO').component('amoBibleInstance', {
   templateUrl: "/components/amoBibleReader/amoBibleInstance.html",
   controllerAs: '$ctrl',
-	controller: ['$scope', '$element', '$window', '$q', '$http', 'amoBibleInstanceManager', 'amoModal', 'instanceStateProvider', 'BIBLEMATRIX',
-    function ($scope, $element, $window, $q, $http, amoBibleInstanceManager, amoModal, instanceStateProvider, BIBLEMATRIX) {
-			var instanceState = instanceStateProvider.generateNewState(),
-				tabManager = amoBibleInstanceManager.createTabManager("navigation");
-			$ctrl = this;
+	controller: ['$scope', '$element', '$window', '$q', '$http', 'amoBibleInstanceManager', 'amoModal', 'instanceStateProvider', 'BIBLEMATRIX', 'amoReaderModel',
+    function ($scope, $element, $window, $q, $http, amoBibleInstanceManager, amoModal, instanceStateProvider, BIBLEMATRIX, amoReaderModel) {
+			var $ctrl = this;
+			var instanceState = instanceStateProvider.generateNewState();
+			var tabManager = amoBibleInstanceManager.createTabManager("navigation");
 			$ctrl.bibleBookName = "";
 			$ctrl.toggleBook = toggleBook;
 			$ctrl.getPrevBook = getPrevBook;
@@ -93,7 +93,9 @@ angular.module('AMO').component('amoBibleInstance', {
 			function setCandidate (ref) {
 				$ctrl.candidate = ref;
 			}
-			init("ru");
+			$ctrl.$onInit = function () {
+				init("ru");
+			};
 			$ctrl.switchToTab("navigation");
 			function init (lang, reference) {
 				instanceState.setLang(lang);
@@ -241,8 +243,8 @@ angular.module('AMO').component('amoBibleInstance', {
 			function navigate (route) {
 				var relevantRef = $ctrl.reference,
 					routeParams = (typeof route === "string") ?
-								  instanceState.parseReference(route).copy() :
-								  instanceState.extendWith(route).copy(),
+					  instanceState.parseReference(route).copy() :
+						instanceState.extendWith(route).copy(),
 					newReference = instanceState.getReference();
 
 				try {
@@ -312,19 +314,21 @@ angular.module('AMO').component('amoBibleInstance', {
 				});
 			}
 			function getPrevBook (reference) {
+				var books = $ctrl.books;
 				var prevBook;
-				$ctrl.books.forEach(function (book, index) {
-					if (book.id === $ctrl.state.book.id){
-						prevBook = $ctrl.books[(index || 1) - 1];
+				books.forEach(function (book, index) {
+					if (book.id === instanceState.parseReference(reference).copy().book){
+						prevBook = books[(index || 1) - 1];
 					}
 				});
 				return prevBook;
 			}
 			function getNextBook (reference) {
+				var books = $ctrl.books;
 				var nextBook;
-				$ctrl.books.forEach(function (book, index) {
-					if (book.id === $ctrl.state.book.id){
-						nextBook = $ctrl.books[(index < 65 ? index : 64) + 1];
+				books.forEach(function (book, index) {
+					if (book.id === instanceState.parseReference(reference).copy().book){
+						nextBook = books[(index < 65 ? index : 64) + 1];
 					}
 				});
 				return nextBook;
