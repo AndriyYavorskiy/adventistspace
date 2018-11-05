@@ -10,7 +10,9 @@
   "author": "''\u001b[DAnrrii",
   "license": "ISC",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  },
   "repository": {
     "type": "git",
     "url": "\u001b[2~\u001b[2~\u001b[2~\u001b[2~https://github.com/AndriyYavorskiy/adventistspace"
