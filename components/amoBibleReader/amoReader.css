@@ -65,8 +65,9 @@
 }
 .book-wrapper .toolbar-menu {
 	font-size: 0.9em;
+    height: 22px;
 	position: absolute;
-	top: -21.5px;
+	top: -22px;
 }
 .toolbar-menu .tab {
 	background: #6383b5;
