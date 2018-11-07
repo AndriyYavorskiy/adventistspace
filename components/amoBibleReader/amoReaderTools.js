@@ -126,9 +126,10 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 		return list;
 	}
 	function helpToFindBook(searchText, lang) {
-		var results = [];
+		var results = [], searchParam = searchText.trim().toLowerCase();
 		amoReaderModel(lang || 'ru').forEach(function (bookModel) {
-			var bookNameIsSimilar = bookModel.name.toLowerCase().indexOf(searchText.toLowerCase()) >= 0;
+			var bookNameIsSimilar = bookModel.name.toLowerCase().indexOf(searchParam) >= 0
+			  || bookModel.alias.toLowerCase().indexOf(searchParam) >= 0;
 			if (bookNameIsSimilar) {
 				results.push(bookModel);
 			}

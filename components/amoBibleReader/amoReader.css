@@ -231,6 +231,9 @@
 	cursor: pointer;
 	padding: 4px 8px;
 }
+.autocomplete .item.active {
+  background: #eee;
+}
 .navigation-box {
 	overflow: hidden;
 	padding: 8px;
