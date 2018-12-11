@@ -65,7 +65,6 @@
 	color: #fff;
 }
 .btn.solid {
-	background: #6383b5;
 	color: #fff;
 }
 .btn.sensation {
@@ -77,8 +76,6 @@
   fill: #b7d3ff;
 }
 .btn.sensation:hover {
-  background: #6383b5;
-  border-color: #6383b5;
   color: #fff;
 }
 .btn.sensation:hover svg {

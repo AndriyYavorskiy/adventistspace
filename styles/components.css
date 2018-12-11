@@ -66,7 +66,8 @@ amo-modal {
 	position: absolute;
 	z-index: -1;
 }
-.slide .message p{
+.slide .message p {
+	text-shadow: 0 0 7px #fff;
 	color: #000;
   padding: 4px 12px;
 }

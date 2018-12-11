@@ -31,7 +31,6 @@ angular.module('AMO').component('amoLangSwitcher', {
         box-shadow: 0 0 6px rgba(0,0,0, .05);
       }
       .head {
-        background: #6383b5;
         border-radius: 3px 3px 0 0;
         color: #fff;
       }
@@ -58,7 +57,6 @@ angular.module('AMO').component('amoLangSwitcher', {
         background: #eee;
       }
       .lang.active {
-        background: #6383b5;
         color: #fff;
       }
     </style>

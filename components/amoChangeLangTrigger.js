@@ -3,7 +3,6 @@ angular.module('AMO').component('amoChangeLangTrigger', {
     <div class="amo-change-lang-trigger wrapper" ng-click="trigger.open()">{{'langSwitcher.x_lang' | translate}}<div>
     <style>
       .amo-change-lang-trigger.wrapper {
-        background: #6383b5;
         border-radius: 0 0 2px 2px;
         color: #fff;
         cursor: pointer;

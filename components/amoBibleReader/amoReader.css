@@ -70,7 +70,6 @@
 	top: -22px;
 }
 .toolbar-menu .tab {
-	background: #6383b5;
 	color: #fff;
     border-radius: 4px 4px 0 0;
     cursor: pointer;
@@ -79,9 +78,8 @@
     margin-left: 4px;
     padding: 2px 8px;
 }
-.toolbar-menu .tab.active {
+[amo-theme] .toolbar-menu .tab.active {
 	background: #fff;
-	color: #6383b5;
 }
 .search-box {
 	padding: 8px;
@@ -128,7 +126,6 @@
 	font-size: 0.9em;
 }
 .result-item .scripture {
-	color: #6383b5;
 	font-size: inherit;
 	text-align: justify;
 }
@@ -138,7 +135,6 @@
 	font-weight: bold;
 }
 .results-link {
-	color: #6383b5;
 	cursor: pointer;
 	float: right;
 }
@@ -204,7 +200,6 @@
   float: left;
 }
 .book-toolbar .inp.txt:focus {
-	border-color: #6383b5;
 	outline: none;
 }
 .book-toolbar #bible-book:not(:focus) + .autocomplete {
@@ -242,7 +237,6 @@
 	color: #ff7777;
 }
 .book-toolbar .btn.primary {
-	background: #6383b5;
 	border-radius: 0 2px 2px 0;
     color: #fff;
 }
@@ -286,7 +280,6 @@
 	background: #eee;
 }
 .navigation-agents .agent:hover {
-	background: #6383b5;
 	color: #fff;
 }
 .navigation-agents .agent:hover .pointer {
@@ -294,9 +287,7 @@
 }
 .navigation-agents .agent .pointer {
     background: #fff;
-	border: 1px solid #6383b5;
     border-radius: 2px;
-    color: #6383b5;
     display: none;
     font-size: 12px;
     height: 14px;
@@ -309,7 +300,6 @@
 }
 .navigation-agents .agent .pointer:after {
     border: 4px solid transparent;
-    border-top: 5px solid #6383b5;
     bottom: -10px;
     content: "";
     left: 5.5px;
@@ -325,20 +315,17 @@
 }
 .history-item {
     border-radius: 2px;
-    color: #6383b5;
     cursor: pointer;
     font-size: 0.9em;
     padding: 2px 6px;
 }
-.history-item.current {
-	background: #6383b5;
+[amo-theme] .history-item.current {
     color: white;
 }
 	[amo-reader] {
 		height: 100%;
 	}
 	.bible.reader {
-		background: #6383b5;
 		border-radius: 0 5px 5px 5px;
 		height: calc(100% - 50px);
 		overflow-y: auto;
@@ -356,7 +343,6 @@
 		width: 100%;
 	}
 	.bible.reader .book.open .book-name {
-		color: #6383b5;
 	}
 	.bible.reader .book-name {
 		color: #fff;
@@ -383,7 +369,6 @@
 		margin-right: 5px;
 	}
 	.bible.reader .chapter-number {
-		color: #6383b5;
 		margin: 0 auto 4px;
 		text-align: center;
 		width: 50%;
@@ -410,13 +395,11 @@
 		color: #cebab8;
 	}
 	.bible.reader .verse.spotlight {
-		background: #6383b5;
 		border-radius: 2px;
 		color: #fff;
 	}
 	.bible.reader .move-to-chapter {
     border-radius: 50%;
-    color: #6383b5;
     cursor: pointer;
     height: 21px;
     line-height: 22px;
@@ -430,7 +413,6 @@
 		fill: #fff;
 	}
 	.bible.reader .move-to-chapter:hover {
-		background: #6383b5;
 		color: #fff;
 	}
 	.close-modal {
@@ -459,11 +441,9 @@
 	opacity: 0.5;
 }
 .verse-actions li:hover {
-	background: #6383b5;
 	color: #fff;
 }
 .fullscreen-trigger {
-  color: #6383b5;
   cursor: pointer;
   height: 20px;
   margin-left: 8px;
