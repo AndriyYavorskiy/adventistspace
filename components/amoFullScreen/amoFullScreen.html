@@ -1,5 +1,5 @@
 <div class="full-screen-container" id="full-screen-container">
-  <div class="full-screen-header clearfix">
+  <div class="full-screen-header clearfix" ng-if="fullScreen.showNav">
     <div class="leave-full-screen" onclick="amoLeaveFullScreen();" ng-click="fullScreen.leaveFullScreen(); closeModal();">
       <svg fill="#fff" width="32px" height="32px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;">
         <path d="M256,0C114.609,0,0,114.609,0,256c0,141.391,114.609,256,256,256c141.391,0,256-114.609,256-256
@@ -17,7 +17,7 @@
       ({{ fullScreen.reference }})
     </span>
   </div>
-  <div class="full-screen-read-area slim-scroll">
+  <div class="full-screen-read-area slim-scroll" ng-class="{'full-height': !fullScreen.showNav}" ng-click="fullScreen.showNav = !fullScreen.showNav">
     <div class="container">
       <div class="row">
         <div class="full-screen-chapters">
@@ -63,9 +63,12 @@
     width: 100%;
   }
   .full-screen-read-area {
+    height: 100%;
+    overflow-y: auto;
+  }
+  .full-screen-read-area:not(.full-height) {
     height: calc(100% - 64px);
     margin-top: 64px;
-    overflow-y: auto;
   }
   .full-screen-title, .entry-point {
     color: #fff;

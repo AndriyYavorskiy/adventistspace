@@ -4,8 +4,9 @@
 		<title>Біблія для усіх | вивчайте з комфортом</title>
 		<meta charset="utf-8">
 		<!--meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=3.0, minimum-scale=0.86"-->
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name='keywords' content='Бог, Біблія, Библия, Евангелие, Євангеліє, пророцтва, пророчества, книга жизни, последнее время, істинна церква, истинная церковь, Священное Писание, Святе Писання, вивчати Біблію, изучать Библию, изучать Библию онлайн, уроки Біблії, уроки Библии, Закон Божий, Заповіді Божі, Божьи Заповеди, Синодальный'>
+		<meta name='keywords' content='читать библию онлайн, кто ниписал библию, библия, церковь, вера'>
 		<meta name='description' content='Изучайте Библию удобно, ищите в Библии, делитесь с другими.'>
 		<meta name="twitter:image" content="http://adventamo.com/images/learn.jpg">
 		<meta property="og:title" content="Библия онлайн" />
@@ -42,6 +43,7 @@
 		<script src='components/amoLangSwitcher/amoLangSwitcher.js'></script>
 		<script src='components/amoChangeLangTrigger.js'></script>
 		<script src='scripts/amoCommon.js'></script>
+		<script src='scripts/amoDesktop.js'></script>
 		<script src='scripts/rightClickDirective.js'></script>
 		<link rel="shortcut icon" href="images/Fish3.png" type="image/x-icon">
 		<script src='libs/ngclipboard.js'></script>
@@ -51,19 +53,28 @@
 	<body ng-controller="amoMain as mainCtrl">
 		<amo-change-lang-trigger></amo-change-lang-trigger>
 		<main>
-			<div class='module'>
+			<div class="desktop module" amo-desktop>
 				<div class='slide column'>
 					<div class='message'>
-						<h1>Ми повинні вивчати Біблію</h1>
+						<h1 amo-reader-link>Библия - Слово Божие</h1>
 						<section>
 							<p class="verse-text">
-								Вникай в себя и в учение; занимайся сим постоянно: ибо, так поступая, и себя спасешь и слушающих тебя
+								Ибо никогда пророчество не было произносимо по воле человеческой, но изрекали его святые Божии человеки, будучи движимы Духом Святым.
 							</p>
 						</section>
-						<p class='source' amo-reader-link="ru:tim1:4:16" auto-text></p>
+						<p class='source' amo-reader-link="ru:pet2:1:21" auto-text></p>
+						<div class="statement">
+							Библия состоит из множества книг и написана многими авторами, но все они руководились Богом.  
+							Это книга с притчами, но большая ее часть это реальные истории и пророчества. Библия дана человеку чтобы учиться мудрсти и рости духовно.
+						</div>
+						<div style="text-align: center; margin-top: 32px;">
+							<button class="btn l solid drop-shadow" amo-reader-link>Читать Библию</button>
+						</div>
 					</div>
 				</div>
-				<div class='slide learn mt-400px absolute'></div>
+				<div class='slide learn absolute'></div>
+			</div>
+			<div class="module">
 				<div class='container'>
 					<div class='columns row'>
 						<div class='column col-lg-3 col-md-4 col-sm-6 col-xs-12'>
@@ -71,6 +82,10 @@
 								7 Главное — мудрость: приобретай мудрость, и всем имением твоим приобретай разум. 
 							</p>
 							<p class='autor' amo-reader-link="ru:prov:4:7">Соломон | Притчі 4:7</p>
+							<p class="verse-text">
+								Вникай в себя и в учение; занимайся сим постоянно: ибо, так поступая, и себя спасешь и слушающих тебя
+							</p>
+							<p class='autor' amo-reader-link="ru:tim1:4:16" auto-text></p>
 						</div>
 						<div class="column col-lg-3 col-md-4 col-sm-6 col-xs-12">
 							<p class="verse-text"> Исследуйте Писания, ибо вы думаете чрез них иметь жизнь вечную; а они свидетельствуют о Мне</p>
@@ -84,7 +99,7 @@
 							<p class="verse-text">
 								Слово Христово да вселяется в вас обильно, со всякою премудростью; научайте и вразумляйте друг друга псалмами, славословием и духовными песнями, во благодати воспевая в сердцах ваших Господу.. 
 							</p>
-							<p class='autor' amo-reader-link="ru:col:3:16">Слова апостола Павла | Послання до Колоссян розділ 3 вірш 16</p>
+							<p class='autor' amo-reader-link="ru:col:3:16">Слова апостола Павла | Послание Колоссянам глава 3 стих 16</p>
 						</div>
 					</div>
 				</div>
@@ -92,7 +107,7 @@
 			<div class='module'>
 				<div class='slide column'>
 					<div class='message'>
-						<h1>Закон Божий є актуальним і не був зміненим</h1>
+						<h1>Закон Божий актуален и не был изменен</h1>
 						<section>
 							<p class="verse-text">	
 								Не думайте, что Я пришел нарушить закон или пророков: не нарушить пришел Я, но исполнить.
@@ -100,7 +115,7 @@
 							<p class="verse-text">
 								Ибо истинно говорю вам: доколе не прейдет небо и земля, ни одна иота или ни одна черта не прейдет из закона, пока не исполнится все</p>
 						</section>
-						<p class='source' amo-reader-link="ru:matt:5:17-18">Ісус Христос | Евангеліє від Матвія 5:17</p>
+						<p class='source' amo-reader-link="ru:matt:5:17-18">Иисус Христос | Евангелие от Матфея 5:17</p>
 					</div>
 				</div>
 				<div class='slide law mt-400px absolute'></div>
@@ -113,13 +128,13 @@
 							<p class="verse-text">
 								3 Ибо это есть любовь к Богу, чтобы мы соблюдали заповеди Его; и заповеди Его нетяжки.
 							</p>
-							<p class='autor' amo-reader-link="ru:john1:5:2,3" auto-text>1-е Іоанна розділ 5 вірш 2 - 3</p>
+							<p class='autor' amo-reader-link="ru:john1:5:2,3" auto-text></p>
 						</div>
 						<div class='column col-lg-3 col-md-4 col-sm-6'>
 							<p class="verse-text">
 								6 Любовь же состоит в том, чтобы мы поступали по заповедям Его.
 							</p>
-							<p class='autor' amo-reader-link="ru:john2:1:6" auto-text>2-е Іоанна розділ 1 вірш 6</p>
+							<p class='autor' amo-reader-link="ru:john2:1:6" auto-text></p>
 							<p class="verse-text">
 								2 Кто говорит: «я познал Его», но заповедей Его не соблюдает, тот лжец, и нет в нем истины;	
 							</p>
@@ -146,7 +161,7 @@
 			<div class='module'>
 				<div class='slide column'>
 					<div class='message'>
-						<h1>Ісус Христос є Богом</h1>
+						<h1>Иисус Христос - Бог</h1>
 						<section>
 							<p class="verse-text">
 								И беспрекословно - великая благочестия тайна: Бог явился во плоти, оправдал Себя в Духе, показал Себя Ангелам, проповедан в народах, принят верою в мире, вознесся во славе.
@@ -171,9 +186,7 @@
 								<p class="verse-text">8 А о Сыне: "Престол Твой Боже, в век века; жезл царствия Твоего - жезл правоты.</p>
 								<p class="verse-text">9 Ты возлюбил правду и возненавидел беззакония; посему помазав Тебя, Боже, Бог твой елеем радости более соучастников твоих"
 								</p>
-								<p class='autor' amo-reader-link="ru:heb:1:8" auto-text>
-									Послание к Евреям глава 1 стихи 8 и 9
-								</p>
+								<p class='autor' amo-reader-link="ru:heb:1:8" auto-text>Послание к Евреям глава 1 стихи 8 и 9</p>
 							</div>
 							<div class="column col-lg-4 col-md-4 col-sm-6">
 								<p class="verse-text">Иисус сказал ему: столько времени Я с вами, и ты не знаешь Меня, Филипп? Видевший Меня видел Отца; как же ты говоришь: покажи нам Отца?</p>

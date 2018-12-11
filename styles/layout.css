@@ -65,7 +65,7 @@
 	transition: .3s;
 	justify-content: center;
 	flex-direction: column;
-	z-index: 777;
+	z-index: 1;
 }
 .gifts:hover{
 	background: rgba(222,222,222, .2);

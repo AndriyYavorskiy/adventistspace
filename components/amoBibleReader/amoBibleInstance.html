@@ -68,7 +68,7 @@
 				</div>
 			</div>
 			<div class="navigation-agents">
-				<div class="agent" ng-repeat="chapter in $ctrl.state.book.chapters"
+				<div class="agent" ng-repeat="chapter in $ctrl.state.book.chapters track by $index"
 					 ng-class="{active: $ctrl.state.chapterIndex === $index}"
 					 ng-if="$ctrl.state.book.chapters.length > 1" 
 					 ng-click="$ctrl.navigate({chapter: $index + 1, verse: 0})">.
@@ -76,7 +76,7 @@
 				</div>
 			</div>
 			<div class="navigation-agents">
-				<div class="agent" ng-repeat="verse in $ctrl.state.chapterMap"
+				<div class="agent" ng-repeat="verse in $ctrl.state.chapterMap track by $index"
 					 ng-class="{active: $ctrl.state.verseIndex === $index}"
 					 ng-click="$ctrl.navigate({verse: $index + 1})">
 					.<span class="pointer">{{$index + 1}}</span>
@@ -92,7 +92,7 @@
 	<div class="reader bible slim-scroll">
 		<div class="cover search-results slim-scroll" ng-if="$ctrl.searchResults.length && $ctrl.showResults && $ctrl.currentTabIs('search')">
 			<div class="result-item"
-				 ng-repeat="result in $ctrl.searchResults | orderBy: '-rate' | limitTo: $ctrl.searchResultsLimit" 
+				 ng-repeat="result in $ctrl.searchResults | orderBy: '-rate' | limitTo: $ctrl.searchResultsLimit track by $index" 
 				 ng-mousedown="$ctrl.actionWithResultItem($event, result.reference)">
 				{{result.reference | BibleReference}} <!--span ng-bind="result.rate"></span-->
 				<div class="scripture" ng-bind-html="result.scripture"></div>
@@ -101,13 +101,13 @@
 				 ng-click="$ctrl.searchResultsLimit = $ctrl.searchResultsLimit + 24" ng-bind="'reader.show_more' | translate"></div>
 		</div>
 		<div class="cover history slim-scroll" ng-if="$ctrl.currentTabIs('share')">
-			<div ng-repeat="place in $ctrl.history" class="history-item" 
+			<div ng-repeat="place in $ctrl.history track by $index" class="history-item" 
 				 ng-class="{current: place.isCurrent}" ng-click="$ctrl.glideInHistory(place)">
 				{{place.ref | BibleReference}}
 			</div>
 		</div>
 		<div class="book" id="{{book.id}}"
-			 ng-repeat="book in $ctrl.books track by $index"
+			 ng-repeat="book in $ctrl.books track by book.alias"
 			 ng-class="{open: book.open, 'with-data': book.chapters.length}">
 			<div class="book-name" ng-click="$ctrl.toggleBook(book)">
 				<span amo-stop-prop class="book-checker go-left">

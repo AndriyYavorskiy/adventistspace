@@ -18,6 +18,10 @@
 	border-radius: 2px;
 	cursor: pointer;
 }
+.btn.l {
+	height: 42px;
+	padding: 0 16px;
+}
 .btn.m {
 	height: 36px;
 	padding: 0 12px;
@@ -29,11 +33,35 @@
 }
 .btn.xs {
 	font-size: 0.9em;
-    height: 20px;
-    padding: 0 6px;
+  height: 20px;
+  padding: 0 6px;
+}
+.btn.creative {
+	background: #bf6363;
+	background: #af5883;
+	background: #6c63b5;
+	background: #525d94;
+	background: #526f94;
+	background: #528a94;
+	background: #529482;
+	background: #52946a;
+	background: #6b9452;
+	background: #a99d42;
+	background: #888;
+	color: #a9ff3e;
+}
+.btn.l.drop-shadow {
+	transition: .3s;
+	box-shadow: 0 0px 12px #ffffff00;
+}
+.btn.l.drop-shadow:hover {
+	box-shadow: 0 6px 12px #00000050;
+}
+.btn.l.drop-shadow:active {
+	box-shadow: 0 12px 12px #00000000;
 }
 .btn.primary {
-    background: #A0DE52;
+  background: #A0DE52;
 	color: #fff;
 }
 .btn.solid {

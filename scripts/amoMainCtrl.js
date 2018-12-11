@@ -16,8 +16,7 @@ angular.module('AMO')
 });
 
 /*
-function getUserIP() { //  onNewIp - your listener function for new IPs
-	//compatibility for firefox and chrome
+function getUserIP() {
 	var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
 	var pc = new myPeerConnection({
 			iceServers: []
@@ -32,10 +31,8 @@ function getUserIP() { //  onNewIp - your listener function for new IPs
 			localIPs[ip] = true;
 	}
 
-	 //create a bogus data channel
 	pc.createDataChannel("");
 
-	// create offer and set local description
 	pc.createOffer().then(function(sdp) {
 			sdp.sdp.split('\n').forEach(function(line) {
 					if (line.indexOf('candidate') < 0) return;
@@ -44,17 +41,14 @@ function getUserIP() { //  onNewIp - your listener function for new IPs
 			
 			pc.setLocalDescription(sdp, noop, noop);
 	}).catch(function(reason) {
-			// An error occurred, so handle the failure to connect
+
 	});
 
-	//listen for candidate events
 	pc.onicecandidate = function(ice) {
 			if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
 			ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
 	};
 }
-
-// Usage
 
 getUserIP(function(ip){
 	alert("Got IP! :" + ip);

@@ -2,7 +2,7 @@
 	<div class='gifts flex'>
 		<div mode class='gift word' ng-click='$ctrl.showGiftsModal = 1'></div>
 		<div mode class='gift low' ng-click='$ctrl.showGiftsModal = 2'></div>
-		<div mode class='gift bible' ng-click='mainCtrl.showBibleReader("ru:rev:17:10"); $ctrl.showGiftsModal = 0'></div>
+		<div mode class='gift bible' amo-reader-link ng-click='mainCtrl.showBibleReader(); $ctrl.showGiftsModal = 0'></div>
 		<div mode class='gift church' ng-click='$ctrl.showGiftsModal = 4'></div>
 		<div mode class='gift infinity' ng-click='$ctrl.showGiftsModal = 5'></div>
 	</div>

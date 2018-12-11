@@ -13,6 +13,7 @@ angular.module('AMO').component('amoFullScreen', {
       fullScreen.model = angular.copy(fullScreen.data.book);
       fullScreen.reference = fullScreen.data.reference;
     };
+    this.showNav = true;
     setTimeout(function () {
       var target = document.getElementById(fullScreen.reference.split('-')[0]);
       if (target) {
