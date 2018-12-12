@@ -1,6 +1,6 @@
 
 
-/* yaspis */
+/* yaspis #d25f53 */
 [amo-theme=yaspis] .toolbar-menu .tab,
 [amo-theme=yaspis] .book-toolbar .btn.primary,
 [amo-theme=yaspis] .navigation-agents .agent:hover,
@@ -16,7 +16,7 @@
 [amo-theme=yaspis] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=yaspis] .btn.solid,
 [amo-theme=yaspis] .amo-theme { 
-	background: #b56249;
+	background: #d25f53;
 }
 [amo-theme=yaspis] .toolbar-menu .tab.active,
 [amo-theme=yaspis] .result-item .scripture,
@@ -28,21 +28,24 @@
 [amo-theme=yaspis] .fullscreen-trigger,
 [amo-theme=yaspis] .full-screen-chapter-title,
 [amo-theme=yaspis] .leave-full-screen {
-	color: #b56249;
+	color: #d25f53;
 }
 [amo-theme=yaspis] .book-toolbar .inp.txt:focus {
-	border-color: #b56249;
+	border-color: #d25f53;
 }
 [amo-theme=yaspis] .navigation-agents .agent .pointer {
-	border: 1px solid #b56249;
-  color: #b56249;
+	border: 1px solid #d25f53;
+  color: #d25f53;
 }
 [amo-theme=yaspis] .navigation-agents .agent .pointer:after {
-  border-top: 5px solid #b56249;
+  border-top: 5px solid #d25f53;
 }
 [amo-theme=yaspis] .btn.sensation:hover {
-  background: #b56249;
-  border-color: #b56249;
+  background: #d25f53;
+  border-color: #d25f53;
+}
+[amo-theme=yaspis] .verse.spotlight .verse-num {
+  color: #ecab97;
 }
 
 
@@ -90,9 +93,12 @@
   background: #456af3;
   border-color: #456af3;
 }
+[amo-theme=sapfir] .verse.spotlight .verse-num {
+  color: #a8bbff;
+}
 
 
-/* xalkidon */
+/* xalkidon #7195bb #6383b5 */
 [amo-theme=xalkidon] .toolbar-menu .tab,
 [amo-theme=xalkidon] .book-toolbar .btn.primary,
 [amo-theme=xalkidon] .navigation-agents .agent:hover,
@@ -136,9 +142,12 @@
   background: #7195bb;
   border-color: #7195bb;
 }
+[amo-theme=xalkidon] .verse.spotlight .verse-num {
+  color: #b6d2ef;
+}
 
 
-/* smaragd */
+/* smaragd #52a290 */
 [amo-theme=smaragd] .toolbar-menu .tab,
 [amo-theme=smaragd] .book-toolbar .btn.primary,
 [amo-theme=smaragd] .navigation-agents .agent:hover,
@@ -182,9 +191,12 @@
   background: #52a290;
   border-color: #52a290;
 }
+[amo-theme=smaragd] .verse.spotlight .verse-num {
+  color: #9cdcce;
+}
 
 
-/* sardonix #e8a055 */
+/* sardonix #e6896d */
 [amo-theme=sardonix] .toolbar-menu .tab,
 [amo-theme=sardonix] .book-toolbar .btn.primary,
 [amo-theme=sardonix] .navigation-agents .agent:hover,
@@ -200,7 +212,7 @@
 [amo-theme=sardonix] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=sardonix] .btn.solid,
 [amo-theme=sardonix] .amo-theme { 
-	background: #e8a055;
+	background: #e6896d;
 }
 [amo-theme=sardonix] .toolbar-menu .tab.active,
 [amo-theme=sardonix] .result-item .scripture,
@@ -212,21 +224,24 @@
 [amo-theme=sardonix] .fullscreen-trigger,
 [amo-theme=sardonix] .full-screen-chapter-title,
 [amo-theme=sardonix] .leave-full-screen {
-	color: #e8a055;
+	color: #e6896d;
 }
 [amo-theme=sardonix] .book-toolbar .inp.txt:focus {
-	border-color: #e8a055;
+	border-color: #e6896d;
 }
 [amo-theme=sardonix] .navigation-agents .agent .pointer {
-	border: 1px solid #e8a055;
-  color: #e8a055;
+	border: 1px solid #e6896d;
+  color: #e6896d;
 }
 [amo-theme=sardonix] .navigation-agents .agent .pointer:after {
-  border-top: 5px solid #e8a055;
+  border-top: 5px solid #e6896d;
 }
 [amo-theme=sardonix] .btn.sensation:hover {
-  background: #e8a055;
-  border-color: #e8a055;
+  background: #e6896d;
+  border-color: #e6896d;
+}
+[amo-theme=sardonix] .verse.spotlight .verse-num {
+  color: #f3d3bd;
 }
 
 
@@ -274,206 +289,257 @@
   background: #e06565;
   border-color: #e06565;
 }
+[amo-theme=cerdolik] .verse.spotlight .verse-num {
+  color: #fdcaca;
+}
 
 
-/* yaspis #b56249 */
-/* sapfir #456af3 */
-/* xalkidon #7195bb */
-/* smaragd #52a290 */
-/* sardonix #e8a055 */
-/* cerdolik #e06565 */
 /* xrizolit #84ab50 */
+[amo-theme=xrizolit] .toolbar-menu .tab,
+[amo-theme=xrizolit] .book-toolbar .btn.primary,
+[amo-theme=xrizolit] .navigation-agents .agent:hover,
+[amo-theme=xrizolit] .history-item.current,
+[amo-theme=xrizolit] .bible.reader,
+[amo-theme=xrizolit] .bible.reader .verse.spotlight,
+[amo-theme=xrizolit] .bible.reader .move-to-chapter:hover,
+[amo-theme=xrizolit] .verse-actions li:hover,
+[amo-theme=xrizolit] .amo-change-lang-trigger.wrapper,
+[amo-theme=xrizolit] .full-screen-header,
+[amo-theme=xrizolit] .head,
+[amo-theme=xrizolit] .lang.active,
+[amo-theme=xrizolit] .slim-scroll::-webkit-scrollbar-thumb,
+[amo-theme=xrizolit] .btn.solid,
+[amo-theme=xrizolit] .amo-theme { 
+	background: #84ab50;
+}
+[amo-theme=xrizolit] .toolbar-menu .tab.active,
+[amo-theme=xrizolit] .result-item .scripture,
+[amo-theme=xrizolit] .results-link,
+[amo-theme=xrizolit] .history-item,
+[amo-theme=xrizolit] .bible.reader .book.open .book-name,
+[amo-theme=xrizolit] .bible.reader .chapter-number,
+[amo-theme=xrizolit] .bible.reader .move-to-chapter,
+[amo-theme=xrizolit] .fullscreen-trigger,
+[amo-theme=xrizolit] .full-screen-chapter-title,
+[amo-theme=xrizolit] .leave-full-screen {
+	color: #84ab50;
+}
+[amo-theme=xrizolit] .book-toolbar .inp.txt:focus {
+	border-color: #84ab50;
+}
+[amo-theme=xrizolit] .navigation-agents .agent .pointer {
+	border: 1px solid #84ab50;
+  color: #84ab50;
+}
+[amo-theme=xrizolit] .navigation-agents .agent .pointer:after {
+  border-top: 5px solid #84ab50;
+}
+[amo-theme=xrizolit] .btn.sensation:hover {
+  background: #84ab50;
+  border-color: #84ab50;
+}
+[amo-theme=xrizolit] .verse.spotlight .verse-num {
+  color: #b6d88a;
+}
+
+
 /* virill #54af70 */
+[amo-theme=virill] .toolbar-menu .tab,
+[amo-theme=virill] .book-toolbar .btn.primary,
+[amo-theme=virill] .navigation-agents .agent:hover,
+[amo-theme=virill] .history-item.current,
+[amo-theme=virill] .bible.reader,
+[amo-theme=virill] .bible.reader .verse.spotlight,
+[amo-theme=virill] .bible.reader .move-to-chapter:hover,
+[amo-theme=virill] .verse-actions li:hover,
+[amo-theme=virill] .amo-change-lang-trigger.wrapper,
+[amo-theme=virill] .full-screen-header,
+[amo-theme=virill] .head,
+[amo-theme=virill] .lang.active,
+[amo-theme=virill] .slim-scroll::-webkit-scrollbar-thumb,
+[amo-theme=virill] .btn.solid,
+[amo-theme=virill] .amo-theme { 
+	background: #54af70;
+}
+[amo-theme=virill] .toolbar-menu .tab.active,
+[amo-theme=virill] .result-item .scripture,
+[amo-theme=virill] .results-link,
+[amo-theme=virill] .history-item,
+[amo-theme=virill] .bible.reader .book.open .book-name,
+[amo-theme=virill] .bible.reader .chapter-number,
+[amo-theme=virill] .bible.reader .move-to-chapter,
+[amo-theme=virill] .fullscreen-trigger,
+[amo-theme=virill] .full-screen-chapter-title,
+[amo-theme=virill] .leave-full-screen {
+	color: #54af70;
+}
+[amo-theme=virill] .book-toolbar .inp.txt:focus {
+	border-color: #54af70;
+}
+[amo-theme=virill] .navigation-agents .agent .pointer {
+	border: 1px solid #54af70;
+  color: #54af70;
+}
+[amo-theme=virill] .navigation-agents .agent .pointer:after {
+  border-top: 5px solid #54af70;
+}
+[amo-theme=virill] .btn.sensation:hover {
+  background: #54af70;
+  border-color: #54af70;
+}
+[amo-theme=virill] .verse.spotlight .verse-num {
+  color: #8dd4a3;
+}
+
+
 /* topaz #40b3d6 */
+[amo-theme=topaz] .toolbar-menu .tab,
+[amo-theme=topaz] .book-toolbar .btn.primary,
+[amo-theme=topaz] .navigation-agents .agent:hover,
+[amo-theme=topaz] .history-item.current,
+[amo-theme=topaz] .bible.reader,
+[amo-theme=topaz] .bible.reader .verse.spotlight,
+[amo-theme=topaz] .bible.reader .move-to-chapter:hover,
+[amo-theme=topaz] .verse-actions li:hover,
+[amo-theme=topaz] .amo-change-lang-trigger.wrapper,
+[amo-theme=topaz] .full-screen-header,
+[amo-theme=topaz] .head,
+[amo-theme=topaz] .lang.active,
+[amo-theme=topaz] .slim-scroll::-webkit-scrollbar-thumb,
+[amo-theme=topaz] .btn.solid,
+[amo-theme=topaz] .amo-theme { 
+	background: #40b3d6;
+}
+[amo-theme=topaz] .toolbar-menu .tab.active,
+[amo-theme=topaz] .result-item .scripture,
+[amo-theme=topaz] .results-link,
+[amo-theme=topaz] .history-item,
+[amo-theme=topaz] .bible.reader .book.open .book-name,
+[amo-theme=topaz] .bible.reader .chapter-number,
+[amo-theme=topaz] .bible.reader .move-to-chapter,
+[amo-theme=topaz] .fullscreen-trigger,
+[amo-theme=topaz] .full-screen-chapter-title,
+[amo-theme=topaz] .leave-full-screen {
+	color: #40b3d6;
+}
+[amo-theme=topaz] .book-toolbar .inp.txt:focus {
+	border-color: #40b3d6;
+}
+[amo-theme=topaz] .navigation-agents .agent .pointer {
+	border: 1px solid #40b3d6;
+  color: #40b3d6;
+}
+[amo-theme=topaz] .navigation-agents .agent .pointer:after {
+  border-top: 5px solid #40b3d6;
+}
+[amo-theme=topaz] .btn.sensation:hover {
+  background: #40b3d6;
+  border-color: #40b3d6;
+}
+[amo-theme=topaz] .verse.spotlight .verse-num {
+  color: #87d8f1;
+}
+
+
 /* xrizopraz #57b7a5 */
-/* giacint #bd6b52 */
+[amo-theme=xrizopraz] .toolbar-menu .tab,
+[amo-theme=xrizopraz] .book-toolbar .btn.primary,
+[amo-theme=xrizopraz] .navigation-agents .agent:hover,
+[amo-theme=xrizopraz] .history-item.current,
+[amo-theme=xrizopraz] .bible.reader,
+[amo-theme=xrizopraz] .bible.reader .verse.spotlight,
+[amo-theme=xrizopraz] .bible.reader .move-to-chapter:hover,
+[amo-theme=xrizopraz] .verse-actions li:hover,
+[amo-theme=xrizopraz] .amo-change-lang-trigger.wrapper,
+[amo-theme=xrizopraz] .full-screen-header,
+[amo-theme=xrizopraz] .head,
+[amo-theme=xrizopraz] .lang.active,
+[amo-theme=xrizopraz] .slim-scroll::-webkit-scrollbar-thumb,
+[amo-theme=xrizopraz] .btn.solid,
+[amo-theme=xrizopraz] .amo-theme { 
+	background: #57b7a5;
+}
+[amo-theme=xrizopraz] .toolbar-menu .tab.active,
+[amo-theme=xrizopraz] .result-item .scripture,
+[amo-theme=xrizopraz] .results-link,
+[amo-theme=xrizopraz] .history-item,
+[amo-theme=xrizopraz] .bible.reader .book.open .book-name,
+[amo-theme=xrizopraz] .bible.reader .chapter-number,
+[amo-theme=xrizopraz] .bible.reader .move-to-chapter,
+[amo-theme=xrizopraz] .fullscreen-trigger,
+[amo-theme=xrizopraz] .full-screen-chapter-title,
+[amo-theme=xrizopraz] .leave-full-screen {
+	color: #57b7a5;
+}
+[amo-theme=xrizopraz] .book-toolbar .inp.txt:focus {
+	border-color: #57b7a5;
+}
+[amo-theme=xrizopraz] .navigation-agents .agent .pointer {
+	border: 1px solid #57b7a5;
+  color: #57b7a5;
+}
+[amo-theme=xrizopraz] .navigation-agents .agent .pointer:after {
+  border-top: 5px solid #57b7a5;
+}
+[amo-theme=xrizopraz] .btn.sensation:hover {
+  background: #57b7a5;
+  border-color: #57b7a5;
+}
+[amo-theme=xrizopraz] .verse.spotlight .verse-num {
+  color: #afeadf;
+}
+
+
+/* giacint #c36f66 */
+[amo-theme=giacint] .toolbar-menu .tab,
+[amo-theme=giacint] .book-toolbar .btn.primary,
+[amo-theme=giacint] .navigation-agents .agent:hover,
+[amo-theme=giacint] .history-item.current,
+[amo-theme=giacint] .bible.reader,
+[amo-theme=giacint] .bible.reader .verse.spotlight,
+[amo-theme=giacint] .bible.reader .move-to-chapter:hover,
+[amo-theme=giacint] .verse-actions li:hover,
+[amo-theme=giacint] .amo-change-lang-trigger.wrapper,
+[amo-theme=giacint] .full-screen-header,
+[amo-theme=giacint] .head,
+[amo-theme=giacint] .lang.active,
+[amo-theme=giacint] .slim-scroll::-webkit-scrollbar-thumb,
+[amo-theme=giacint] .btn.solid,
+[amo-theme=giacint] .amo-theme { 
+	background: #c36f66;
+}
+[amo-theme=giacint] .toolbar-menu .tab.active,
+[amo-theme=giacint] .result-item .scripture,
+[amo-theme=giacint] .results-link,
+[amo-theme=giacint] .history-item,
+[amo-theme=giacint] .bible.reader .book.open .book-name,
+[amo-theme=giacint] .bible.reader .chapter-number,
+[amo-theme=giacint] .bible.reader .move-to-chapter,
+[amo-theme=giacint] .fullscreen-trigger,
+[amo-theme=giacint] .full-screen-chapter-title,
+[amo-theme=giacint] .leave-full-screen {
+	color: #c36f66;
+}
+[amo-theme=giacint] .book-toolbar .inp.txt:focus {
+	border-color: #c36f66;
+}
+[amo-theme=giacint] .navigation-agents .agent .pointer {
+	border: 1px solid #c36f66;
+  color: #c36f66;
+}
+[amo-theme=giacint] .navigation-agents .agent .pointer:after {
+  border-top: 5px solid #c36f66;
+}
+[amo-theme=giacint] .btn.sensation:hover {
+  background: #c36f66;
+  border-color: #c36f66;
+}
+[amo-theme=giacint] .verse.spotlight .verse-num {
+  color: #eab1a0;
+}
+
+
 /* ametist #9182ce */
-/* coffee */
-[amo-theme=coffee] .toolbar-menu .tab,
-[amo-theme=coffee] .book-toolbar .btn.primary,
-[amo-theme=coffee] .navigation-agents .agent:hover,
-[amo-theme=coffee] .history-item.current,
-[amo-theme=coffee] .bible.reader,
-[amo-theme=coffee] .bible.reader .verse.spotlight,
-[amo-theme=coffee] .bible.reader .move-to-chapter:hover,
-[amo-theme=coffee] .verse-actions li:hover,
-[amo-theme=coffee] .amo-change-lang-trigger.wrapper,
-[amo-theme=coffee] .full-screen-header,
-[amo-theme=coffee] .head,
-[amo-theme=coffee] .lang.active,
-[amo-theme=coffee] .slim-scroll::-webkit-scrollbar-thumb,
-[amo-theme=coffee] .btn.solid,
-[amo-theme=coffee] .amo-theme { 
-	background: #c0ffee;
-}
-[amo-theme=coffee] .toolbar-menu .tab.active,
-[amo-theme=coffee] .result-item .scripture,
-[amo-theme=coffee] .results-link,
-[amo-theme=coffee] .history-item,
-[amo-theme=coffee] .bible.reader .book.open .book-name,
-[amo-theme=coffee] .bible.reader .chapter-number,
-[amo-theme=coffee] .bible.reader .move-to-chapter,
-[amo-theme=coffee] .fullscreen-trigger,
-[amo-theme=coffee] .full-screen-chapter-title,
-[amo-theme=coffee] .leave-full-screen {
-	color: #c0ffee;
-}
-[amo-theme=coffee] .book-toolbar .inp.txt:focus {
-	border-color: #c0ffee;
-}
-[amo-theme=coffee] .navigation-agents .agent .pointer {
-	border: 1px solid #c0ffee;
-  color: #c0ffee;
-}
-[amo-theme=coffee] .navigation-agents .agent .pointer:after {
-  border-top: 5px solid #c0ffee;
-}
-[amo-theme=coffee] .btn.sensation:hover {
-  background: #c0ffee;
-  border-color: #c0ffee;
-}
-
-
-
-/* Default */
-[amo-theme=default] .toolbar-menu .tab,
-[amo-theme=default] .book-toolbar .btn.primary,
-[amo-theme=default] .navigation-agents .agent:hover,
-[amo-theme=default] .history-item.current,
-[amo-theme=default] .bible.reader,
-[amo-theme=default] .bible.reader .verse.spotlight,
-[amo-theme=default] .bible.reader .move-to-chapter:hover,
-[amo-theme=default] .verse-actions li:hover,
-[amo-theme=default] .amo-change-lang-trigger.wrapper,
-[amo-theme=default] .full-screen-header,
-[amo-theme=default] .head,
-[amo-theme=default] .lang.active,
-[amo-theme=default] .slim-scroll::-webkit-scrollbar-thumb,
-[amo-theme=default] .btn.solid,
-[amo-theme=default] .amo-theme { 
-	background: #6383b5;
-}
-[amo-theme=default] .toolbar-menu .tab.active,
-[amo-theme=default] .result-item .scripture,
-[amo-theme=default] .results-link,
-[amo-theme=default] .history-item,
-[amo-theme=default] .bible.reader .book.open .book-name,
-[amo-theme=default] .bible.reader .chapter-number,
-[amo-theme=default] .bible.reader .move-to-chapter,
-[amo-theme=default] .fullscreen-trigger,
-[amo-theme=default] .full-screen-chapter-title,
-[amo-theme=default] .leave-full-screen {
-	color: #6383b5;
-}
-[amo-theme=default] .book-toolbar .inp.txt:focus {
-	border-color: #6383b5;
-}
-[amo-theme=default] .navigation-agents .agent .pointer {
-	border: 1px solid #6383b5;
-  color: #6383b5;
-}
-[amo-theme=default] .navigation-agents .agent .pointer:after {
-  border-top: 5px solid #6383b5;
-}
-[amo-theme=default] .btn.sensation:hover {
-  background: #6383b5;
-  border-color: #6383b5;
-}
-
-
-
-
-/* ametist #7c5ec5 */
-[amo-theme=ametist] .toolbar-menu .tab {
-	background: #7c5ec5;
-}
-[amo-theme=ametist] .toolbar-menu .tab.active {
-	color: #7c5ec5;
-}
-[amo-theme=ametist] .result-item .scripture {
-	color: #7c5ec5;
-}
-[amo-theme=ametist] .results-link {
-	color: #7c5ec5;
-}
-[amo-theme=ametist] .book-toolbar .inp.txt:focus {
-	border-color: #7c5ec5;
-}
-[amo-theme=ametist] .book-toolbar .btn.primary {
-	background: #7c5ec5;
-}
-[amo-theme=ametist] .navigation-agents .agent:hover {
-	background: #7c5ec5;
-}
-[amo-theme=ametist] .navigation-agents .agent .pointer {
-	border: 1px solid #7c5ec5;
-  color: #7c5ec5;
-}
-[amo-theme=ametist] .navigation-agents .agent .pointer:after {
-  border-top: 5px solid #7c5ec5;
-}
-[amo-theme=ametist] .history-item {
-  color: #7c5ec5;
-}
-[amo-theme=ametist] .history-item.current {
-	background: #7c5ec5;
-}
-[amo-theme=ametist] .bible.reader {
-  background: #7c5ec5;
-}
-[amo-theme=ametist] .bible.reader .book.open .book-name {
-  color: #7c5ec5;
-}
-[amo-theme=ametist] .bible.reader .chapter-number {
-  color: #7c5ec5;
-}
-[amo-theme=ametist] .bible.reader .verse.spotlight {
-  background: #7c5ec5;
-}
-[amo-theme=ametist] .bible.reader .move-to-chapter {
-  color: #7c5ec5;
-}
-[amo-theme=ametist] .bible.reader .move-to-chapter:hover {
-  background: #7c5ec5;
-}
-[amo-theme=ametist] .verse-actions li:hover {
-	background: #7c5ec5;
-}
-[amo-theme=ametist] .fullscreen-trigger {
-  color: #7c5ec5;
-}
-[amo-theme=ametist] .amo-change-lang-trigger.wrapper {
-  background: #7c5ec5;
-}
-[amo-theme=ametist] .full-screen-header {
-  background: #7c5ec5;
-}
-[amo-theme=ametist] .full-screen-chapter-title {
-  color: #7c5ec5;
-}
-[amo-theme=ametist] .leave-full-screen {
-  color: #7c5ec5;
-}
-[amo-theme=ametist] .head {
-  background: #7c5ec5;
-}
-[amo-theme=ametist] .lang.active {
-  background: #7c5ec5;
-}
-[amo-theme=ametist] .slim-scroll::-webkit-scrollbar-thumb {
-	background: #7c5ec5;
-}
-[amo-theme=ametist] .btn.solid {
-	background: #7c5ec5;
-}
-[amo-theme=ametist] .btn.sensation:hover {
-  background: #7c5ec5;
-  border-color: #7c5ec5;
-}
-
-
-
-
 [amo-theme=ametist] .toolbar-menu .tab,
 [amo-theme=ametist] .book-toolbar .btn.primary,
 [amo-theme=ametist] .navigation-agents .agent:hover,
@@ -517,11 +583,123 @@
   background: #7c5ec5;
   border-color: #7c5ec5;
 }
-
-
-
+[amo-theme=ametist] .verse.spotlight .verse-num {
+  color: #beacea;
+}
 
 
 [amo-theme] .slim-scroll::-webkit-scrollbar-thumb {
 	background-clip: content-box;
 }
+
+
+
+
+/* yaspis #d25f53 */
+/* sapfir #456af3 */
+/* xalkidon #7195bb #6383b5 */
+/* smaragd #52a290 */
+/* sardonix #e6896d */
+/* cerdolik #e06565 */
+/* xrizolit #84ab50 */
+/* virill #54af70 */
+/* topaz #40b3d6 */
+/* xrizopraz #57b7a5 */
+/* giacint #c36f66 */
+/* ametist #7c5ec5 */
+
+/*
+[amo-theme=coffee] .toolbar-menu .tab,
+[amo-theme=coffee] .book-toolbar .btn.primary,
+[amo-theme=coffee] .navigation-agents .agent:hover,
+[amo-theme=coffee] .history-item.current,
+[amo-theme=coffee] .bible.reader,
+[amo-theme=coffee] .bible.reader .verse.spotlight,
+[amo-theme=coffee] .bible.reader .move-to-chapter:hover,
+[amo-theme=coffee] .verse-actions li:hover,
+[amo-theme=coffee] .amo-change-lang-trigger.wrapper,
+[amo-theme=coffee] .full-screen-header,
+[amo-theme=coffee] .head,
+[amo-theme=coffee] .lang.active,
+[amo-theme=coffee] .slim-scroll::-webkit-scrollbar-thumb,
+[amo-theme=coffee] .btn.solid,
+[amo-theme=coffee] .amo-theme { 
+	background: #c0ffee;
+}
+[amo-theme=coffee] .toolbar-menu .tab.active,
+[amo-theme=coffee] .result-item .scripture,
+[amo-theme=coffee] .results-link,
+[amo-theme=coffee] .history-item,
+[amo-theme=coffee] .bible.reader .book.open .book-name,
+[amo-theme=coffee] .bible.reader .chapter-number,
+[amo-theme=coffee] .bible.reader .move-to-chapter,
+[amo-theme=coffee] .fullscreen-trigger,
+[amo-theme=coffee] .full-screen-chapter-title,
+[amo-theme=coffee] .leave-full-screen {
+	color: #c0ffee;
+}
+[amo-theme=coffee] .book-toolbar .inp.txt:focus {
+	border-color: #c0ffee;
+}
+[amo-theme=coffee] .navigation-agents .agent .pointer {
+	border: 1px solid #c0ffee;
+  color: #c0ffee;
+}
+[amo-theme=coffee] .navigation-agents .agent .pointer:after {
+  border-top: 5px solid #c0ffee;
+}
+[amo-theme=coffee] .btn.sensation:hover {
+  background: #c0ffee;
+  border-color: #c0ffee;
+}
+[amo-theme=coffee] .verse.spotlight .verse-num {
+  color: #c0ffee;
+}
+
+
+[amo-theme=default] .toolbar-menu .tab,
+[amo-theme=default] .book-toolbar .btn.primary,
+[amo-theme=default] .navigation-agents .agent:hover,
+[amo-theme=default] .history-item.current,
+[amo-theme=default] .bible.reader,
+[amo-theme=default] .bible.reader .verse.spotlight,
+[amo-theme=default] .bible.reader .move-to-chapter:hover,
+[amo-theme=default] .verse-actions li:hover,
+[amo-theme=default] .amo-change-lang-trigger.wrapper,
+[amo-theme=default] .full-screen-header,
+[amo-theme=default] .head,
+[amo-theme=default] .lang.active,
+[amo-theme=default] .slim-scroll::-webkit-scrollbar-thumb,
+[amo-theme=default] .btn.solid,
+[amo-theme=default] .amo-theme { 
+	background: #6383b5;
+}
+[amo-theme=default] .toolbar-menu .tab.active,
+[amo-theme=default] .result-item .scripture,
+[amo-theme=default] .results-link,
+[amo-theme=default] .history-item,
+[amo-theme=default] .bible.reader .book.open .book-name,
+[amo-theme=default] .bible.reader .chapter-number,
+[amo-theme=default] .bible.reader .move-to-chapter,
+[amo-theme=default] .fullscreen-trigger,
+[amo-theme=default] .full-screen-chapter-title,
+[amo-theme=default] .leave-full-screen {
+	color: #6383b5;
+}
+[amo-theme=default] .book-toolbar .inp.txt:focus {
+	border-color: #6383b5;
+}
+[amo-theme=default] .navigation-agents .agent .pointer {
+	border: 1px solid #6383b5;
+  color: #6383b5;
+}
+[amo-theme=default] .navigation-agents .agent .pointer:after {
+  border-top: 5px solid #6383b5;
+}
+[amo-theme=default] .btn.sensation:hover {
+  background: #6383b5;
+  border-color: #6383b5;
+}
+[amo-theme=default] .verse.spotlight .verse-num {
+  color: #a3b9dd;
+}*/
