@@ -18,12 +18,12 @@
 	border-radius: 2px 2px 0 0;
 	padding: 8px 12px;
 	position: relative;
-	background: linear-gradient(#B9EF76, #A0DE52);
 	color: #fff;
 	height: 42px;
 }
 .window .head span{
 	color: #fff;
+	line-height: 26px;
 }
 .window .head .close:hover{
     background: rgba(0,0,0, .1);
@@ -32,11 +32,12 @@
 	border-radius: 0 2px 0 0;
 	color: #fff;
 	cursor: default;
+	line-height: 32px;
+	padding: 5.5px 14px;
 	position: absolute;
 	right: 0px;
+	text-align: center;
 	top: 0px;
-	padding: 5.5px 14px;
-	line-height: 31px;	
 	width: 42px;
 }
 .window .body {

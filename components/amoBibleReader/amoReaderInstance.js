@@ -46,11 +46,11 @@ angular.module('AMO').component('amoBibleInstance', {
 			$ctrl.searchResultsLimit = 24;
 			$ctrl.verseActions = [
 				{
-					text: "Відкрити у новиму вікні",
+					text: 'Открыть в новом окне',
 					callback: openNewWindow
 				},
 				{
-					text: "Поділитися",
+					text: 'Поделиться',
 					callback: shareReference
 				}
 			];
@@ -61,27 +61,22 @@ angular.module('AMO').component('amoBibleInstance', {
 			/*
 			  ,
 			  {
-				text:"Зберегти", 
+				text:"Сохранить", 
 				callback: saveRef,
 				disabled: false
 			  },
 			  {
-				text:"Копіювати посилання", 
+				text:"Копировать ссылку", 
 				callback: saveRef,
 				disabled: false
 			  },
 			  {
-				text:"Копіювати текст", 
+				text:"Копировать текст", 
 				callback: saveRef,
 				disabled: false
 			  },
 			  {
-				text:"Закрити книгу", 
-				callback: saveRef,
-				disabled: false
-			  },
-			  {
-				text:"Копіювати текст", 
+				text:"Найти похожие стихи", 
 				callback: saveRef,
 				disabled: false
 			  }

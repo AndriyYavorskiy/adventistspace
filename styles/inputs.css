@@ -86,6 +86,8 @@
 	border: none;
 }
 .btn[disabled] {
-	background: #e8e5d4;
 	cursor: default;
+}
+[amo-theme] .btn[disabled] {
+	background: #e8e5d4 !important;
 }
