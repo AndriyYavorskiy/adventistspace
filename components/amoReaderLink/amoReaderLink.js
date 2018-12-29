@@ -3,13 +3,14 @@ angular.module('AMO').directive('amoReaderLink', function (amoModal, $filter){
 	object.restrict = "A";
 	object.link = function (s, e, a) {
 		var reference = a.amoReaderLink,
-			isAutoTextOn = Object.keys(a).indexOf("autoText") > -1;
+			isAutoTextOn = Object.keys(a).indexOf("autoText") > -1,
+			pre = a.preText || '', post = a.postText || '';
 		
 		e.addClass("amo-reader-link");
 		if (isAutoTextOn) {
-			e.text($filter("BibleReference")(reference));
+			e.text(pre + $filter("BibleReference")(reference) + post);
 		}
-		e.on("click", function (event) {
+		e.on("click", function () {
 			amoModal.open({ component: "amo-reader", data: {reference: reference} });
 		});
 	}
