@@ -25,6 +25,10 @@ body {
 	height: 400px;
 	margin-top: -400px;
 }
+.absolute{
+	position: absolute;
+	z-index: -1;
+}
 .flex {
 	display: flex;
 }

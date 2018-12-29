@@ -62,10 +62,6 @@ amo-modal {
 	text-align: center;
 	margin-bottom: 12px;
 }
-.absolute{
-	position: absolute;
-	z-index: -1;
-}
 .slide .message p {
 	text-shadow: 0 0 7px #fff;
 	color: #000;
@@ -86,12 +82,6 @@ amo-modal {
 	margin: auto;
 	max-width: 480px;
 }
-.slide .message .statement {
-	color: #fff;
-	margin: 8px auto 0px auto;
-	padding: 4px 12px;
-	max-width: 480px;
-}
 
 .facts{
 	width: 30%;
@@ -104,33 +94,19 @@ amo-modal {
 	color: #fff;
 	background: #A0DE52;
 }
-.facts a:not(.active):hover{
+.facts a:not(.active):hover {
 	background: #eee;
 }
-.facts a{
+.facts a {
 	cursor: pointer;
 	display: block;
 	padding: 8px 12px;
 }
-.fact{
+.fact {
 	width: 70%;
 }
-.fact p{
+.fact p {
 	padding: 8px 12px;
-}
-
-moby-scroll:hover{
-	background: linear-gradient(#555, #333);
-	box-shadow: 0 0 3px rgba(0,0,0, .4), inset 0 0 0 1px rgba(255,255,255, .1);
-}
-moby-scroll{
-	background: rgba(0,0,0, .3);
-	border-radius: 3px;
-	width: 30px;
-	min-height: 30px;
-	right: 	0px;
-	position: absolute;
-	top: 0;
 }
 
 .expander {
@@ -139,16 +115,9 @@ moby-scroll{
 	margin: 8px 0 12px 0;
 	overflow: hidden;
 }
-
 .expander.collapsed{
 	height: 24px;
 	padding: 24px 0 0 0 !important;
-}
-.colp:hover{
-	background: rgba(0,0,0, .1);
-}
-.colp {
-	height: 24px;
 }
 .expander.collapsed:hover:before{
 	content: '';

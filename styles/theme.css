@@ -14,7 +14,8 @@
 [amo-theme=yaspis] .lang.active,
 [amo-theme=yaspis] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=yaspis] .btn.solid,
-[amo-theme=yaspis] .amo-theme { 
+[amo-theme=yaspis] .amo-theme,
+[amo-theme=yaspis] .amo-theme-bg { 
 	background: #d25f53;
 }
 [amo-theme=yaspis] .toolbar-menu .tab.active,
@@ -26,7 +27,8 @@
 [amo-theme=yaspis] .bible.reader .move-to-chapter,
 [amo-theme=yaspis] .fullscreen-trigger,
 [amo-theme=yaspis] .full-screen-chapter-title,
-[amo-theme=yaspis] .leave-full-screen {
+[amo-theme=yaspis] .leave-full-screen,
+[amo-theme=yaspis] .amo-theme-color  {
 	color: #d25f53;
 }
 [amo-theme=yaspis] .book-toolbar .inp.txt:focus {
@@ -63,7 +65,8 @@
 [amo-theme=sapfir] .lang.active,
 [amo-theme=sapfir] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=sapfir] .btn.solid,
-[amo-theme=sapfir] .amo-theme { 
+[amo-theme=sapfir] .amo-theme,
+[amo-theme=sapfir] .amo-theme-bg { 
 	background: #456af3;
 }
 [amo-theme=sapfir] .toolbar-menu .tab.active,
@@ -75,7 +78,8 @@
 [amo-theme=sapfir] .bible.reader .move-to-chapter,
 [amo-theme=sapfir] .fullscreen-trigger,
 [amo-theme=sapfir] .full-screen-chapter-title,
-[amo-theme=sapfir] .leave-full-screen {
+[amo-theme=sapfir] .leave-full-screen,
+[amo-theme=sapfir] .amo-theme-color  {
 	color: #456af3;
 }
 [amo-theme=sapfir] .book-toolbar .inp.txt:focus {
@@ -112,7 +116,8 @@
 [amo-theme=xalkidon] .lang.active,
 [amo-theme=xalkidon] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=xalkidon] .btn.solid,
-[amo-theme=xalkidon] .amo-theme { 
+[amo-theme=xalkidon] .amo-theme,
+[amo-theme=xalkidon] .amo-theme-bg { 
 	background: #7195bb;
 }
 [amo-theme=xalkidon] .toolbar-menu .tab.active,
@@ -124,7 +129,8 @@
 [amo-theme=xalkidon] .bible.reader .move-to-chapter,
 [amo-theme=xalkidon] .fullscreen-trigger,
 [amo-theme=xalkidon] .full-screen-chapter-title,
-[amo-theme=xalkidon] .leave-full-screen {
+[amo-theme=xalkidon] .leave-full-screen,
+[amo-theme=xalkidon] .amo-theme-color  {
 	color: #7195bb;
 }
 [amo-theme=xalkidon] .book-toolbar .inp.txt:focus {
@@ -161,7 +167,8 @@
 [amo-theme=smaragd] .lang.active,
 [amo-theme=smaragd] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=smaragd] .btn.solid,
-[amo-theme=smaragd] .amo-theme { 
+[amo-theme=smaragd] .amo-theme,
+[amo-theme=smaragd] .amo-theme-bg { 
 	background: #52a290;
 }
 [amo-theme=smaragd] .toolbar-menu .tab.active,
@@ -173,7 +180,8 @@
 [amo-theme=smaragd] .bible.reader .move-to-chapter,
 [amo-theme=smaragd] .fullscreen-trigger,
 [amo-theme=smaragd] .full-screen-chapter-title,
-[amo-theme=smaragd] .leave-full-screen {
+[amo-theme=smaragd] .leave-full-screen,
+[amo-theme=smaragd] .amo-theme-color  {
 	color: #52a290;
 }
 [amo-theme=smaragd] .book-toolbar .inp.txt:focus {
@@ -210,7 +218,8 @@
 [amo-theme=sardonix] .lang.active,
 [amo-theme=sardonix] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=sardonix] .btn.solid,
-[amo-theme=sardonix] .amo-theme { 
+[amo-theme=sardonix] .amo-theme,
+[amo-theme=sardonix] .amo-theme-bg { 
 	background: #e6896d;
 }
 [amo-theme=sardonix] .toolbar-menu .tab.active,
@@ -222,7 +231,8 @@
 [amo-theme=sardonix] .bible.reader .move-to-chapter,
 [amo-theme=sardonix] .fullscreen-trigger,
 [amo-theme=sardonix] .full-screen-chapter-title,
-[amo-theme=sardonix] .leave-full-screen {
+[amo-theme=sardonix] .leave-full-screen,
+[amo-theme=sardonix] .amo-theme-color  {
 	color: #e6896d;
 }
 [amo-theme=sardonix] .book-toolbar .inp.txt:focus {
@@ -259,7 +269,8 @@
 [amo-theme=cerdolik] .lang.active,
 [amo-theme=cerdolik] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=cerdolik] .btn.solid,
-[amo-theme=cerdolik] .amo-theme { 
+[amo-theme=cerdolik] .amo-theme,
+[amo-theme=cerdolik] .amo-theme-bg { 
 	background: #e06565;
 }
 [amo-theme=cerdolik] .toolbar-menu .tab.active,
@@ -271,7 +282,8 @@
 [amo-theme=cerdolik] .bible.reader .move-to-chapter,
 [amo-theme=cerdolik] .fullscreen-trigger,
 [amo-theme=cerdolik] .full-screen-chapter-title,
-[amo-theme=cerdolik] .leave-full-screen {
+[amo-theme=cerdolik] .leave-full-screen,
+[amo-theme=cerdolik] .amo-theme-color  {
 	color: #e06565;
 }
 [amo-theme=cerdolik] .book-toolbar .inp.txt:focus {
@@ -308,7 +320,8 @@
 [amo-theme=xrizolit] .lang.active,
 [amo-theme=xrizolit] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=xrizolit] .btn.solid,
-[amo-theme=xrizolit] .amo-theme { 
+[amo-theme=xrizolit] .amo-theme,
+[amo-theme=xrizolit] .amo-theme-bg { 
 	background: #84ab50;
 }
 [amo-theme=xrizolit] .toolbar-menu .tab.active,
@@ -320,7 +333,8 @@
 [amo-theme=xrizolit] .bible.reader .move-to-chapter,
 [amo-theme=xrizolit] .fullscreen-trigger,
 [amo-theme=xrizolit] .full-screen-chapter-title,
-[amo-theme=xrizolit] .leave-full-screen {
+[amo-theme=xrizolit] .leave-full-screen,
+[amo-theme=xrizolit] .amo-theme-color  {
 	color: #84ab50;
 }
 [amo-theme=xrizolit] .book-toolbar .inp.txt:focus {
@@ -357,7 +371,8 @@
 [amo-theme=virill] .lang.active,
 [amo-theme=virill] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=virill] .btn.solid,
-[amo-theme=virill] .amo-theme { 
+[amo-theme=virill] .amo-theme,
+[amo-theme=virill] .amo-theme-bg { 
 	background: #54af70;
 }
 [amo-theme=virill] .toolbar-menu .tab.active,
@@ -369,7 +384,8 @@
 [amo-theme=virill] .bible.reader .move-to-chapter,
 [amo-theme=virill] .fullscreen-trigger,
 [amo-theme=virill] .full-screen-chapter-title,
-[amo-theme=virill] .leave-full-screen {
+[amo-theme=virill] .leave-full-screen,
+[amo-theme=virill] .amo-theme-color  {
 	color: #54af70;
 }
 [amo-theme=virill] .book-toolbar .inp.txt:focus {
@@ -406,7 +422,8 @@
 [amo-theme=topaz] .lang.active,
 [amo-theme=topaz] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=topaz] .btn.solid,
-[amo-theme=topaz] .amo-theme { 
+[amo-theme=topaz] .amo-theme,
+[amo-theme=topaz] .amo-theme-bg { 
 	background: #40b3d6;
 }
 [amo-theme=topaz] .toolbar-menu .tab.active,
@@ -418,7 +435,8 @@
 [amo-theme=topaz] .bible.reader .move-to-chapter,
 [amo-theme=topaz] .fullscreen-trigger,
 [amo-theme=topaz] .full-screen-chapter-title,
-[amo-theme=topaz] .leave-full-screen {
+[amo-theme=topaz] .leave-full-screen,
+[amo-theme=topaz] .amo-theme-color  {
 	color: #40b3d6;
 }
 [amo-theme=topaz] .book-toolbar .inp.txt:focus {
@@ -455,7 +473,8 @@
 [amo-theme=xrizopraz] .lang.active,
 [amo-theme=xrizopraz] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=xrizopraz] .btn.solid,
-[amo-theme=xrizopraz] .amo-theme { 
+[amo-theme=xrizopraz] .amo-theme,
+[amo-theme=xrizopraz] .amo-theme-bg { 
 	background: #57b7a5;
 }
 [amo-theme=xrizopraz] .toolbar-menu .tab.active,
@@ -467,7 +486,8 @@
 [amo-theme=xrizopraz] .bible.reader .move-to-chapter,
 [amo-theme=xrizopraz] .fullscreen-trigger,
 [amo-theme=xrizopraz] .full-screen-chapter-title,
-[amo-theme=xrizopraz] .leave-full-screen {
+[amo-theme=xrizopraz] .leave-full-screen,
+[amo-theme=xrizopraz] .amo-theme-color  {
 	color: #57b7a5;
 }
 [amo-theme=xrizopraz] .book-toolbar .inp.txt:focus {
@@ -504,7 +524,8 @@
 [amo-theme=giacint] .lang.active,
 [amo-theme=giacint] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=giacint] .btn.solid,
-[amo-theme=giacint] .amo-theme { 
+[amo-theme=giacint] .amo-theme,
+[amo-theme=giacint] .amo-theme-bg { 
 	background: #c36f66;
 }
 [amo-theme=giacint] .toolbar-menu .tab.active,
@@ -516,7 +537,8 @@
 [amo-theme=giacint] .bible.reader .move-to-chapter,
 [amo-theme=giacint] .fullscreen-trigger,
 [amo-theme=giacint] .full-screen-chapter-title,
-[amo-theme=giacint] .leave-full-screen {
+[amo-theme=giacint] .leave-full-screen,
+[amo-theme=giacint] .amo-theme-color  {
 	color: #c36f66;
 }
 [amo-theme=giacint] .book-toolbar .inp.txt:focus {
@@ -553,7 +575,8 @@
 [amo-theme=ametist] .lang.active,
 [amo-theme=ametist] .slim-scroll::-webkit-scrollbar-thumb,
 [amo-theme=ametist] .btn.solid,
-[amo-theme=ametist] .amo-theme { 
+[amo-theme=ametist] .amo-theme,
+[amo-theme=ametist] .amo-theme-bg { 
 	background: #7c5ec5;
 }
 [amo-theme=ametist] .toolbar-menu .tab.active,
@@ -565,7 +588,8 @@
 [amo-theme=ametist] .bible.reader .move-to-chapter,
 [amo-theme=ametist] .fullscreen-trigger,
 [amo-theme=ametist] .full-screen-chapter-title,
-[amo-theme=ametist] .leave-full-screen {
+[amo-theme=ametist] .leave-full-screen,
+[amo-theme=ametist] .amo-theme-color  {
 	color: #7c5ec5;
 }
 [amo-theme=ametist] .book-toolbar .inp.txt:focus {

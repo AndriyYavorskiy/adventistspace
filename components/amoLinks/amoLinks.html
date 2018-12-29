@@ -1,0 +1,100 @@
+<div class="amo-links-trigger amo-theme-bg" ng-click="amoLinks.open = true;">
+  Мои ссылки
+</div>
+<div class="amo-links container" ng-if="amoLinks.open">
+  <div class="amo-links-list row">
+    <div class="amo-link amo-theme-color clearfix col-sm-12 col-md-12 col-xl-6" ng-repeat="link in amoLinks.model.root track by $index">
+      <span class="inherit color" ng-bind="link.name" amo-reader-link="{{link.link}}" ng-click="amoLinks.open = false;"></span>
+      <span class="go-right">
+        <span class="update-link" ng-click="amoLinks.goUpdateLink(link, null)">Изменить</span>
+        <span class="delete-link" ng-click="amoLinks.deleteLink(link)">Удалить</span>
+      </span>
+    </div>
+    <div ng-if="amoLinks.target" class="action-mode update-link-mode">
+      <button class="btn m sure cancel-update-link" ng-click="amoLinks.cancelUpdateLink()">Отменить изменение</button>
+    </div>
+  </div>
+  <form name="new-link-form" class="amo-links-header amo-theme-bg row clearfix">
+    <div class="col-sm-12 col-md-3">
+      <input type="text" name="link" class="inp txt m sensation mb12px fox-to-col" placeholder="ссылка книга:глава:стих" required>
+    </div>
+    <div class="col-sm-12 col-md-7">
+      <input type="text" name="name" class="inp txt m sensation mb12px fox-to-col" placeholder="описание">
+    </div>
+    <div class="col-sm-12 col-md-2">
+      <button ng-if="!amoLinks.target" class="btn m primary create-link mb12px fox-to-col" ng-click="amoLinks.saveLink()" ng-bind="'Создать'"></button>
+      <button ng-if="amoLinks.target" class="btn m primary create-link mb12px fox-to-col" ng-click="amoLinks.updateLink(amoLinks.target.link)" ng-bind="'Сохранить'"></button>
+    </div>
+    <button class="btn m blank hide-links amo-theme-color" ng-click="amoLinks.open = false;">✖</button>
+  </form>
+</div>
+
+<style>
+  .fox-to-col {
+    width: calc(100% + 20px);
+    margin-left: -10px;
+  }
+  .amo-links-trigger {
+    border-radius: 2px 2px 0 0;
+    bottom: 0;
+    color: #fff;
+    cursor: pointer;
+    height: 26px;
+    left: 50px;
+    overflow: hidden;
+    /*opacity: .4;*/
+    position: absolute;
+    padding: 2px 8px 4px;
+  }
+  .amo-links {
+    box-shadow: 0 0 16px #0000001c;
+    border-radius: 3px 3px 0 0;
+    bottom: 0;
+    left: 50px;
+    max-width: calc(100% - 100px);
+    position: absolute;
+  }
+  .amo-links-header {
+    border-radius: 3px 3px 0 0;
+    padding: 12px 12px 0 12px;
+    
+  }
+  .amo-links-list {
+    background: #fff;
+    max-height: 50%;
+    overflow: auto;
+    position: relative;
+  }
+  .amo-link {
+    padding: 8px;
+  }
+  .action-mode.update-link-mode {
+    background: rgba(224, 220, 197, 0.75);
+    display: flex;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+  .cancel-update-link {
+    margin: auto;
+  }
+  .mb12px {
+    margin-bottom: 10px;
+  }
+  .delete-link,
+  .update-link {
+    color: #eee;
+    cursor: pointer;
+  }
+  .delete-link:hover {
+    color: #e47777;
+  }
+  .update-link:hover {
+    color: #797979;
+  }
+  .hide-links {
+    top: -36px;
+    right: 0;
+    position: absolute;
+  }
+</style>

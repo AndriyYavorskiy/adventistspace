@@ -82,8 +82,17 @@
   fill: #fff;
 }
 .btn.blank {
-    background: none;
+  background: none;
 	border: none;
+}
+.btn.empty {
+	background: none;
+	border: 1px solid #fff;
+	color: #fff;
+}
+.btn.sure {
+	background: #123456;
+	color: #fffeee;
 }
 .btn[disabled] {
 	cursor: default;

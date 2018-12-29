@@ -23,16 +23,8 @@
 		<script src='scripts/angular.js'></script>
 		<script src="libs/angular-translate.min.js"></script>
 		<script src="https://cdn.rawgit.com/angular-translate/bower-angular-translate-loader-static-files/2.18.1/angular-translate-loader-static-files.js"></script>
-		<script>
-			angular.module('AMO', ['ngclipboard', 'pascalprecht.translate'])
-			.config(function($translateProvider) {
-				$translateProvider.useStaticFilesLoader({
-					files: [{ prefix: 'locals/', suffix: '.json' }]
-				});
-				$translateProvider.preferredLanguage(window.localStorage.getItem('amo-lang') || 'en');
-				$translateProvider.useSanitizeValueStrategy('escape');
-			});
-		</script>
+		<!--script src="scripts/angular-translate.js"></script-->
+		<script src="index.js"></script>
 		<script src='scripts/amoMainCtrl.js'></script>
 		<script src='components/amoToolbar.js'></script>
 		<script src='components/amoBibleReader/amoReader.js'></script>
@@ -45,14 +37,17 @@
 		<script src='components/amoChangeLangTrigger.js'></script>
 		<script src='scripts/amoCommon.js'></script>
 		<script src='scripts/amoDesktop.js'></script>
+		<script src='scripts/amoLinksManager.js'></script>
 		<script src='scripts/rightClickDirective.js'></script>
 		<script src='libs/ngclipboard.js'></script>
 		<script src='components/amoFullScreen/amoFullScreen.js'></script>
 		<script src='components/amoTheme/amoTheme.js'></script>
+		<script src='components/amoLinks/amoLinks.js'></script>
 	</head>
 	<body ng-controller="amoMain as mainCtrl" amo-theme="xalkidon">
 		<amo-theme></amo-theme>
 		<amo-change-lang-trigger></amo-change-lang-trigger>
+		<amo-links></amo-links>
 		<main>
 			<div class="desktop module" amo-desktop>
 				<div class='slide column'>
@@ -64,11 +59,8 @@
 							</p>
 						</section>
 						<p class='source' amo-reader-link="ru:pet2:1:21" auto-text></p>
-						<div class="statement">
-							Библия состоит из множества книг и написана многими авторами, но все они руководились Богом.  
-							Это книга с притчами, но большая ее часть это реальные истории и пророчества. Библия дана человеку чтобы учиться мудрсти и расти духовно.
-						</div>
 						<div style="text-align: center; margin-top: 32px;">
+							<button class="btn l empty drop-shadow">Читать о Библии</button>
 							<button class="btn l solid drop-shadow" amo-reader-link>Читать Библию</button>
 						</div>
 					</div>
@@ -77,6 +69,12 @@
 			</div>
 			<div class="module">
 				<div class='container'>
+					<div class="row" style="margin-top: 36px;">
+						<div class="col-lg-12 statement">
+							Библия состоит из множества книг и написана многими авторами, но все они руководились Богом.  
+							Это книга с притчами, но большая ее часть это реальные истории и пророчества. Библия дана человеку чтобы учиться мудрсти и расти духовно.
+						</div>
+					</div>
 					<div class='columns row'>
 						<div class='column col-lg-3 col-md-4 col-sm-6 col-xs-12'>
 							<p class="verse-text">

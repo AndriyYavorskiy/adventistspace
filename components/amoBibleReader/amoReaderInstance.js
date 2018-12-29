@@ -1,6 +1,9 @@
 angular.module('AMO').component('amoBibleInstance', {
   templateUrl: "/components/amoBibleReader/amoBibleInstance.html",
-  controllerAs: '$ctrl',
+	controllerAs: '$ctrl',
+	bindings: {
+		parent: '<'
+	},
 	controller: ['$scope', '$element', '$window', '$q', '$http', 'amoBibleInstanceManager', 'amoModal', 'instanceStateProvider', 'BIBLEMATRIX', 'amoReaderModel',
     function ($scope, $element, $window, $q, $http, amoBibleInstanceManager, amoModal, instanceStateProvider, BIBLEMATRIX, amoReaderModel) {
 			var $ctrl = this;
@@ -52,7 +55,14 @@ angular.module('AMO').component('amoBibleInstance', {
 				{
 					text: 'Поделиться',
 					callback: shareReference
-				}
+				},
+			  {
+					text:"Сохранить", 
+					callback: function () {
+						$ctrl.parent.displayLinksMaster($ctrl.candidate)
+					},
+					disabled: false
+			  }
 			];
 			function shareReference () {
 				navigate($ctrl.candidate);
@@ -61,23 +71,18 @@ angular.module('AMO').component('amoBibleInstance', {
 			/*
 			  ,
 			  {
-				text:"Сохранить", 
-				callback: saveRef,
-				disabled: false
-			  },
-			  {
 				text:"Копировать ссылку", 
-				callback: saveRef,
+				callback: cb,
 				disabled: false
 			  },
 			  {
 				text:"Копировать текст", 
-				callback: saveRef,
+				callback: cb,
 				disabled: false
 			  },
 			  {
 				text:"Найти похожие стихи", 
-				callback: saveRef,
+				callback: cb,
 				disabled: false
 			  }
 			*/
