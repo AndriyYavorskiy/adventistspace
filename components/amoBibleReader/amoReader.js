@@ -6,6 +6,8 @@ angular.module('AMO').component('amoReader', {
 			<div class="books-wrapper">
 				<div class="reader-toolbar"></div>
 			</div>
+			<div class="links-master" ng-if="reader.showLinksMaster">LinksMaster</div>
+			<links-master ng-if="reader.showLinksMaster"></links-master>
 		</div>
 	`,
 	bindings: {
@@ -27,6 +29,9 @@ angular.module('AMO').component('amoReader', {
 					addInstance(state);
 				}
 			}
+			var delegator = {
+				displayLinksMaster: displayLinksMaster
+			};
 			$scope.$on('appeal:add-bookmark', function (event, ref) {
 				amoBibleInstanceManager.addToLastBookmarks(ref);
 			});
@@ -46,10 +51,16 @@ angular.module('AMO').component('amoReader', {
 			});
 
 			function addInstance (reference) {
-				var template = angular.element("<amo-bible-instance reference='" + reference + "' class='book-wrapper'></amo-bible-instance>");
+				var template = angular.element(
+					"<amo-bible-instance reference='" + reference + "' class='book-wrapper' parent='delegator'></amo-bible-instance>"
+				);
 
 				angular.element($element[0].querySelector(".books-wrapper")).append(template[0]);
 				$compile(template)($scope.$new());
+			}
+			function displayLinksMaster (candidate) {
+				reader.showLinksMaster = true;
+				reader.candidateLink = candidate;
 			}
 			function getLastState () {
 				if (reader.data && reader.data.reference) {

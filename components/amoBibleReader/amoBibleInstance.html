@@ -55,9 +55,9 @@
 						<g transform="scale(1 -1) translate(0 -1280)"><path d="M1536 192v-128q0 -26 -19 -45t-45 -19h-1408q-26 0 -45 19t-19 45v128q0 26 19 45t45 19h1408q26 0 45 -19t19 -45zM1536 704v-128q0 -26 -19 -45t-45 -19h-1408q-26 0 -45 19t-19 45v128q0 26 19 45t45 19h1408q26 0 45 -19t19 -45zM1536 1216v-128q0 -26 -19 -45 t-45 -19h-1408q-26 0 -45 19t-19 45v128q0 26 19 45t45 19h1408q26 0 45 -19t19 -45z"/></g>
 					</svg>
 				</button>
-				<input type="text" ng-model="$ctrl.bibleBookName" id="bible-book"
+				<input type="text" ng-model="$ctrl.navigationQuery" id="bible-book"
 					placeholder="{{'reader.Bible_book' | translate}}" class="inp txt m sensation find-book">
-				<div class="autocomplete" amo-autocomplete-for="#bible-book" bible-book="$ctrl.bibleBookName" switch-to-book="$ctrl.switchToBook"></div>
+				<div class="autocomplete" amo-autocomplete-for="#bible-book" bible-book="$ctrl.navigationQuery" callback="$ctrl.switchToBook"></div>
 				<div class="go-left" ng-if="$ctrl.reference">
 					<button class="btn m sensation go-neighbor-book" ng-bind="$ctrl.getPrevBook($ctrl.reference).alias"
 					  ng-click="$ctrl.navigate($ctrl.getPrevBook($ctrl.reference).lang + ':' + $ctrl.getPrevBook($ctrl.reference).id)">					
@@ -133,9 +133,9 @@
 					</div>
 					<div class="verses">
 						<p class="verse" ng-repeat="verse in chapter track by $index" amo-prevent-default="['click']"
-						   ng-right-click="$ctrl.setCandidate(lang + ':' + book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))"
+						   ng-right-click="$ctrl.setCandidate($ctrl.lang + ':' + book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))"
 						   menu-items="$ctrl.verseActions" menu-class="verse-actions"
-						   ng-dblclick="$ctrl.navigate(lang + ':' + book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))"
+						   ng-dblclick="$ctrl.navigate($ctrl.lang + ':' + book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))"
 						   ng-mousedown="$ctrl.handeleVerseManipulation($event, book.id + ':' + ($parent.$index + 1) + ':' + ($index + 1))">
 							<span class="verse-num">{{$index + 1}}</span>{{" " + verse}}
 						</p>

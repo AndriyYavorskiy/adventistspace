@@ -79,9 +79,7 @@ angular.module('AMO').service("instanceStateProvider", function () {
 
 angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEMATRIX, amoReaderModel, $sce) {
 	var manager = {};
-	manager.addBookmark = function (bookmark) {}
-	manager.removeBookmark = function (bookmark) {}
-	manager.updateBookmark = function (bookmark) {}
+
 	manager.remindLastState = function () {
 		return JSON.parse(localStorage.getItem("BibleReaderLastState")) || [];
 	}
@@ -102,7 +100,7 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 	}
 	manager.isValidReference = isValidReference;
 	manager.loadBookModel = loadBookModel;
-	manager.helpToFindBook = helpToFindBook;
+	manager.findDestinations = findDestinations;
 	manager.executeSearchInBook = executeSearchInBook;
 	manager.createTabManager = createTabManager;
 	manager.decodeVersesList = decodeVersesList;
@@ -125,20 +123,31 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 
 		return list;
 	}
-	function helpToFindBook(searchText, lang) {
-		var results = [], searchParam = searchText.trim().toLowerCase();
-		amoReaderModel(lang || 'ru').forEach(function (bookModel) {
-			var bookNameIsSimilar = bookModel.name.toLowerCase().indexOf(searchParam) >= 0
-			  || bookModel.alias.toLowerCase().indexOf(searchParam) >= 0;
-			if (bookNameIsSimilar) {
-				results.push(bookModel);
+	function findDestinations(params, language) {
+		var results = [], searchParam = params.query.trim().toLowerCase(),
+			lang = language || 'ru',
+			martix = BIBLEMATRIX(lang);
+		amoReaderModel(lang).forEach(function (bookModel) {
+			var matchesByQuery = bookModel.name.toLowerCase().indexOf(searchParam) >= 0
+				|| bookModel.alias.toLowerCase().indexOf(searchParam) >= 0 || (bookModel.id.toLowerCase().indexOf(searchParam) >= 0) ,
+				hasChapter, hasVerse,
+				destination = lang + ":" + bookModel.id;
+
+			if (matchesByQuery) {
+				hasChapter = params.chapter && params.chapter <= martix[bookModel.id].length;
+				destination = hasChapter ? (destination += ':' + params.chapter) : destination;
+
+				hasVerse = params.verse && params.verse <= martix[bookModel.id][params.verse];
+				destination = (hasChapter && hasVerse) ? (destination += ':' + params.verse) : destination;
+
+				results.push(destination);
 			}
 		});
 		return results;
 	}
 	function isValidReference (bookmark) {
 		if (!bookmark) {
-			throw new Error("Reference argument is: " + bookmark + ".");
+			// console.warn("Reference argument is: " + bookmark + ".");
 			return false;
 		};
 		var bookRegex = /^(ru|ua|en){1}(:\w{2,})?(:\d+)?(:\d+((-\d+)?|(,\d+)*)?)?$/gim,
@@ -151,15 +160,15 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 			verseNum = parts[3] ? parts[3].split(parts[3].match(/\W/i)).sort(function(a,b){return a < b})[0] : undefined;
 			if (bookId && !(BIBLEMATRIX()[bookId].length)) {
 				byMATRIX = false;
-				throw new Error(bookmark + " - Incorrect book id.");
+				// console.warn(bookmark + " - Incorrect book id.");
 			}
 			if (chapterNum && !(BIBLEMATRIX()[bookId].length >= chapterNum && chapterNum >= 0)) {
 				byMATRIX = false;
-				throw new Error(bookmark + " - Incorrect chapter number.")
+				// console.warn(bookmark + " - Incorrect chapter number.")
 			}
 			if (verseNum && !(BIBLEMATRIX()[bookId][chapterNum] >= verseNum)) {
 				byMATRIX = false;
-				throw new Error(bookmark + " - Incorrect book number.");
+				// console.warn(bookmark + " - Incorrect book number.");
 			}
 		}
 		

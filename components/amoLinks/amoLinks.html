@@ -5,6 +5,7 @@
   <div class="amo-links-list row">
     <div class="amo-link amo-theme-color clearfix col-sm-12 col-md-12 col-xl-6" ng-repeat="link in amoLinks.model.root track by $index">
       <span class="inherit color" ng-bind="link.name" amo-reader-link="{{link.link}}" ng-click="amoLinks.open = false;"></span>
+      <span ng-bind="link.link | BibleReference"></span>
       <span class="go-right">
         <span class="update-link" ng-click="amoLinks.goUpdateLink(link, null)">Изменить</span>
         <span class="delete-link" ng-click="amoLinks.deleteLink(link)">Удалить</span>

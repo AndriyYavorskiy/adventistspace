@@ -9,7 +9,7 @@ angular.module('AMO').component('amoBibleInstance', {
 			var $ctrl = this;
 			var instanceState = instanceStateProvider.generateNewState();
 			var tabManager = amoBibleInstanceManager.createTabManager("navigation");
-			$ctrl.bibleBookName = "";
+			$ctrl.navigationQuery = "";
 			$ctrl.toggleBook = toggleBook;
 			$ctrl.getPrevBook = getPrevBook;
 			$ctrl.getNextBook = getNextBook;
@@ -201,9 +201,8 @@ angular.module('AMO').component('amoBibleInstance', {
 					$ctrl.searchResults = $ctrl.searchResults.concat(chank);
 				}
 			}
-			function switchToBook (book) {
-				navigate({book: book.id, chapter: 0, verse: 0});
-				$ctrl.bibleBookName = book.name;
+			function switchToBook (link) {
+				navigate(link);
 			}
 			function selectText(e) {
 				if (e.target.classList.contains('verse')) {
