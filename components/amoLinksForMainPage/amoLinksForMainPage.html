@@ -1,0 +1,29 @@
+<div class="amo-links-trigger amo-theme-bg" ng-click="amoLinksForMainPage.config.open = !amoLinksForMainPage.config.open;">
+  Мои ссылки
+</div>
+<div class="amo-links-for-main-page-box" ng-if="amoLinksForMainPage.config.open">
+  <amo-links wrapper-config="amoLinksForMainPage.config"></amo-links>
+</div>
+
+<style>
+  .amo-links-trigger {
+    border-radius: 2px 2px 0 0;
+    bottom: 0;
+    color: #fff;
+    cursor: pointer;
+    height: 26px;
+    left: 50px;
+    overflow: hidden;
+    /*opacity: .4;*/
+    position: absolute;
+    padding: 2px 8px 4px;
+  }
+
+  .amo-links-for-main-page-box {
+    bottom: 90px;
+    left: 50px;
+    max-width: calc(100% - 100px);
+    position: fixed;
+    z-index: 30;
+  }
+</style>

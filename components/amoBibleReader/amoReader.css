@@ -439,10 +439,27 @@
 	opacity: 0.5;
 }
 .verse-actions li:hover {
-	color: #fff;
+  color: #fff;
 }
 .fullscreen-trigger {
   cursor: pointer;
   height: 20px;
   margin-left: 8px;
+}
+
+.links-master {
+  background: rgba(224, 220, 197, 0.75);
+  bottom: 0;
+  display: flex;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 30;
+}
+.links-master amo-links {
+  left: 10%;
+  margin: auto;
+  width: 80%;
 }

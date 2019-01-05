@@ -94,6 +94,10 @@
 	background: #123456;
 	color: #fffeee;
 }
+.btn.universal {
+	background: #ffffff2b;
+	color: #fff;
+}
 .btn[disabled] {
 	cursor: default;
 }
