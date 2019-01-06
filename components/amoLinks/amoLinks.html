@@ -25,13 +25,14 @@
           <span class="delete folder" ng-click="amoLinks.deleteFolder(folder.id)"><img src="./images/bucket.svg"></span>
         </span>
       </div>
+      <!--div class="nothing-here col-md-12" ng-if="amoLinks.model.folders.length < 1" ng-bind="'Вы еще не создавали папок'"></div-->
     </div>
     <div class="amo-links-list col-md-8">
       <div class="amo-link amo-links-content-item amo-theme-color clearfix" ng-click="amoLinks.active = link.id"
         ng-class="{active: amoLinks.active === link.id}" ng-dblclick="amoLinks.visitRef(link.link)"
         ng-repeat="link in amoLinks.currentDir.links track by $index">
-        <span class="inherit color" ng-bind="link.name" amo-reader-link="{{link.link}}" ng-click="amoLinks.close();"></span>
-        <span ng-bind="link.link | BibleReference"></span>
+        <span class="amo-link-name inherit color" ng-bind="link.name || link.link" ng-click="amoLinks.visitRef(link.link);"></span>
+        <span ng-bind="link.link | BibleReference:'n c:v'"></span>
         <span class="managing-tools go-right">
           <span class="update link" ng-click="amoLinks.goUpdateLink(link, null)"><img src="./images/edit.svg"></span>
           <span class="delete link" ng-click="amoLinks.deleteLink(link)"><img src="./images/bucket.svg"></span>
@@ -92,6 +93,12 @@
     height: 40px;
     margin: -8px 0;
     padding: 0 8px;
+    transition: .3s;
+    max-width: 300px;
+    min-width: 80px;
+    width: calc(100% - 300px);
+  }
+  .folder-amender:focus {  
     width: calc(100% - 200px);
   }
   .create-folder {
@@ -177,13 +184,12 @@
     padding-top: 15px;
     overflow: auto;
   }
-  .amo-link:hover,
-  .amo-link.active {
-    background: rgba(0,0,0, .01); 
-  }
   .amo-link:hover .managing-tools {
     opacity: 0.5;
-  } 
+  }
+  .amo-link-name {
+    cursor: pointer;
+  }
   .amo-link img {
     width: 24px;
     float: left;
@@ -196,10 +202,9 @@
     overflow: auto;
     padding-top: 15px;
   }
-  .amo-links-folder {}
-  .amo-links-folder:hover,
-  .amo-links-folder.active {
-    background: rgba(0,0,0, .01); 
+  .amo-links-content-item:hover,
+  .amo-links-content-item.active {
+    background: rgba(0,0,0, .05); 
   }
   .amo-links-folder:hover .managing-tools {
     opacity: 0.5;

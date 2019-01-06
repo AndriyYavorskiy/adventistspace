@@ -34,7 +34,20 @@ angular.module('AMO').component('amoReader', {
 				displayLinksMaster: displayLinksMaster
 			};
 			reader.linksMasterConfig = {
-				open: false
+				open: false,
+				dispatch: function (action) {
+					switch(action.type) {
+						case ('[AMO_LINKS] OPEN_RERERENCE'): 
+							this.open = false;
+							addInstance(action.payload);
+							break;
+						case ('[AMO_LINKS] CLOSE_LINKS_MASTRER'):
+							this.open = false;
+							break;
+						default: 
+							console.warn('[AMO_LINKS] Unknown actiontype: ' + action.type);
+					}
+				}
 			}
 			$scope.$on('appeal:add-bookmark', function (event, ref) {
 				amoBibleInstanceManager.addToLastBookmarks(ref);

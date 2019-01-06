@@ -6,50 +6,25 @@ angular.module('AMO').component('amoLinks', {
   },
   controllerAs: 'amoLinks',
   controller: ['$document', '$window', 'amoLinksManager', function ($document, $window, amoLinksManager) {
-    var $ctrl = this,
-      form = $document[0].forms['link-form'];
+    var $ctrl = this;
+
     this.target = null;
     this.currentDirId = 'root';
     this.active = '';
-    this.model = {
-      root: [
-        {
-          name: 'Откровение о Христе',
-          link: 'ru:rev:22:16',
-          id: '1546711123388'
-        }
-      ],
-      folders: {
-        ids: [1546711136829],
-        items: {
-          1546711136829: {
-            name: '',
-            links: [
-              {
-                name: '',
-                link: ''
-              }
-            ],
-            id: '1546711136829',
-            childOf: 'root'
-          }
-        }
-      }
-    };
+    this.model;
     refreshState();
     this.close = function () {
-      $ctrl.wrapperConfig.open = false;
+      $ctrl.wrapperConfig.dispatch({type: '[AMO_LINKS] CLOSE_LINKS_MASTRER'});
+    }
+    this.visitRef = function (ref) {
+      $ctrl.wrapperConfig.dispatch({type: '[AMO_LINKS] OPEN_RERERENCE', payload: ref});
     }
     setTimeout(function () {
       var form = $document[0].forms['link-form'];
       form.link.value = $ctrl.wrapperConfig.candidateLink || '';
-      console.log($ctrl.wrapperConfig);
     });
 
     // folders management
-    this.visitRef = function (ref) {
-      console.log(ref);
-    }
     this.createFolder = function () {
       var form = $document[0].forms['folder-form'];
       amoLinksManager.createFolder(form.folder.value || 'Новая папка', $ctrl.currentDirId || $ctrl.currentDir.id);
