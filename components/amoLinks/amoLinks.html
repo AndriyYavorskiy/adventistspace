@@ -1,46 +1,55 @@
 <div class="amo-links container">
   <form name="folder-form" class="amo-links-toolbar amo-theme-bg">
-    <button ng-disabled="!amoLinks.currentDir.childOf" class="btn s parent-dir" ng-click="amoLinks.setDir(amoLinks.currentDir.childOf);"></button>
-    <input type="text" name="folder" class="inp txt s sensation" placeholder="Имя папки">
-    <button ng-if="!amoLinks.target" class="btn s universal create-folder" ng-click="amoLinks.createFolder();" ng-bind="'Создать папку'"></button>
+    <button ng-disabled="!amoLinks.currentDir.childOf" class="btn parent-dir" ng-click="amoLinks.setDir(amoLinks.currentDir.childOf);">⮬</button>
+    <input type="text" name="folder" class="folder-amender go-left" placeholder="Имя папки">
+    <button ng-if="!amoLinks.target" class="btn create-folder go-left" ng-click="amoLinks.createFolder();" ng-bind="'Создать папку'"></button>
+    <button ng-if="amoLinks.target" class="btn create-folder go-left" ng-click="amoLinks.updateFolder(amoLinks.target.folder);" ng-bind="'Изменить папку'"></button>
     <button class="btn blank hide-links" ng-click="amoLinks.close()">✖</button>
   </form>
+  <div class="row breadcrumbs">
+    <div class="go-left breadcrumb amo-theme-color" ng-repeat="breadcrumb in amoLinks.breadcrumbs"
+      ng-click="amoLinks.setDir(breadcrumb.id)" ng-bind="breadcrumb.name || 'Дом'"></div>
+  </div>
   <div class="workspace row">
-    <div class="amo-links-list col-md-12">
-      <div class="amo-link amo-theme-color clearfix" ng-repeat="link in amoLinks.currentDir.links track by $index">
-        <span class="inherit color" ng-bind="link.name" amo-reader-link="{{link.link}}" ng-click="amoLinks.close();"></span>
-        <span ng-bind="link.link | BibleReference"></span>
-        <span class="go-right">
-          <span class="update link" ng-click="amoLinks.goUpdateLink(link, null)"><img src="./images/edit.svg"></span>
-          <span class="delete link" ng-click="amoLinks.deleteLink(link)"><img src="./images/bucket.svg"></span>
-        </span>
-      </div>
-      <div class="nothing-here col-md-12" ng-if="!amoLinks.currentDir.links.length" ng-bind="'В этой папке еще нет ссылок'"></div>
-      <div ng-if="amoLinks.target" class="action-mode update-link-mode">
-        <button class="btn m sure cancel-update-link" ng-click="amoLinks.cancelUpdateLink()">Отменить изменение</button>
-      </div>
+    <div ng-if="amoLinks.target" class="action-mode update-link-mode">
+      <button class="btn m sure cancel-update" ng-click="amoLinks.cancelUpdateProcess()">Отменить изменение</button>
     </div>
-    <div class="amo-links-folders-list col-md-12">
-      <div class="amo-links-folder clearfix" ng-repeat="folder in amoLinks.model.folders" ng-if="folder.childOf === amoLinks.currentDirId" ng-dblclick="amoLinks.setDir(folder.id)">
+    <div class="amo-links-folders-list col-md-4">
+      <div class="amo-links-folder amo-links-content-item clearfix" ng-click="amoLinks.active = folder.id"
+        ng-repeat="folder in amoLinks.model.folders" ng-class="{active: amoLinks.active === folder.id}"
+        ng-if="folder.childOf === amoLinks.currentDirId" ng-dblclick="amoLinks.setDir(folder.id)">
         <img src="./images/folder.svg">
         <span ng-bind="folder.name || '..'"></span>
-        <span class="go-right" ng-if="folder.name">
+        <span class="managing-tools go-right" ng-if="folder.name">
           <span class="update folder" ng-click="amoLinks.goUpdateFolder(folder)"><img src="./images/edit.svg"></span>
           <span class="delete folder" ng-click="amoLinks.deleteFolder(folder.id)"><img src="./images/bucket.svg"></span>
         </span>
       </div>
     </div>
+    <div class="amo-links-list col-md-8">
+      <div class="amo-link amo-links-content-item amo-theme-color clearfix" ng-click="amoLinks.active = link.id"
+        ng-class="{active: amoLinks.active === link.id}" ng-dblclick="amoLinks.visitRef(link.link)"
+        ng-repeat="link in amoLinks.currentDir.links track by $index">
+        <span class="inherit color" ng-bind="link.name" amo-reader-link="{{link.link}}" ng-click="amoLinks.close();"></span>
+        <span ng-bind="link.link | BibleReference"></span>
+        <span class="managing-tools go-right">
+          <span class="update link" ng-click="amoLinks.goUpdateLink(link, null)"><img src="./images/edit.svg"></span>
+          <span class="delete link" ng-click="amoLinks.deleteLink(link)"><img src="./images/bucket.svg"></span>
+        </span>
+      </div>
+      <div class="nothing-here col-md-12" ng-if="!amoLinks.currentDir.links.length" ng-bind="'В этой папке еще нет ссылок'"></div>
+    </div>
   </div>
-  <form name="link-form" class="amo-links-amender amo-theme-bg row clearfix">
+  <form name="link-form" class="amo-links-amender row clearfix">
     <div class="col-sm-12 col-md-3">
-      <input type="text" name="link" class="inp txt s sensation mb12px fox-to-col" placeholder="ссылка книга:глава:стих" required>
+      <input type="text" name="link" class="inp txt m sensation m mb12px full-size" placeholder="ссылка книга:глава:стих" required>
     </div>
     <div class="col-sm-12 col-md-7">
-      <input type="text" name="name" class="inp txt s sensation mb12px fox-to-col" placeholder="описание">
+      <input type="text" name="name" class="inp txt m sensation mb12px full-size" placeholder="описание">
     </div>
     <div class="col-sm-12 col-md-2">
-      <button ng-if="!amoLinks.target" class="btn s universal create-link mb12px fox-to-col" ng-click="amoLinks.saveLink(); amoLinks.close()" ng-bind="'Создать'"></button>
-      <button ng-if="amoLinks.target" class="btn s universal create-link mb12px fox-to-col" ng-click="amoLinks.updateLink(amoLinks.target.link); amoLinks.close()" ng-bind="'Сохранить'"></button>
+      <button ng-if="!amoLinks.target" class="btn m solid create-link mb12px full-size" ng-click="amoLinks.saveLink();" ng-bind="'Создать'"></button>
+      <button ng-if="amoLinks.target" class="btn m solid create-link mb12px full-size" ng-click="amoLinks.updateLink(amoLinks.target.link);" ng-bind="'Сохранить'"></button>
     </div>
   </form>
 </div>
@@ -53,16 +62,47 @@
   }
   .amo-links-toolbar {
     border-radius: 2px 2px 0 0;
+    height: 40px;
     margin-left: -15px;
-    padding: 8px 12px;
+    padding: 8px 40px;
     width: calc(100% + 30px);
   }
+  .parent-dir:hover {
+    background: rgba(0,0,0, .1);
+  }
   .parent-dir {
-    background: url(./images/parent-dir.png);
-    background-size: cover;
-    float: left;
-    margin-right: 12px;
-    width: 24px;
+    background: none;
+    color: #fff;
+    font-size: 25px;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 40px;
+  }
+  .parent-dir:disabled {
+    opacity: 0;
+  }
+  .folder-amender {
+    background: none;
+    border: 1px solid #ffffff3d;
+    border-top: none;
+    border-bottom: none;
+    color: #fff;
+    height: 40px;
+    margin: -8px 0;
+    padding: 0 8px;
+    width: calc(100% - 200px);
+  }
+  .create-folder {
+    background: #ffffff21;
+    color: #fff;
+    height: 40px;
+    margin: -8px 0;
+    width: 120px;
+  }
+  .folder-amender::placeholder {
+    color: #ffffff3d;
   }
   .hide-links {
     color: #fff;
@@ -75,16 +115,41 @@
   .hide-links:hover {
     background: rgba(0,0,0, .1);
   }
+
+  .breadcrumbs {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding-left: 8px;
+  }
+  .breadcrumb {
+    cursor: pointer;
+    padding: 8px;
+  }
+
   .workspace {
     background: #fff;
     max-height: 50%;
     min-height: 80px;
     overflow: auto;
+    position: relative;
   }
   .nothing-here {
     text-align: center;
   }
-
+  .managing-tools {
+    opacity: 0;
+    position: absolute;
+    right: 0;
+  }
+  .managing-tools:hover {
+    opacity: 1 !important;
+  }
+  .managing-tools .update:hover {
+    opacity: 1;
+  }
+  .managing-tools .delete:hover {
+    opacity: 1;
+  }
   .mb12px {
     margin-bottom: 10px;
   }
@@ -100,16 +165,25 @@
     color: #797979;
   }
 
-  .amo-links-list {
-    padding-top: 15px;
-  }
-  .amo-link {
+  .amo-links-content-item {
+    cursor: default;
     height: 24px;
     padding-top: 4px;
+    white-space: nowrap;
+    overflow: visible;
   }
-  .amo-link:hover {
-    background: rgba(0,0,0, .1); 
+
+  .amo-links-list {
+    padding-top: 15px;
+    overflow: auto;
   }
+  .amo-link:hover,
+  .amo-link.active {
+    background: rgba(0,0,0, .01); 
+  }
+  .amo-link:hover .managing-tools {
+    opacity: 0.5;
+  } 
   .amo-link img {
     width: 24px;
     float: left;
@@ -118,13 +192,18 @@
   }
 
   .amo-links-folders-list {
-    padding-bottom: 15px;
+    border-right: 1px solid #eee;
+    overflow: auto;
+    padding-top: 15px;
   }
-  .amo-links-folder {
-    cursor: pointer;
-    height: 24px;
-    padding-top: 4px;
+  .amo-links-folder {}
+  .amo-links-folder:hover,
+  .amo-links-folder.active {
+    background: rgba(0,0,0, .01); 
   }
+  .amo-links-folder:hover .managing-tools {
+    opacity: 0.5;
+  } 
   .amo-links-folder img {
     width: 24px;
     float: left;
@@ -138,8 +217,8 @@
   }
 
   .amo-links-amender {
+    background: #eee;
     border-radius: 0 0 2px 2px;
-    padding: 12px 12px 0 12px;
   }
   .action-mode.update-link-mode {
     background: rgba(224, 220, 197, 0.75);
@@ -147,12 +226,18 @@
     height: 100%;
     position: absolute;
     width: 100%;
+    z-index: 2;
   }
-  .cancel-update-link {
+  .cancel-update {
     margin: auto;
   }
   .fox-to-col {
     width: calc(100% + 20px);
     margin-left: -10px;
+  }
+  .full-size {
+    height: 100%;
+    margin: 0 -15px;
+    width: calc(100% + 30px);
   }
 </style>

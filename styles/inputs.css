@@ -101,6 +101,6 @@
 .btn[disabled] {
 	cursor: default;
 }
-[amo-theme] .btn[disabled] {
+[amo-theme] .btn.solid[disabled] {
 	background: #e8e5d4 !important;
 }

@@ -10,6 +10,7 @@ angular.module('AMO').component('amoLinks', {
       form = $document[0].forms['link-form'];
     this.target = null;
     this.currentDirId = 'root';
+    this.active = '';
     this.model = {
       root: [
         {
@@ -46,9 +47,21 @@ angular.module('AMO').component('amoLinks', {
     });
 
     // folders management
+    this.visitRef = function (ref) {
+      console.log(ref);
+    }
     this.createFolder = function () {
       var form = $document[0].forms['folder-form'];
-      amoLinksManager.createFolder(form.folder.value, $ctrl.currentDirId || $ctrl.currentDir.id);
+      amoLinksManager.createFolder(form.folder.value || 'Новая папка', $ctrl.currentDirId || $ctrl.currentDir.id);
+      refreshState();
+    }
+    this.updateFolder = function (folder) {
+      var form = $document[0].forms['folder-form'],
+      newName = form.folder.value;
+
+      amoLinksManager.renameFolder(folder.id, newName);
+      $ctrl.target = null;
+      form.reset();
       refreshState();
     }
     this.deleteFolder = function (folderId) {
@@ -63,12 +76,12 @@ angular.module('AMO').component('amoLinks', {
         $ctrl.errors = '';
         return;
       }
-      amoLinksManager.addOne({link: form.link.value, name: form.name.value});
+      amoLinksManager.addOne({link: form.link.value, name: form.name.value}, $ctrl.currentDir.id);
       form.reset();
       refreshState();
     }
     this.deleteLink = function (link, folder) {
-      amoLinksManager.deleteOne(link);
+      amoLinksManager.deleteOne(link, $ctrl.currentDir.id);
       refreshState();
     }
     this.updateLink = function (link, folder) {
@@ -80,22 +93,41 @@ angular.module('AMO').component('amoLinks', {
     }
     this.goUpdateLink = function (link, folder) {
       var form = $document[0].forms['link-form'];
-      $ctrl.target = {link: link, folder: folder || null};
+      $ctrl.target = {link: link, folder: folder || null, type: 'link'};
       form.link.value = link.link;
       form.name.value = link.name;
     }
-    this.cancelUpdateLink = function () {
+    this.goUpdateFolder = function (folder) {
+      var form = $document[0].forms['folder-form'];
+      $ctrl.target = {folder: folder, type: 'folder'};
+      form.folder.value = folder.name;
+    }
+    this.cancelUpdateProcess = function () {
       var form = $document[0].forms['link-form'];
       $ctrl.target = null;
       form.reset();
     }
     function refreshState () {
       $ctrl.model = amoLinksManager.getLinks();
-      $ctrl.currentDir = $ctrl.model.folders[$ctrl.currentDirId] || $ctrl.model.folders['root'];
+      // $ctrl.currentDir = $ctrl.model.folders[$ctrl.currentDirId] || $ctrl.model.folders['root'];
+      _setDir($ctrl.currentDirId);
     }
     this.setDir = function (dirId) {
-      $ctrl.currentDirId = dirId;
-      $ctrl.currentDir = $ctrl.model.folders[dirId];
+      _setDir(dirId);
+    }
+    function _setDir (dirId) {
+      var pointer;
+
+      $ctrl.currentDirId = dirId || 'root';
+      $ctrl.currentDir = $ctrl.model.folders[dirId] || $ctrl.model.folders['root'];
+      pointer = $ctrl.model.folders[dirId]
+      $ctrl.breadcrumbs = [pointer];
+      var i = 0;
+      while (pointer.id !== 'root' && i < 100) {
+        i++;
+        pointer = $ctrl.model.folders[pointer.childOf];
+        $ctrl.breadcrumbs.unshift(pointer);
+      }
     }
 
   }]
