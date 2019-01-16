@@ -18,6 +18,7 @@
 [amo-theme=yaspis] .amo-theme-bg { 
 	background: #d25f53;
 }
+[amo-theme=yaspis] .amo-theme-color-on-hover:hover,
 [amo-theme=yaspis] .toolbar-menu .tab.active,
 [amo-theme=yaspis] .result-item .scripture,
 [amo-theme=yaspis] .results-link,
@@ -69,6 +70,7 @@
 [amo-theme=sapfir] .amo-theme-bg { 
 	background: #456af3;
 }
+[amo-theme=sapfir] .amo-theme-color-on-hover:hover,
 [amo-theme=sapfir] .toolbar-menu .tab.active,
 [amo-theme=sapfir] .result-item .scripture,
 [amo-theme=sapfir] .results-link,
@@ -120,6 +122,7 @@
 [amo-theme=xalkidon] .amo-theme-bg { 
 	background: #7195bb;
 }
+[amo-theme=xalkidon] .amo-theme-color-on-hover:hover,
 [amo-theme=xalkidon] .toolbar-menu .tab.active,
 [amo-theme=xalkidon] .result-item .scripture,
 [amo-theme=xalkidon] .results-link,
@@ -171,6 +174,7 @@
 [amo-theme=smaragd] .amo-theme-bg { 
 	background: #52a290;
 }
+[amo-theme=smaragd] .amo-theme-color-on-hover:hover,
 [amo-theme=smaragd] .toolbar-menu .tab.active,
 [amo-theme=smaragd] .result-item .scripture,
 [amo-theme=smaragd] .results-link,
@@ -222,6 +226,7 @@
 [amo-theme=sardonix] .amo-theme-bg { 
 	background: #e6896d;
 }
+[amo-theme=sardonix] .amo-theme-color-on-hover:hover,
 [amo-theme=sardonix] .toolbar-menu .tab.active,
 [amo-theme=sardonix] .result-item .scripture,
 [amo-theme=sardonix] .results-link,
@@ -273,6 +278,7 @@
 [amo-theme=cerdolik] .amo-theme-bg { 
 	background: #e06565;
 }
+[amo-theme=cerdolik] .amo-theme-color-on-hover:hover,
 [amo-theme=cerdolik] .toolbar-menu .tab.active,
 [amo-theme=cerdolik] .result-item .scripture,
 [amo-theme=cerdolik] .results-link,
@@ -324,6 +330,7 @@
 [amo-theme=xrizolit] .amo-theme-bg { 
 	background: #84ab50;
 }
+[amo-theme=xrizolit] .amo-theme-color-on-hover:hover,
 [amo-theme=xrizolit] .toolbar-menu .tab.active,
 [amo-theme=xrizolit] .result-item .scripture,
 [amo-theme=xrizolit] .results-link,
@@ -375,6 +382,7 @@
 [amo-theme=virill] .amo-theme-bg { 
 	background: #54af70;
 }
+[amo-theme=virill] .amo-theme-color-on-hover:hover,
 [amo-theme=virill] .toolbar-menu .tab.active,
 [amo-theme=virill] .result-item .scripture,
 [amo-theme=virill] .results-link,
@@ -426,6 +434,7 @@
 [amo-theme=topaz] .amo-theme-bg { 
 	background: #40b3d6;
 }
+[amo-theme=topaz] .amo-theme-color-on-hover:hover,
 [amo-theme=topaz] .toolbar-menu .tab.active,
 [amo-theme=topaz] .result-item .scripture,
 [amo-theme=topaz] .results-link,
@@ -477,6 +486,7 @@
 [amo-theme=xrizopraz] .amo-theme-bg { 
 	background: #57b7a5;
 }
+[amo-theme=xrizopraz] .amo-theme-color-on-hover:hover,
 [amo-theme=xrizopraz] .toolbar-menu .tab.active,
 [amo-theme=xrizopraz] .result-item .scripture,
 [amo-theme=xrizopraz] .results-link,
@@ -528,6 +538,7 @@
 [amo-theme=giacint] .amo-theme-bg { 
 	background: #c36f66;
 }
+[amo-theme=giacint] .amo-theme-color-on-hover:hover,
 [amo-theme=giacint] .toolbar-menu .tab.active,
 [amo-theme=giacint] .result-item .scripture,
 [amo-theme=giacint] .results-link,
@@ -579,6 +590,7 @@
 [amo-theme=ametist] .amo-theme-bg { 
 	background: #7c5ec5;
 }
+[amo-theme=ametist] .amo-theme-color-on-hover:hover,
 [amo-theme=ametist] .toolbar-menu .tab.active,
 [amo-theme=ametist] .result-item .scripture,
 [amo-theme=ametist] .results-link,

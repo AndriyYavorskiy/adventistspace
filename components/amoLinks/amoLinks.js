@@ -5,10 +5,10 @@ angular.module('AMO').component('amoLinks', {
     wrapperConfig: '<'
   },
   controllerAs: 'amoLinks',
-  controller: ['$document', '$window', 'amoLinksManager', function ($document, $window, amoLinksManager) {
+  controller: ['$document', 'amoLinksManager', '$timeout', function ($document, amoLinksManager, $timeout) {
     var $ctrl = this;
 
-    this.target = null;
+    this.process = null;
     this.currentDirId = 'root';
     this.active = '';
     this.model;
@@ -19,9 +19,10 @@ angular.module('AMO').component('amoLinks', {
     this.visitRef = function (ref) {
       $ctrl.wrapperConfig.dispatch({type: '[AMO_LINKS] OPEN_RERERENCE', payload: ref});
     }
-    setTimeout(function () {
-      var form = $document[0].forms['link-form'];
-      form.link.value = $ctrl.wrapperConfig.candidateLink || '';
+    $timeout(function () {
+      var form = $document[0].forms['link-form'],
+        candidate = $ctrl.wrapperConfig.candidateLink;
+      form.link.value = candidate || '';
     });
 
     // folders management
@@ -35,11 +36,38 @@ angular.module('AMO').component('amoLinks', {
       newName = form.folder.value;
 
       amoLinksManager.renameFolder(folder.id, newName);
-      $ctrl.target = null;
+      $ctrl.process = null;
       form.reset();
       refreshState();
     }
-    this.deleteFolder = function (folderId) {
+    this.goDeleteLink = function (link) {
+      $ctrl.process = {
+        link: link,
+        type: 'delete-link',
+        discardMessage: 'Отменить удаление',
+        commitMessage: 'Подтвердить удаление'};
+    }
+    this.goDeleteFolder = function (folder) {
+      $ctrl.process = {
+        folder: folder,
+        type: 'delete-folder',
+        discardMessage: 'Отменить удаление',
+        commitMessage: 'Подтвердить удаление'};
+    }
+    this.commitProcess = function (process) {
+      switch (process.type) {
+        case ('delete-folder'): 
+          deleteFolder(process.folder.id);
+          break;
+        case ('delete-link'): 
+          deleteLink(process.link);
+          break;
+        default:
+          console.log('[amoLinks] Unknown process type.');
+      }
+      $ctrl.process = null;
+    }
+    deleteFolder = function (folderId) {
       amoLinksManager.deleteFolder(folderId);
       refreshState();
     }
@@ -55,32 +83,39 @@ angular.module('AMO').component('amoLinks', {
       form.reset();
       refreshState();
     }
-    this.deleteLink = function (link, folder) {
+    deleteLink = function (link) {
       amoLinksManager.deleteOne(link, $ctrl.currentDir.id);
       refreshState();
     }
     this.updateLink = function (link, folder) {
       var form = $document[0].forms['link-form'];
       amoLinksManager.updateOne({link: form.link.value, name: form.name.value, id: link.id}, folder ? folder.id : null);
-      $ctrl.target = null;
+      $ctrl.process = null;
       form.reset();
       refreshState();
     }
     this.goUpdateLink = function (link, folder) {
       var form = $document[0].forms['link-form'];
-      $ctrl.target = {link: link, folder: folder || null, type: 'link'};
+      $ctrl.process = {
+        link: link,
+        folder: folder || null,
+        type: 'update-link',
+        discardMessage: 'Отменить редактирование'};
       form.link.value = link.link;
       form.name.value = link.name;
     }
     this.goUpdateFolder = function (folder) {
       var form = $document[0].forms['folder-form'];
-      $ctrl.target = {folder: folder, type: 'folder'};
+      $ctrl.process = {
+        folder: folder,
+        type: 'update-folder',
+        discardMessage: 'Отменить редактирование'};
       form.folder.value = folder.name;
     }
-    this.cancelUpdateProcess = function () {
-      var form = $document[0].forms['link-form'];
-      $ctrl.target = null;
-      form.reset();
+    this.discardProcess = function () {
+      $ctrl.process = null;
+      $document[0].forms['link-form'].reset();
+      $document[0].forms['folder-form'].reset();
     }
     function refreshState () {
       $ctrl.model = amoLinksManager.getLinks();

@@ -77,6 +77,7 @@ angular.module('AMO').component('amoReader', {
 			}
 			function displayLinksMaster (candidate) {
 				reader.linksMasterConfig.open = true;
+				reader.linksMasterConfig.message = 'Сохранение ссылки';
 				reader.linksMasterConfig.candidateLink = candidate;
 			}
 			function getLastState () {
