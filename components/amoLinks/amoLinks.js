@@ -44,30 +44,32 @@ angular.module('AMO').component('amoLinks', {
       $ctrl.process = {
         link: link,
         type: 'delete-link',
-        discardMessage: 'Отменить удаление',
-        commitMessage: 'Подтвердить удаление'};
+        discardMessage: 'Отменить',
+        commitMessage: 'Подтвердить',
+        message: 'Вы удаляете ссылку с названием: "' + link.name + '"'};
     }
     this.goDeleteFolder = function (folder) {
       $ctrl.process = {
         folder: folder,
         type: 'delete-folder',
-        discardMessage: 'Отменить удаление',
-        commitMessage: 'Подтвердить удаление'};
+        discardMessage: 'Отменить',
+        commitMessage: 'Подтвердить',
+        message: 'Вы удаляете папку с названием: "' + folder.name + '"'};
     }
     this.commitProcess = function (process) {
       switch (process.type) {
         case ('delete-folder'): 
-          deleteFolder(process.folder.id);
+          _deleteFolder(process.folder.id);
           break;
         case ('delete-link'): 
-          deleteLink(process.link);
+          _deleteLink(process.link);
           break;
         default:
           console.log('[amoLinks] Unknown process type.');
       }
       $ctrl.process = null;
     }
-    deleteFolder = function (folderId) {
+    function _deleteFolder (folderId) {
       amoLinksManager.deleteFolder(folderId);
       refreshState();
     }
@@ -83,7 +85,7 @@ angular.module('AMO').component('amoLinks', {
       form.reset();
       refreshState();
     }
-    deleteLink = function (link) {
+    function _deleteLink (link) {
       amoLinksManager.deleteOne(link, $ctrl.currentDir.id);
       refreshState();
     }
@@ -100,17 +102,21 @@ angular.module('AMO').component('amoLinks', {
         link: link,
         folder: folder || null,
         type: 'update-link',
-        discardMessage: 'Отменить редактирование'};
+        discardMessage: 'Отменить редактирование',
+        message: 'Прежнее название ссылки: "' + link.name + '"'};
       form.link.value = link.link;
       form.name.value = link.name;
+      form.name.focus();
     }
     this.goUpdateFolder = function (folder) {
       var form = $document[0].forms['folder-form'];
       $ctrl.process = {
         folder: folder,
         type: 'update-folder',
-        discardMessage: 'Отменить редактирование'};
+        discardMessage: 'Отменить редактирование',
+        message: 'Прежнее название папки: "' + folder.name + '"'};
       form.folder.value = folder.name;
+      form.folder.focus();
     }
     this.discardProcess = function () {
       $ctrl.process = null;

@@ -105,6 +105,20 @@
 	color: #eee;
 	outline: none;
 }
+.btn.sober-light {
+	background: #e8e5d4;
+	border: 1px solid #877063;
+	color: #877063;
+	margin-right: 8px;
+}
+.btn.sober-dark {
+	background: #877063;
+	color: #e8e5d4;
+}
+.btn.danger {
+	background: #ff7878;
+	color: #fff;
+}
 .btn[disabled] {
 	cursor: default;
 }
