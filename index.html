@@ -19,6 +19,7 @@
 		<link rel="stylesheet" href="components/amoBibleReader/amoReader.css?v=1">
 		<link rel='stylesheet' href='styles/bootstrap-grid.css?v=1'>
 		<link rel='stylesheet' href='styles/theme.css?v=1'>
+		<link rel='stylesheet' href='styles/main-page.css?v=1'>
 		<link href='http://fonts.googleapis.com/css?family=Philosopher:400,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 		<script src='scripts/angular.js'></script>
 		<script src="libs/angular-translate.min.js"></script>
@@ -31,7 +32,8 @@
 		<script src='components/amoBibleReader/amoReaderInstance.js'></script>
 		<script src='components/amoBibleReader/amoReaderTools.js'></script>
 		<script src='components/amoModal/amoModal.js'></script>
-		<script src='components/amoAutocomplete/amoAutocompleteFor.js'></script>
+		<script src='components/amoAutocompleteFor/amoAutocompleteFor.js'></script>
+		<script src='components/amoAutocomplete/amoAutocomplete.js'></script>
 		<script src='components/amoReaderLink/amoReaderLink.js'></script>
 		<script src='components/amoLangSwitcher/amoLangSwitcher.js'></script>
 		<script src='components/amoChangeLangTrigger.js'></script>
@@ -45,15 +47,24 @@
 		<script src='components/amoTheme/amoTheme.js'></script>
 		<script src='components/amoLinks/amoLinks.js'></script>
 		<script src='components/amoLinksForMainPage/amoLinksForMainPage.js'></script>
+		<script src='components/amoSearch/amoSearch.js'></script>
 	</head>
 	<body ng-controller="amoMain as mainCtrl" amo-theme="xalkidon">
 		<amo-theme></amo-theme>
 		<amo-change-lang-trigger></amo-change-lang-trigger>
 		<amo-links-for-main-page></amo-links-for-main-page>
+		<div class="amo-search-for-main-page">
+			<div class="container">
+				<div class="row">
+					<amo-search class="col-md-6"></amo-search>
+				</div>
+			</div>
+		</div>
 		<main>
 			<div class="desktop module" amo-desktop>
 				<div class='slide column'>
 					<div class='message'>
+						
 						<h1 amo-reader-link>Библия - Слово Божие</h1>
 						<section>
 							<p class="verse-text">

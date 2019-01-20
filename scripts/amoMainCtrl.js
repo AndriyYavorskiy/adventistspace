@@ -1,6 +1,6 @@
 angular.module('AMO')
 .controller('amoMain', ['amoModal', '$translate', '$window', function (amoModal, $translate, $window){
-  amoModal.open({component: "amo-reader"});
+  // amoModal.open({component: "amo-reader"});
 	this.showBibleReader = function (ref) {
 		amoModal.open({component: 'amo-reader', data: {reference: ref}});
 	}

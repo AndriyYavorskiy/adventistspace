@@ -30,10 +30,10 @@ angular.module('AMO')
 					input.blur();
 				}
 				if (event.target.value.length > 1) {
-					var alfaPart = input.value.split(/\d/i)[0].trim(),
-						numbers = _getNumbersFrom(input.value),
+					var chars = _getChars(event.target.value),
+          	numbers = _getNumbers(event.target.value),
 						searchParams = {
-							query: alfaPart,
+							query: chars[0] || '',
 							chapter: numbers[0] || 0,
 							verse: numbers[1] || 0
 						};
@@ -48,13 +48,24 @@ angular.module('AMO')
 
 		return object;
 
-		function _getNumbersFrom (str) {
-			var raw = str.split(/\D+/i), nums = [];
-			raw.forEach(function (rawItem) {
-				if (rawItem && typeof +rawItem === 'number') {
-					nums.push(+rawItem);
-				}
-			});
-			return nums;
-		}
+    function _getChars(str) {
+      var chars = [], particles = str.split(/\b/i);
+
+      particles.forEach(function (particle) {
+        if (/^([а-я]|\w+)+$/.test(particle.trim())) {
+          chars.push(particle.trim());
+        }
+      });
+      return chars;
+    }
+    function _getNumbers(str) {
+      var numbers = [], particles = str.split(/[\D+]/i);
+
+      particles.forEach(function (particle) {
+        if (/^\d+$/.test(particle)) {
+          numbers.push(+particle);
+        }
+      });
+      return numbers;
+    }
 	});

@@ -124,7 +124,8 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 		return list;
 	}
 	function findDestinations(params, language) {
-		var results = [], searchParam = params.query.trim().toLowerCase(),
+		var results = [],
+			searchParam = (params.query || '').trim().toLowerCase(),
 			lang = language || 'ru',
 			martix = BIBLEMATRIX(lang);
 		amoReaderModel(lang).forEach(function (bookModel) {
@@ -137,7 +138,7 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 				hasChapter = params.chapter && params.chapter <= martix[bookModel.id].length;
 				destination = hasChapter ? (destination += ':' + params.chapter) : destination;
 
-				hasVerse = params.verse && params.verse <= martix[bookModel.id][params.verse];
+				hasVerse = params.verse && params.verse <= martix[bookModel.id][params.chapter - 1];
 				destination = (hasChapter && hasVerse) ? (destination += ':' + params.verse) : destination;
 
 				results.push(destination);

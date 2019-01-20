@@ -9,6 +9,10 @@
 	height: 36px;
 	padding: 0 12px;
 }
+.inp.l {
+	height: 42px;
+	padding: 0 16px;
+}
 .sensation {
 	border: 1px solid #eee;
 }

@@ -1,0 +1,29 @@
+<div class="amo-autocomplete">
+  <ng-transclude></ng-transclude>
+  <div class="amo-autocomplete-list" ng-if="focus && candidates.length">
+    <div class="item" ng-class="{ active: $index === candidateIndex }"
+		  ng-repeat="candidate in candidates" ng-mousedown="amoAutocomplete.callback(candidate)" ng-bind="candidate | BibleReference">
+		</div>
+  </div>
+</div>
+<style>
+  .amo-autocomplete input[type='text'] {
+    outline: none;
+  }
+  .amo-autocomplete-list {
+    background: #fff;
+    box-shadow: inset 0 0 0 1px #eee;
+    padding: 8px;
+    z-index: 9;
+  }
+  .amo-autocomplete-list .item:hover {
+    background: #eee;
+  }
+  .amo-autocomplete-list .item {
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  .amo-autocomplete-list .item.active {
+    background: #eee;
+  }
+</style>

@@ -1,0 +1,37 @@
+<div class="amo-search">
+  <amo-autocomplete callback="amoSearch.openReader">
+    <input type="text" class="inp l amo-search-input" placeholder="Искать книгу Библии">
+    <img src="./images/search2.png">
+  </amo-autocomplete>
+</div>
+<style>
+  amo-search {
+    display: block;
+  }
+  .amo-seach {
+    position: relative;
+  }
+  .amo-search img {
+    height: 24px;
+    position: absolute;
+    right: 23px;
+    top: 9px;
+  }
+  .amo-search-input {
+    background: linear-gradient(#ffffff00, #ffffff1f);
+    box-shadow: 0 0 16px #11111157;
+    border: none;
+    border-radius: 2px;
+    margin: 0 auto;
+    outline-color: transparent;
+    width: 100%;
+    /*
+      background: linear-gradient(#ffffff1f, #ffffff00);
+      background: linear-gradient(#ffffff08, #ffffff1f);
+      border: none;
+    */
+  }
+  .amo-search-input:focus {
+    background: #fff;
+  }
+</style>
