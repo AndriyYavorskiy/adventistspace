@@ -464,7 +464,7 @@ angular.module('AMO').constant("BIBLEMATRIX", function () {
 			"james":[27,26,18,17,20],
 			"pet1":[25,25,22,19,14],
 			"pet2":[21,22,18],
-			"john1":[10,29,23,8,7],
+			"john1":[10,29,24,21,21],
 			"john2":[13],
 			"john3":[15],
 			"jude":[25],
