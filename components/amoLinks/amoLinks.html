@@ -1,14 +1,14 @@
 <div class="amo-links container">
-  <form name="folder-form" class="amo-links-toolbar amo-theme-bg">
-    <button ng-disabled="!amoLinks.currentDir.childOf" class="btn parent-dir" ng-click="amoLinks.setDir(amoLinks.currentDir.childOf);">⮬</button>
+  <form name="folder-form" class="folder-form amo-links-toolbar amo-theme-bg">
+    <button type="button" ng-disabled="!amoLinks.currentDir.childOf" class="btn parent-dir" ng-click="amoLinks.goToDir(amoLinks.currentDir.childOf);">⮬</button>
     <input type="text" name="folder" class="folder-amender go-left" placeholder="Имя папки">
-    <button ng-if="!amoLinks.process || amoLinks.process.type !== 'update-folder'" class="btn create-folder go-left" ng-click="amoLinks.createFolder();" ng-bind="'Создать папку'"></button>
-    <button ng-if="amoLinks.process.type === 'update-folder'" class="btn create-folder go-left" ng-click="amoLinks.updateFolder(amoLinks.process.folder);" ng-bind="'Изменить папку'"></button>
-    <button class="btn blank hide-links" ng-click="amoLinks.close()">✖</button>
+    <button type="button" ng-if="!amoLinks.process || amoLinks.process.type !== 'update-folder'" class="btn create-folder go-left" ng-click="amoLinks.createFolder();" ng-bind="'Создать папку'"></button>
+    <button type="button" ng-if="amoLinks.process.type === 'update-folder'" class="btn create-folder go-left" ng-click="amoLinks.updateFolder(amoLinks.process.folder);" ng-bind="'Изменить папку'"></button>
+    <button type="button" class="btn blank hide-links" ng-click="amoLinks.close()">✖</button>
   </form>
   <div class="row breadcrumbs">
     <div class="go-left breadcrumb amo-theme-color" ng-repeat="breadcrumb in amoLinks.breadcrumbs"
-      ng-click="amoLinks.setDir(breadcrumb.id)" ng-bind="breadcrumb.name || 'Дом'"></div>
+      ng-click="amoLinks.goToDir(breadcrumb.id)" ng-bind="breadcrumb.name || 'Дом'"></div>
     <button class="btn info amo-theme-color-on-hover go-right general">
       i
       <span class="tooltip">
@@ -20,7 +20,7 @@
     <div ng-if="amoLinks.process" class="active-process">
       <div class="balancer">
         <div class="process-message" ng-bind="amoLinks.process.message || ''"></div>
-        <button class="btn m sober-light" ng-click="amoLinks.discardProcess()" ng-bind="amoLinks.process.discardMessage"></button>
+        <button class="btn m sober-light" ng-click="amoLinks.discardProcess(amoLinks.process)" ng-bind="amoLinks.process.discardMessage"></button>
         <button class="btn m sober-dark" ng-if="amoLinks.process.commitMessage"
           ng-click="amoLinks.commitProcess(amoLinks.process)" ng-bind="amoLinks.process.commitMessage"></button>
       </div>
@@ -28,7 +28,7 @@
     <div class="amo-links-folders-list col-md-4">
       <div class="amo-links-folder amo-links-content-item clearfix" ng-click="amoLinks.active = folder.id"
         ng-repeat="folder in amoLinks.model.folders" ng-class="{active: amoLinks.active === folder.id}"
-        ng-if="folder.childOf === amoLinks.currentDirId" ng-dblclick="amoLinks.setDir(folder.id)">
+        ng-if="folder.childOf === amoLinks.currentDirId" ng-dblclick="amoLinks.goToDir(folder.id)">
         <img src="./images/folder.svg">
         <span ng-bind="folder.name || '..'"></span>
         <span class="managing-tools go-right" ng-if="folder.name">
@@ -40,10 +40,10 @@
     </div>
     <div class="amo-links-list col-md-8">
       <div class="amo-link amo-links-content-item amo-theme-color clearfix" ng-click="amoLinks.active = link.id"
-        ng-class="{active: amoLinks.active === link.id}" ng-dblclick="amoLinks.visitRef(link.link)"
+        ng-class="{active: amoLinks.active === link.id}" ng-dblclick="amoLinks.visitRef(link.url)"
         ng-repeat="link in amoLinks.currentDir.links track by $index">
-        <span class="amo-link-ref inherit color" ng-click="amoLinks.visitRef(link.link);" ng-bind="link.link | BibleReference:'n c:v'"></span>
-        <span class="amo-link-name" ng-bind="link.name || link.link"></span>
+        <span class="amo-link-ref inherit color" ng-click="amoLinks.visitRef(link.url);" ng-bind="link.url | BibleReference:'n c:v'"></span>
+        <span class="amo-link-name" ng-bind="link.name || link.url"></span>
         <span class="managing-tools go-right">
           <span class="update tool" ng-click="amoLinks.goUpdateLink(link, null)"><img src="./images/edit.svg"></span>
           <span class="delete tool" ng-click="amoLinks.goDeleteLink(link)"><img src="./images/bucket.svg"></span>
@@ -52,7 +52,7 @@
       <div class="nothing-here col-md-12" ng-if="!amoLinks.currentDir.links.length" ng-bind="'В этой папке еще нет ссылок'"></div>
     </div>
   </div>
-  <form name="link-form" class="amo-links-amender row clearfix">
+  <form name="link-form" class="link-form amo-links-amender row clearfix ">
     <div class="col-sm-12 col-md-3">
       <input type="text" name="link" class="inp txt m sensation m full-size" placeholder="ссылка" required>
     </div>
@@ -60,8 +60,8 @@
       <input type="text" name="name" class="inp txt m sensation full-size" placeholder="описание">
     </div>
     <div class="col-sm-12 col-md-2">
-      <button ng-if="!amoLinks.process || amoLinks.process.type !== 'update-link'" class="btn m solid create-link full-size" ng-click="amoLinks.saveLink();" ng-bind="'Создать'"></button>
-      <button ng-if="amoLinks.process.type === 'update-link'" class="btn m solid create-link full-size" ng-click="amoLinks.updateLink(amoLinks.process.link);" ng-bind="'Сохранить'"></button>
+      <button type="button" ng-if="!amoLinks.process || amoLinks.process.type !== 'update-link'" class="btn m solid create-link full-size" ng-click="amoLinks.saveLink();" ng-bind="'Создать'"></button>
+      <button type="button" ng-if="amoLinks.process.type === 'update-link'" class="btn m solid create-link full-size" ng-click="amoLinks.updateLink(amoLinks.process.link);" ng-bind="'Сохранить'"></button>
     </div>
   </form>
 </div>
@@ -93,10 +93,10 @@
     width: 40px;
   }
   .parent-dir:disabled {
-    opacity: 0;
+    opacity: 0.1;
   }
   .folder-amender {
-    background: none;
+    background: rgba(0,0,0, .1);
     border: 1px solid #ffffff3d;
     border-top: none;
     border-bottom: none;

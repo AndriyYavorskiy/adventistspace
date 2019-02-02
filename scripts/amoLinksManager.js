@@ -2,14 +2,14 @@ angular.module('AMO')
 .factory('amoLinksManager', ['$window', function ($window) {
   var manager = {};
   manager.addOne = function (link, folderId) {
-    if (!link && !link.link) {return}
+    if (!link && !link.url) {return}
     link.id = new Date().valueOf();
     var freshModel = manager.getLinks();
     freshModel.folders[folderId || 'root'].links.unshift(link);
     _setLinks(freshModel);
   };
   manager.deleteOne = function (link, folderId) {
-    if (!link && !link.link) {return}
+    if (!link && !link.url) {return}
     var freshModel = manager.getLinks(),
       targetFolder = freshModel.folders[folderId || 'root'];
 
@@ -19,7 +19,7 @@ angular.module('AMO')
     _setLinks(freshModel);
   }
   manager.updateOne = function (link, folderId) {
-    if (!link && !link.link) {return}
+    if (!link && !link.url) {return}
     var freshModel = manager.getLinks(),
     targetFolder = freshModel.folders[folderId || 'root'];
     targetFolder.links = targetFolder.links.filter(function (item) {

@@ -5,14 +5,17 @@ angular.module('AMO').component('amoLinks', {
     wrapperConfig: '<'
   },
   controllerAs: 'amoLinks',
-  controller: ['$document', 'amoLinksManager', '$timeout', function ($document, amoLinksManager, $timeout) {
-    var $ctrl = this;
+  controller: ['$element', 'amoLinksManager', '$timeout', '$rootScope', function ($element, amoLinksManager, $timeout, $rootScope) {
+    var $ctrl = this,
+      linkForm = $element[0].querySelector('.link-form'),
+      folderForm = $element[0].querySelector('.folder-form');
 
     this.process = null;
     this.currentDirId = 'root';
     this.active = '';
     this.model;
-    refreshState();
+    $rootScope.$on('[amoLinks] LOCAL_LINKS_STORAGE_UPDATE', _applyLatestData);
+    _refreshState();
     this.close = function () {
       $ctrl.wrapperConfig.dispatch({type: '[AMO_LINKS] CLOSE_LINKS_MASTRER'});
     }
@@ -20,33 +23,31 @@ angular.module('AMO').component('amoLinks', {
       $ctrl.wrapperConfig.dispatch({type: '[AMO_LINKS] OPEN_RERERENCE', payload: ref});
     }
     $timeout(function () {
-      var form = $document[0].forms['link-form'],
-        candidate = $ctrl.wrapperConfig.candidateLink;
-      form.link.value = candidate || '';
+      linkForm.link.value = $ctrl.wrapperConfig.candidateLink || '';
     });
 
-    // folders management
-    this.createFolder = function () {
-      var form = $document[0].forms['folder-form'];
-      amoLinksManager.createFolder(form.folder.value || 'Новая папка', $ctrl.currentDirId || $ctrl.currentDir.id);
-      refreshState();
+    this.goToDir = function (dirId) {
+      _setDir(dirId);
     }
-    this.updateFolder = function (folder) {
-      var form = $document[0].forms['folder-form'],
-      newName = form.folder.value;
+    this.commitProcess = function (process) {
+      _finalizeProcess(process, true);
+    }
+    this.discardProcess = function (process) {
+      _finalizeProcess(process, false);
+    }
 
-      amoLinksManager.renameFolder(folder.id, newName);
-      $ctrl.process = null;
-      form.reset();
-      refreshState();
+    this.createFolder = function () {
+      amoLinksManager.createFolder(folderForm.folder.value || 'Новая папка', $ctrl.currentDirId || $ctrl.currentDir.id);
+      _refreshState();
     }
-    this.goDeleteLink = function (link) {
+    this.goUpdateFolder = function (folder) {
       $ctrl.process = {
-        link: link,
-        type: 'delete-link',
-        discardMessage: 'Отменить',
-        commitMessage: 'Подтвердить',
-        message: 'Вы удаляете ссылку с названием: "' + link.name + '"'};
+        folder: folder,
+        type: 'update-folder',
+        discardMessage: 'Отменить редактирование',
+        message: 'Прежнее название папки: "' + folder.name + '"'};
+      folderForm.folder.value = folder.name;
+      folderForm.folder.focus();
     }
     this.goDeleteFolder = function (folder) {
       $ctrl.process = {
@@ -56,80 +57,77 @@ angular.module('AMO').component('amoLinks', {
         commitMessage: 'Подтвердить',
         message: 'Вы удаляете папку с названием: "' + folder.name + '"'};
     }
-    this.commitProcess = function (process) {
-      switch (process.type) {
-        case ('delete-folder'): 
-          _deleteFolder(process.folder.id);
-          break;
-        case ('delete-link'): 
-          _deleteLink(process.link);
-          break;
-        default:
-          console.log('[amoLinks] Unknown process type.');
-      }
-      $ctrl.process = null;
-    }
-    function _deleteFolder (folderId) {
-      amoLinksManager.deleteFolder(folderId);
-      refreshState();
-    }
 
-    // links mangement
     this.saveLink = function () {
-      var form = $document[0].forms['link-form'];
-      if (!form.link) {
+      if (!linkForm.link) {
         $ctrl.errors = '';
         return;
       }
-      amoLinksManager.addOne({link: form.link.value, name: form.name.value}, $ctrl.currentDir.id);
-      form.reset();
-      refreshState();
+      amoLinksManager.addOne({url: linkForm.link.value, name: linkForm.name.value}, $ctrl.currentDir.id);
+      linkForm.reset();
+      _refreshState();
     }
-    function _deleteLink (link) {
-      amoLinksManager.deleteOne(link, $ctrl.currentDir.id);
-      refreshState();
-    }
-    this.updateLink = function (link, folder) {
-      var form = $document[0].forms['link-form'];
-      amoLinksManager.updateOne({link: form.link.value, name: form.name.value, id: link.id}, folder ? folder.id : null);
+    this.updateFolder = function (folder) {
+      var newName = folderForm.folder.value;
+
+      amoLinksManager.renameFolder(folder.id, newName);
       $ctrl.process = null;
-      form.reset();
-      refreshState();
+      folderForm.reset();
+      _refreshState();
     }
     this.goUpdateLink = function (link, folder) {
-      var form = $document[0].forms['link-form'];
       $ctrl.process = {
         link: link,
         folder: folder || null,
         type: 'update-link',
         discardMessage: 'Отменить редактирование',
         message: 'Прежнее название ссылки: "' + link.name + '"'};
-      form.link.value = link.link;
-      form.name.value = link.name;
-      form.name.focus();
+      linkForm.link.value = link.url;
+      linkForm.name.value = link.name;
+      linkForm.name.focus();
     }
-    this.goUpdateFolder = function (folder) {
-      var form = $document[0].forms['folder-form'];
-      $ctrl.process = {
-        folder: folder,
-        type: 'update-folder',
-        discardMessage: 'Отменить редактирование',
-        message: 'Прежнее название папки: "' + folder.name + '"'};
-      form.folder.value = folder.name;
-      form.folder.focus();
-    }
-    this.discardProcess = function () {
+    this.updateLink = function (link, folder) {
+      amoLinksManager.updateOne({url: linkForm.link.value, name: linkForm.name.value, id: link.id}, folder ? folder.id : null);
       $ctrl.process = null;
-      $document[0].forms['link-form'].reset();
-      $document[0].forms['folder-form'].reset();
+      linkForm.reset();
+      _refreshState();
     }
-    function refreshState () {
+    this.goDeleteLink = function (link) {
+      $ctrl.process = {
+        link: link,
+        type: 'delete-link',
+        discardMessage: 'Отменить',
+        commitMessage: 'Подтвердить',
+        message: 'Вы удаляете ссылку с названием: "' + link.name + '"'};
+    }
+
+    function _finalizeProcess (process, isConfirmed) {
+      switch (process.type) {
+        case ('delete-folder'):
+        isConfirmed ? _deleteFolder(process.folder.id) : folderForm.reset();
+          break;
+        case ('delete-link'):
+        isConfirmed ? _deleteLink(process.link) : linkForm.reset();
+          break;
+        default:
+          console.log('[amoLinks] ERROR - Unknown process type.');
+      }
+      $ctrl.process = null;
+    }
+    function _deleteFolder (folderId) {
+      amoLinksManager.deleteFolder(folderId);
+      _refreshState();
+    }
+    function _deleteLink (link) {
+      amoLinksManager.deleteOne(link, $ctrl.currentDir.id);
+      _refreshState();
+    }
+    function _refreshState () {
+      $rootScope.$emit('[amoLinks] LOCAL_LINKS_STORAGE_UPDATE');
+    }
+    function _applyLatestData() {
       $ctrl.model = amoLinksManager.getLinks();
-      // $ctrl.currentDir = $ctrl.model.folders[$ctrl.currentDirId] || $ctrl.model.folders['root'];
       _setDir($ctrl.currentDirId);
-    }
-    this.setDir = function (dirId) {
-      _setDir(dirId);
     }
     function _setDir (dirId) {
       var pointer;
