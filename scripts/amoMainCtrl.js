@@ -1,5 +1,7 @@
 angular.module('AMO')
-.controller('amoMain', ['amoModal', '$translate', '$window', function (amoModal, $translate, $window){
+.controller('amoMain', ['amoModal', '$translate', '$window', '$filter', function (amoModal, $translate, $window, $filter){
+	var openGraphTitle = document.querySelector('#og-title');
+
   amoModal.open({component: "amo-reader"});
 	this.showBibleReader = function (ref) {
 		amoModal.open({component: 'amo-reader', data: {reference: ref}});
@@ -11,9 +13,10 @@ angular.module('AMO')
 	function changeLanguage (key) {
 		$translate.use(key);
 	}
-}]).constant('ayep', function () {
-	return 
-});
+	if ($window.location.hash) {
+		openGraphTitle.attributes.content.value = $filter('BibleReference')($window.location.hash.replace('#', ''));
+	}
+}]);
 
 /*
 function getUserIP() {
