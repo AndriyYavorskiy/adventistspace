@@ -311,7 +311,7 @@
 	position: absolute;
 	right: 0px;
 	top: -30px;
-	z-index: 7;
+	z-index: 6;
 }
 .history-item {
     border-radius: 2px;
