@@ -1,0 +1,20 @@
+[amo-device=mobile] .full-screen-chapter {
+  column-count: 1;
+}
+[amo-device=mobile] .full-screen-chapters {
+  width: calc(100% - 24px);
+}
+
+[amo-device=tablet] .full-screen-chapter {
+  column-count: 2;
+}
+[amo-device=tablet] .full-screen-chapters {
+  width: 100%;
+}
+
+[amo-device=desktop] .full-screen-chapters {
+  width: 100%;
+}
+[amo-device=desktop] .full-screen-chapter {
+  column-count: 3;
+}

@@ -9,9 +9,14 @@ angular.module('AMO').component('amoFullScreen', {
     var html = document.querySelector('html'),
         fullScreen = this;
 
-    fullScreen.$onInit =function () {
+    fullScreen.$onInit = function () {
       fullScreen.model = angular.copy(fullScreen.data.book);
       fullScreen.reference = fullScreen.data.reference;
+    };
+    fullScreen.handleReadAreaClick = function (event) {
+      if (!findParentBySelector(event.target, '.full-screen-chapter')) {
+        fullScreen.showNav = !fullScreen.showNav
+      }
     };
     this.showNav = true;
     setTimeout(function () {
@@ -63,6 +68,21 @@ angular.module('AMO').component('amoFullScreen', {
       $scope.$destroy();
       // angular.element($element).remove();
       fullScreen.closeModal();
+    }
+
+    function collectionHas(a, b) {
+      for(var i = 0, len = a.length; i < len; i ++) {
+          if(a[i] == b) return true;
+      }
+      return false;
+    }
+    function findParentBySelector(elm, selector) {
+        var all = document.querySelectorAll(selector);
+        var cur = elm.parentNode;
+        while(cur && !collectionHas(all, cur)) {
+            cur = cur.parentNode;
+        }
+        return cur;
     }
   }],
   controllerAs: 'fullScreen'

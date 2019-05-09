@@ -17,21 +17,25 @@
       ({{ fullScreen.reference }})
     </span>
   </div>
-  <div class="full-screen-read-area slim-scroll" ng-class="{'full-height': !fullScreen.showNav}" ng-click="fullScreen.showNav = !fullScreen.showNav">
+  <div class="full-screen-read-area slim-scroll"
+       ng-class="{'full-height': !fullScreen.showNav}"
+       ng-click="fullScreen.handleReadAreaClick($event)">
     <div class="container">
       <div class="row">
         <div class="full-screen-chapters">
-          <div class="full-screen-chapter"
-            id="{{ ::fullScreen.createID(fullScreen.model, $index) }}"
-            ng-repeat="chapter in fullScreen.model.chapters">
+          <div ng-repeat="chapter in fullScreen.model.chapters">
             <div class="full-screen-chapter-title">
               <span class="inherit color" ng-bind="::('reader.chapter' | translate) + ' ' + ($index + 1)"></span>
             </div>
-            <div class="full-screen-verses">
-              <div class="full-screen-varse" ng-repeat="verse in chapter track by $index" ng-dblclick="fullScreen.navigate($event)"
-                id="{{ ::fullScreen.createID(fullScreen.model, $parent.$index, $index) }}">
-                <span ng-bind="::($index + 1) + ' '"></span>
-                <span ng-bind="::verse"></span>
+            <div class="full-screen-chapter"
+              id="{{ ::fullScreen.createID(fullScreen.model, $index) }}">
+
+              <div class="full-screen-verses">
+                <div class="full-screen-varse" ng-repeat="verse in chapter track by $index" ng-dblclick="fullScreen.navigate($event)"
+                  id="{{ ::fullScreen.createID(fullScreen.model, $parent.$index, $index) }}">
+                  <span ng-bind="::($index + 1) + ' '"></span>
+                  <span ng-bind="::verse"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -83,13 +87,15 @@
   }
   .full-screen-chapters {
     margin: 16px auto;
-    width: 255px;
   }
   .full-screen-chapter {
     margin-bottom: 16px;
   }
+  .full-screen-verses {
+    margin: 0 12px;
+  }
   .full-screen-chapter-title {
-    margin-bottom: 4px;
+    margin: 36px 0 12px;
     text-align: center;
     text-transform: capitalize;
   }

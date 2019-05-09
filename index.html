@@ -19,6 +19,7 @@
 		<link rel="stylesheet" href="components/amoBibleReader/amoReader.css?v=2">
 		<link rel='stylesheet' href='styles/bootstrap-grid.css?v=2'>
 		<link rel='stylesheet' href='styles/theme.css?v=2'>
+		<link rel='stylesheet' href='styles/responsive.css?v=2'>
 		<link rel='stylesheet' href='styles/main-page.css?v=2'>
 		<link href='http://fonts.googleapis.com/css?family=Philosopher:400,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 		<script src='scripts/angular.js'></script>
@@ -45,11 +46,12 @@
 		<script src='libs/ngclipboard.js'></script>
 		<script src='components/amoFullScreen/amoFullScreen.js'></script>
 		<script src='components/amoTheme/amoTheme.js'></script>
+		<script src='components/amoDevice/amoDevice.js'></script>
 		<script src='components/amoLinks/amoLinks.js'></script>
 		<script src='components/amoLinksForMainPage/amoLinksForMainPage.js'></script>
 		<script src='components/amoSearch/amoSearch.js'></script>
 	</head>
-	<body ng-controller="amoMain as mainCtrl" amo-theme="xalkidon">
+	<body ng-controller="amoMain as mainCtrl" amo-theme="xalkidon" amo-device="desktop">
 		<amo-theme></amo-theme>
 		<amo-change-lang-trigger></amo-change-lang-trigger>
 		<amo-links-for-main-page></amo-links-for-main-page>
