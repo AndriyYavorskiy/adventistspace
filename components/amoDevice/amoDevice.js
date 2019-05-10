@@ -2,6 +2,7 @@ angular.module('AMO').directive('amoDevice', ['$window', '$document', function (
   return {
     restrict: 'A',
     link: function (s, e, a) {
+      setDevice();
       $window.addEventListener('resize', setDevice);
       function setDevice () {
         if ($window.innerWidth < 480) {
