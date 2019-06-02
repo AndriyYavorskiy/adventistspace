@@ -1,10 +1,10 @@
 
-angular.module('AMO').component('amoLinks', {
-  templateUrl: './components/amoLinks/amoLinks.html',
+angular.module('AMO').component('amoBibleLinks', {
+  templateUrl: './components/amoBibleLinks/amoBibleLinks.html',
   bindings: {
     wrapperConfig: '<'
   },
-  controllerAs: 'amoLinks',
+  controllerAs: '$ctrl',
   controller: ['$element', 'amoLinksManager', '$timeout', '$rootScope', function ($element, amoLinksManager, $timeout, $rootScope) {
     var $ctrl = this,
       linkForm = $element[0].querySelector('.link-form'),
@@ -14,7 +14,7 @@ angular.module('AMO').component('amoLinks', {
     this.currentDirId = 'root';
     this.active = '';
     this.model;
-    $rootScope.$on('[amoLinks] LOCAL_LINKS_STORAGE_UPDATE', _applyLatestData);
+    $rootScope.$on('[amoBibleLinks] LOCAL_LINKS_STORAGE_UPDATE', _applyLatestData);
     _refreshState();
     this.close = function () {
       $ctrl.wrapperConfig.dispatch({type: '[AMO_LINKS] CLOSE_LINKS_MASTRER'});
@@ -110,7 +110,7 @@ angular.module('AMO').component('amoLinks', {
         isConfirmed ? _deleteLink(process.link) : linkForm.reset();
           break;
         default:
-          console.log('[amoLinks] ERROR - Unknown process type.');
+          console.log('[amoBibleLinks] ERROR - Unknown process type.');
       }
       $ctrl.process = null;
     }
@@ -123,7 +123,7 @@ angular.module('AMO').component('amoLinks', {
       _refreshState();
     }
     function _refreshState () {
-      $rootScope.$emit('[amoLinks] LOCAL_LINKS_STORAGE_UPDATE');
+      $rootScope.$emit('[amoBibleLinks] LOCAL_LINKS_STORAGE_UPDATE');
     }
     function _applyLatestData() {
       $ctrl.model = amoLinksManager.getLinks();

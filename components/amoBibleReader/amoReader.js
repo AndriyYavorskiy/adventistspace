@@ -37,7 +37,7 @@ angular.module('AMO').component('amoReader', {
 				open: false,
 				dispatch: function (action) {
 					switch(action.type) {
-						case ('[AMO_LINKS] OPEN_RERERENCE'): 
+						case ('[AMO_LINKS] OPEN_REFERENCE'): 
 							this.open = false;
 							addInstance(action.payload);
 							break;

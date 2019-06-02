@@ -166,8 +166,8 @@
 .book-toolbar .share-box {
 	width: 100%;
 }
-.share-box .summery {
-	margin: auto;
+.share-box .summary {
+	margin-top: 8px auto auto auto;
 	text-align: center;
 	width: 80%;
 }
@@ -462,4 +462,8 @@
   left: 10%;
   margin: auto;
   width: 80%;
+}
+
+.division {
+	height: 50%;
 }

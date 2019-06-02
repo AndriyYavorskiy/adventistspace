@@ -46,7 +46,7 @@
 			<input type="text" id="link-to-share" class="inp txt m sensation share" readonly value="{{'http://adventamo.com/#' + $ctrl.reference}}">
 			<button class="btn m primary copy" ngclipboard data-clipboard-target="#link-to-share">
 				Ctrl + C</button>
-			<div class="summery" ng-bind="$ctrl.reference | BibleReference"></div>
+			<div class="summary" ng-bind="$ctrl.reference | BibleReference"></div>
 		</div>
 		<div ng-if="$ctrl.currentTabIs('navigation')" class="navigation-box clearfix">
 			<div class="select-book clearfix">
@@ -100,11 +100,16 @@
 			<div class="more-results" ng-show="$ctrl.searchResultsLimit < $ctrl.searchResults.length"
 				 ng-click="$ctrl.searchResultsLimit = $ctrl.searchResultsLimit + 24" ng-bind="'reader.show_more' | translate"></div>
 		</div>
-		<div class="cover history slim-scroll" ng-if="$ctrl.currentTabIs('share')">
-			<div ng-repeat="place in $ctrl.history track by $index" class="history-item" 
-				 ng-class="{current: place.isCurrent}" ng-click="$ctrl.glideInHistory(place)">
-				{{place.ref | BibleReference}}
+		<div class="cover slim-scroll" ng-if="$ctrl.currentTabIs('share')">
+			<div class="links">
+				<amo-bible-links wrapper-config="$ctrl.linkStorageConfig"></amo-bible-links>
 			</div>
+			<!--div class="division history">
+				<div ng-repeat="place in $ctrl.history track by $index" class="history-item" 
+					 ng-class="{current: place.isCurrent}" ng-click="$ctrl.glideInHistory(place)">
+					{{place.ref | BibleReference}}
+				</div>
+			</div-->
 		</div>
 		<div class="book" id="{{book.id}}"
 			 ng-repeat="book in $ctrl.books track by book.alias"

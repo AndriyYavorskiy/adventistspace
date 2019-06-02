@@ -7,7 +7,7 @@ angular.module('AMO').component('amoLinksForMainPage', {
     var $ctrl = this;
     $ctrl.config = {open: false, dispatch: function (action) {
       switch(action.type) {
-        case ('[AMO_LINKS] OPEN_RERERENCE'): 
+        case ('[AMO_LINKS] OPEN_REFERENCE'): 
           this.open = false;
           amoModal.open({component: 'amo-reader', data: {reference: action.payload}});
           break;

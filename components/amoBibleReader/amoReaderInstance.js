@@ -33,6 +33,20 @@ angular.module('AMO').component('amoBibleInstance', {
 			$ctrl.closeBook = function (book) {
 				book.open = false;
 			}
+			$ctrl.linkStorageConfig = {
+				open: false,
+				dispatch: function (action) {
+					switch(action.type) {
+						case ('[AMO_LINKS] OPEN_REFERENCE'): 
+							this.open = false;
+							navigate(action.payload);
+							$ctrl.switchToTab("navigation");
+							break;
+						default: 
+							console.warn('[AMO_LINKS] Unknown actiontype: ' + action.type);
+					}
+				}
+			};
 			$scope.$on("appeal:process-end", function () {
 				$ctrl.inProcess = false;
 			});
@@ -59,7 +73,9 @@ angular.module('AMO').component('amoBibleInstance', {
 			  {
 					text:"Сохранить", 
 					callback: function () {
-						$ctrl.parent.displayLinksMaster($ctrl.candidate)
+						// $ctrl.parent.displayLinksMaster($ctrl.candidate)
+						$ctrl.switchToTab('share');
+						$ctrl.linkStorageConfig.candidateLink = $ctrl.candidate;
 					},
 					disabled: false
 			  }
