@@ -59,12 +59,24 @@
 					placeholder="{{'reader.Bible_book' | translate}}" class="inp txt m sensation find-book">
 				<div class="autocomplete" amo-autocomplete-for="#bible-book" bible-book="$ctrl.navigationQuery" callback="$ctrl.switchToBook"></div>
 				<div class="go-left" ng-if="$ctrl.reference">
-					<button class="btn m sensation go-neighbor-book" ng-bind="$ctrl.getPrevBook($ctrl.reference).alias"
+					<button class="btn m sensation quick-links-trigger">
+						Ссылки					
+					</button>
+					<div class="tooltip quick-links">
+						История
+						<div class="division history">
+							<div ng-repeat="place in $ctrl.history track by $index" class="history-item" 
+								ng-class="{current: place.isCurrent}" ng-mousedown="$ctrl.glideInHistory(place)">
+								{{place.ref | BibleReference}}
+							</div>
+						</div>
+					</div>
+					<!--<button class="btn m sensation go-neighbor-book" ng-bind="$ctrl.getPrevBook($ctrl.reference).alias"
 					  ng-click="$ctrl.navigate($ctrl.getPrevBook($ctrl.reference).lang + ':' + $ctrl.getPrevBook($ctrl.reference).id)">					
 					</button>
 					<button class="btn m sensation go-neighbor-book" ng-bind="$ctrl.getNextBook($ctrl.reference).alias"
 					  ng-click="$ctrl.navigate($ctrl.getNextBook($ctrl.reference).lang + ':' + $ctrl.getNextBook($ctrl.reference).id)">									
-					</button>
+					</button>-->
 				</div>
 			</div>
 			<div class="navigation-agents">

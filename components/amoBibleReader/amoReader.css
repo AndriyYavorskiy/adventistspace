@@ -193,7 +193,7 @@
   margin-bottom: 6px;
   overflow-x: hidden;
 }
-.select-book .btn:not(:last-child) {
+.select-book .btn:not(:last-of-type) {
   margin-right: 6px;
 }
 .select-book .btn {
@@ -241,14 +241,64 @@
     color: #fff;
 }
 .book-toolbar .btn.collapse-books {
+	margin-right: 6px;
   padding: 0;
   width: 36px;
 }
-.btn.go-neighbor-book {
+/*.btn.go-neighbor-book {
   font-size: 14px;
   padding: 0;
   width: 46px;
+}*/
+
+.quick-links-trigger {
+	text-align: left;
+	width: 98px;
 }
+.quick-links-trigger:focus + .quick-links {
+	display: block;
+}
+.quick-links-trigger:after {
+	border: 5px solid transparent;
+	border-top-color: #eee;
+	content: '';
+	position: absolute;
+	right: 17px;
+	top: 25px;
+}
+.quick-links {
+	background: #fff;
+	border-radius: 4px;
+	padding: 8px;
+	border: 1px solid #eee;
+	box-shadow: 0 0 16px #00000038;
+	display: none;
+	position: absolute;
+	margin-top: 42px;
+	right: -8px;
+	width: 316px;
+	z-index: 2;
+}
+.btn.quick-links:hover:after {
+	border-top-color: #fff;
+}
+.quick-links:before,
+.quick-links:after {
+	border: 7px solid transparent;
+	content: '';
+	position: absolute;
+	right: 55px;
+	top: -14px;
+	z-index: 12;
+}
+.quick-links:before {
+	border-bottom-color: #eee;
+	top: -15px;
+}
+.quick-links:after {
+	border-bottom-color: #fff;
+}
+
 .book-toolbar .btn.copy,
 .book-toolbar .btn.find {
 	width: 76px

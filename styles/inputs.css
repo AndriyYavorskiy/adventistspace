@@ -13,6 +13,9 @@
 	height: 42px;
 	padding: 0 16px;
 }
+.sensation::placeholder {
+	color: #ddd;
+}
 .sensation {
 	border: 1px solid #eee;
 }
@@ -40,6 +43,7 @@
 	border: none;
 	border-radius: 2px;
 	cursor: pointer;
+	outline: none;
 }
 .btn.l {
 	height: 42px;
