@@ -347,7 +347,13 @@
 		cursor: pointer;
 		font-size: 0.9em;
 		padding: 8px 0;
+		text-align: center;
 	}
+
+	.bible.reader .book-name:hover {
+		background: rgba(255,255,255, .1);
+	}
+
 	.book .book-name .name {
 		color: inherit;
 		display: none;
@@ -362,10 +368,10 @@
 	.book.open .book-name .alias {
 		display: none;
 	}
-	.bible.reader .book-checker {
+	/*.bible.reader .book-checker {
 		line-height: 19px;
 		margin-right: 5px;
-	}
+	}*/
 	.bible.reader .chapter-number {
 		margin: 0 auto 4px;
 		text-align: center;

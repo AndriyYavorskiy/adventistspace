@@ -115,9 +115,9 @@
 			 ng-repeat="book in $ctrl.books track by book.alias"
 			 ng-class="{open: book.open, 'with-data': book.chapters.length}">
 			<div class="book-name" ng-click="$ctrl.toggleBook(book)">
-				<span amo-stop-prop class="book-checker go-left">
+				<!--span amo-stop-prop class="book-checker go-left">
 					<input type="checkbox" ng-model="book.checked">
-				</span>
+				</span-->
 				<span class="alias" title="{{book.name}}">{{book.alias}}</span>
 				<span class="name">{{book.name}}</span>
 			</div>
