@@ -16,8 +16,8 @@ angular.module('AMO').component('amoReader', {
 		data: '<'
 	},
 	controllerAs: 'reader',
-	controller: ['$scope', '$element', '$compile', '$window', 'amoBibleInstanceManager', '$rootScope',
-	  function ($scope, $element, $compile, $window, amoBibleInstanceManager) {
+	controller: ['$location', '$scope', '$element', '$compile', '$window', 'amoBibleInstanceManager', '$rootScope',
+	  function ($location, $scope, $element, $compile, $window, amoBibleInstanceManager, ) {
 			var reader = this;
 			this.addInstance = addInstance;
 			this.$onInit = function () {
@@ -85,10 +85,28 @@ angular.module('AMO').component('amoReader', {
 					return reader.data.reference;
 				} else if ($window.location.hash) {
 					return $window.location.hash.replace("#", "");
+				} else if ($window.location.search.match(/(\?|&)read=/i)) {
+					return fetchCollection($window.location.search);
 				} else {
 					var lastBookmark = amoBibleInstanceManager.remindLastState();
-					return lastBookmark.length ? lastBookmark : "ru:matt:1";
+					return lastBookmark.length ? lastBookmark : "ru:john:3:16";
 				}
+			}
+			function fetchCollection (search) {
+				var searchParams = search.split('&');
+				var collection = [];
+				var safe = [];
+				searchParams.forEach(function (param) {
+					if (/^(\?)?read=/i.test(param)) {
+						collection = param.replace(/^(\?)?read=/i, '').split('|');
+						collection.forEach(item => {
+							if (amoBibleInstanceManager.isValidReference(item)) {
+								safe.push(item);
+							}
+						});
+					}
+				});
+				return safe;
 			}
 	  }
 	]
