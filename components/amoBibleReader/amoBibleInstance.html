@@ -43,7 +43,7 @@
 			</div>
 		</div>
 		<div ng-if="$ctrl.currentTabIs('share') === true" class="share-box">
-			<input type="text" id="link-to-share" class="inp txt m sensation share" readonly value="{{'http://adventamo.com/#' + $ctrl.reference}}">
+			<input type="text" id="link-to-share" class="inp txt m sensation share" readonly value="{{'http://adventamo.com/?read=' + $ctrl.reference}}">
 			<button class="btn m primary copy" ngclipboard data-clipboard-target="#link-to-share">
 				Ctrl + C</button>
 			<div class="summary" ng-bind="$ctrl.reference | BibleReference"></div>
