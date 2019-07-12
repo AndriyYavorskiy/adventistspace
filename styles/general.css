@@ -4,7 +4,6 @@
 	-moz-box-sizing: border-box;
 	color: #877063;
 	font-family: 'Philosopher', sans-serif;
-	/*font-family: 'advent', 'Philosopher';*/
 	font-size: 1em;
 	margin: 0;
 	padding: 0;
@@ -21,6 +20,14 @@ body {
 	overflow: hidden;
 	width: 100%;
 }
+
+h1 {font-size: 34px; margin-top: 28px;margin-bottom: 20px;}
+h2 {font-size: 28px; margin-top: 24px;margin-bottom: 18px;}
+h3 {font-size: 24px; margin-top: 20px;margin-bottom: 14px;}
+h4 {font-size: 20px; margin-top: 18px;margin-bottom: 12px;}
+h5 {font-size: 18px; margin-top: 14px;margin-bottom: 10px;}
+h6 {font-size: 14px; margin-top: 12px;margin-bottom: 8px;}
+
 .mt-400px {
 	height: 400px;
 	margin-top: -400px;
