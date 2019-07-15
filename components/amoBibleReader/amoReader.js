@@ -108,6 +108,8 @@ angular.module('AMO').component('amoReader', {
 				});
 				return safe;
 			}
+
+			// decodeURI
 	  }
 	]
 });
