@@ -123,6 +123,7 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 
 		return list;
 	}
+
 	function findDestinations(params, language) {
 		var results = [],
 			searchParam = (params.query || '').trim().toLowerCase(),
@@ -146,9 +147,9 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 		});
 		return results;
 	}
+
 	function isValidReference (bookmark) {
 		if (!bookmark) {
-			// console.warn("Reference argument is: " + bookmark + ".");
 			return false;
 		};
 		var bookRegex = /^(ru|ua|en){1}(:\w{2,})?(:\d+)?(:\d+((-\d+)?|(,\d+)*)?)?$/gim,
@@ -161,27 +162,25 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 			verseNum = parts[3] ? parts[3].split(parts[3].match(/\W/i)).sort(function(a,b){return a < b})[0] : undefined;
 			if (bookId && !(BIBLEMATRIX()[bookId].length)) {
 				byMATRIX = false;
-				// console.warn(bookmark + " - Incorrect book id.");
 			}
 			if (chapterNum && !(BIBLEMATRIX()[bookId].length >= chapterNum && chapterNum >= 0)) {
 				byMATRIX = false;
-				// console.warn(bookmark + " - Incorrect chapter number.")
 			}
 			if (verseNum && !(BIBLEMATRIX()[bookId][chapterNum] >= verseNum)) {
 				byMATRIX = false;
-				// console.warn(bookmark + " - Incorrect book number.");
 			}
 		}
 		
 		return byREGEX && byMATRIX;
 	}
+
 	function loadBookModel (book) {
 		return $http.get("/scriptures/Bible_ru/" + book.alias + ".json");
 	}
+
 	function executeSearchInBook(book, searchParam) {
 		var param = searchParam.toLowerCase(), foundInBook = [],
-			words = param.replace(/(,|-|\.)/gim, "").split(" "),
-			lettersRegex = /[а-я]/i;
+			words = param.replace(/(,|-|\.)/gim, "").split(" ");
 			
 		(book.chapters || []).forEach(function (chapter, chapterIndex) {
 
@@ -214,8 +213,8 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 				
 				if (rate) {
 					if (coordenates.length > 1) {
-						coordenates.sort(function (a, b) {
-							return a[0] > b[0];
+						coordenates = coordenates.sort(function (a, b) {
+							return a[0] > b[0] ? 1 : -1;
 						});
 						rate += _getProximityBonus(verse, coordenates);
 					}
@@ -234,9 +233,7 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 			
 		return foundInBook.length ? foundInBook : null;
 	}
-	function splitSearchResults (results, rigidity) {
-		
-	}
+
 	function _detectSubStr (text, subStr) {
 		var match, matches = [], regexp = new RegExp(subStr, "gim");
 	
@@ -246,9 +243,9 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 	
 		return matches;
 	}
+
 	function _getProximityBonus (text, coords) {
-		var grunt = 0,
-			regex = /[а-я]/i;
+		var grunt = 0;
 		
 		coords.forEach(function (coord, index) {
 			if (!coords[index + 1]) {return;}
@@ -260,6 +257,7 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 		
 		return grunt;
 	}
+
 	function _getMatchPurityBonus (text, index, string) {
 		var bonus = 0,
 			regex = /[а-я]/i,
@@ -271,6 +269,7 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 		
 		return bonus;
 	}
+
 	function wrapMatches (text, coords) {
 		var finalText = "",
 		checkPoint = 0;
@@ -284,9 +283,11 @@ angular.module('AMO').factory("amoBibleInstanceManager", function ($http, BIBLEM
 		
 		return finalText;
 	}
+
 	function createTabManager (tab) {
 		return new TabManager(tab);
 	}
+
 	function TabManager (tab) {
 		var currentTab = tab || "";
 		this.setTab = function (tab) {
