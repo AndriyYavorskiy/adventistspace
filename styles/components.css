@@ -23,6 +23,12 @@ amo-modal {
 	filter: invert(0.2);
 	height: 100%;
 }
+.field {
+	background: url('../images/field.jpg') center;
+	background-size: cover;
+	filter: invert(0.2);
+	height: 100%;
+}
 .mediator{
 	background: url('../images/mediator.jpg') center;
 	background-size: cover;
@@ -51,7 +57,7 @@ amo-modal {
 .desktop .scriptures {
 	background: url('../images/scriptures.jpg');
 	background-size: cover;
-	-webkit-filter: invert(1) sepia(1);
+	filter: invert(1) sepia(1);
 	height: 100%;
 }
 
