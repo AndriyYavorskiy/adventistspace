@@ -20,18 +20,23 @@ amo-modal {
 .learn {
 	background: url('../images/learn.jpg') center;
 	background-size: cover;
-	-webkit-filter: invert(0.2);
+	filter: invert(0.2);
 	height: 100%;
 }
 .mediator{
 	background: url('../images/mediator.jpg') center;
 	background-size: cover;
-	-webkit-filter: invert(0.1);
+	filter: invert(0.1);
 }
 .law{
 	background: url('../images/law.jpg') center;
 	background-size: cover;
-	-webkit-filter: invert(0.1);
+	filter: invert(0.1);
+}
+.trust {
+	background: url('../images/trust.jpg') center;
+	background-size: cover;
+	filter: invert(0.2);
 }
 
 .desktop {
