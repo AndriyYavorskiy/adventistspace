@@ -1,4 +1,5 @@
 console.log('http://adventamo.com/?read=ru:ezek:20:19');
+console.log('http://adventamo.com/?read=ru:cor2:2');
 angular.module('AMO').component('amoReader', {
 	template: `
 		<div class="readers-wrapper">

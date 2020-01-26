@@ -7,3 +7,9 @@
 .amo-search-for-main-page amo-search {
   margin: 0 auto;
 }
+
+.open-options {
+  color: #fff;
+  display: inline-block;
+  margin-top: 12px;
+}

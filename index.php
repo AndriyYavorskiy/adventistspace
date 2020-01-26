@@ -33,10 +33,10 @@
 		"heb" => "Послание к Евреям","rev" => "Откровение Иоанна Богослова"
 	);
 	$readParam = htmlspecialchars($_GET["read"]);
-	$chunks = spliti('\|', $readParam);
+	$chunks = explode('\|', $readParam);
 
-	list($targetLang, $targetBook, $targetChapter, $targetVerse) = split(':', $chunks[0]);
-	$targetBookContent = file_get_contents("scriptures/Bible_ru/" . $booksMap[$targetBook] . ".json");
+	list($targetLang, $targetBook, $targetChapter, $targetVerse) = explode(':', $chunks[0]);
+	$targetBookContent = $targetBook ? file_get_contents("scriptures/Bible_ru/" . $booksMap[$targetBook] . ".json") : '';
 	$targetBookContentJson = json_decode($targetBookContent, true);
 	$targetLink = $chunks[0];
 	$targetMultipleVerses = strpos($targetVerse, ',') || strpos($targetVerse, '-');
@@ -134,6 +134,14 @@
 						<div style="text-align: center; margin-top: 32px;">
               <!--button class="btn l empty drop-shadow">Читать о Библии</button-->
 							<button class="btn l solid drop-shadow" amo-reader-link>Читать Библию</button>
+							<div>
+								<label class="open-options">
+									Автоматично відкривати Біблію: 
+									<input type="checkbox" id="open-options"
+										ng-change="mainCtrl.toggleOpenOption()"
+										ng-model="mainCtrl.openOnLoad">
+								</label>
+							</div>
 						</div>
 					</div>
 				</div>
