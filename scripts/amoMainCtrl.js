@@ -1,9 +1,12 @@
 angular.module('AMO')
-.controller('amoMain', ['amoModal', '$translate', '$window', '$filter', function (amoModal, $translate, $window, $filter){
+.controller('amoMain', ['amoModal', '$translate', '$window', '$filter', 'amoBibleInstanceManager',
+ function (amoModal, $translate, $window, $filter, amoBibleInstanceManager){
 	var openGraphTitle = document.querySelector('#og-title');
+	var hash = $window.location.hash.replace('#', '');
+	var hashIsALink = amoBibleInstanceManager.isValidReference(hash);
 
 	this.openOnLoad = !!JSON.parse($window.localStorage.getItem('amo-settings') || '{}').openOnLoad;
-	if (this.openOnLoad || $window.location.search.match(/(\?|&)read=/i)) {
+	if (this.openOnLoad || $window.location.search.match(/(\?|&)read=/i) || hashIsALink) {
 		amoModal.open({component: "amo-reader"});
 	}
 
@@ -17,8 +20,8 @@ angular.module('AMO')
 	function changeLanguage (key) {
 		$translate.use(key);
 	}
-	if ($window.location.hash) {
-		openGraphTitle.attributes.content.value = $filter('BibleReference')($window.location.hash.replace('#', ''));
+	if (hashIsALink) {
+		openGraphTitle.attributes.content.value = $filter('BibleReference')(hash);
 	}
 
 	this.toggleOpenOption = function () {

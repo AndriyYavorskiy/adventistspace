@@ -99,7 +99,7 @@ angular.module('AMO').component('amoReader', {
 				var safe = [];
 				searchParams.forEach(function (param) {
 					if (/^(\?)?read=/i.test(param)) {
-						collection = param.replace(/^(\?)?read=/i, '').split('|');
+						collection = param.replace(/^(\?)?read=/i, '').split(/(\||;|~|@)/i);
 						collection.forEach(item => {
 							if (amoBibleInstanceManager.isValidReference(item)) {
 								safe.push(item);

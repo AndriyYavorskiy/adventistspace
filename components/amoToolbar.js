@@ -16,7 +16,6 @@ angular.module('AMO')
 		ob.link = function (scope, el, attrs) {
 			el.on('click', function (e){
 				e.stopPropagation();
-					console.log(el.parent());
 				//el.toggleClass('collapsed');
 				if (el.hasClass('collapsed')) {
 					el.removeClass('collapsed');

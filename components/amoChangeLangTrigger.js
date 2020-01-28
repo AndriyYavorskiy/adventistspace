@@ -6,7 +6,7 @@ angular.module('AMO').component('amoChangeLangTrigger', {
         border-radius: 0 0 2px 2px;
         color: #fff;
         cursor: pointer;
-        opacity: .4;
+        opacity: .5;
         padding: 4px 8px;
         position: absolute;
         right: 36px;

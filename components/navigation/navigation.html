@@ -1,0 +1,28 @@
+<div class="nav-container">
+  <a href="/home" ng-class="{ active: currentPage === '/' }">Дім</a>
+  <a href="/2love" ng-class="{ active: currentPage === '/2love' }">Другий прихід Христа</a>
+</div>
+
+<style>
+  .nav-container {
+    left: 70px;
+    position: absolute;
+    top: 30px;
+  }
+  .nav-container a:hover {
+    color: #fff;
+  }
+  .nav-container a {
+    border-radius: 2px;
+    color: #ffffffa3;
+    padding: 9px 12px;
+    text-decoration: none;
+  }
+  .nav-container a.active {
+    background: #ffffffa3;
+    color: #877063;
+  }
+  .nav-container a.active:hover {
+    background: #fff;
+  }
+</style>

@@ -1,32 +1,40 @@
 <div class="amo-theme">
-  <div class="theme current clearfix">
-    <div class="text" ng-bind="amoTheme.currentTheme.text"></div>
-  </div>
   <div class="theme clearfix" ng-repeat="stone in amoTheme.stones track by stone.id" ng-click="amoTheme.switchTheme(stone)">
     <div class="text" ng-bind="stone.text"></div>
-    <div class="theme-color" style="background: {{stone.id}}"></div>
+    <div class="theme-color" style="background: {{ stone.id }}"></div>
+  </div>
+  <div class="theme current clearfix">
+    <div class="text" ng-bind="amoTheme.currentTheme.text"></div>
   </div>
 </div>
 <style>
   .amo-theme {
-    border-radius: 0 0 2px 2px;
+    border-radius: 2px 2px 0 0;
     color: #fff;
     cursor: pointer;
     height: 26px;
-    left: 50px;
+    right: 50px;
     overflow: hidden;
-    opacity: .4;
+    opacity: .5;
     position: absolute;
-    top: 0;
-    padding: 2px 8px 4px;
+    bottom: 0;
+    padding: 2px 8px;
     z-index: 1;
   }
   .amo-theme:hover {
     height: auto;
     opacity: 1;
+    padding-top: 4px;
+  }
+  .amo-theme:hover .theme {
+    display: block;
   }
   .theme {
     padding: 2px 4px;
+    width: 108px;
+  }
+  .theme:not(.current) {
+    display: none;
   }
   .theme:hover .theme-color {
     box-shadow: 0 0 7px rgba(0,0,0, .4);
