@@ -66,8 +66,9 @@ angular.module('AMO').component('amoLangSwitcher', {
   },
   controller: ['$translate', '$window', function ($translate, $window) {
     var switcher = this;
-    this.langs = [{code: 'pl', description: 'Język polski'},
-      {code: 'it', description: 'Lingua italiana'},
+    this.langs = [
+      // {code: 'pl', description: 'Język polski'},
+      // {code: 'it', description: 'Lingua italiana'},
       {code: 'en', description: 'English language'},
       {code: 'ru', description: 'Русский язык'},
       {code: 'ua', description: 'Українська мова'}];

@@ -4,6 +4,12 @@ angular.module('AMO')
 	var openGraphTitle = document.querySelector('#og-title');
 	var hash = $window.location.hash.replace('#', '');
 	var hashIsALink = amoBibleInstanceManager.isValidReference(hash);
+	var langUrlParamMatch = $window.location.search.match(/(\?|&)lang=(en|ru|ua)/i);
+
+	if (langUrlParamMatch) {
+		var lang = langUrlParamMatch[0].split('=')[1];
+		changeLanguage(lang);
+	}
 
 	this.openOnLoad = !!JSON.parse($window.localStorage.getItem('amo-settings') || '{}').openOnLoad;
 	if (this.openOnLoad || $window.location.search.match(/(\?|&)read=/i) || hashIsALink) {
@@ -14,11 +20,12 @@ angular.module('AMO')
 		amoModal.open({component: 'amo-reader', data: {reference: ref}});
 	}
 	if (!$window.localStorage.getItem('amo-lang')) {
-		amoModal.open({component: 'amo-lang-switcher'});
+		changeLanguage('ru');
 	}
 	this.changeLanguage = changeLanguage;
 	function changeLanguage (key) {
 		$translate.use(key);
+		$window.localStorage.setItem('amo-lang', key);
 	}
 	if (hashIsALink) {
 		openGraphTitle.attributes.content.value = $filter('BibleReference')(hash);
