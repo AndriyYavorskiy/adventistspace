@@ -13,6 +13,10 @@
     "show_more": "Показати більше",
     "chapter": "розділ"
   },
+  "navigation": {
+    "home": "Дім",
+    "secondComing": "Другий прихід Ісуса Христа"
+  },
   "langSwitcher": {
     "select_lang": "Оберіть мову",
     "x_lang": "Українська мова"

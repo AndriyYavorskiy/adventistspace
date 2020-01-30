@@ -13,6 +13,10 @@
     "show_more": "Показать больше",
     "chapter": "глава"
   },
+  "navigation": {
+    "home": "Дом",
+    "secondComing": "Второе пришествие Иисуса Христа"
+  },
   "langSwitcher": {
     "select_lang": "Выберите язык",
     "x_lang": "Русский язык"
