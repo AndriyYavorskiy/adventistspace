@@ -22,6 +22,6 @@
     "what": "Wake up and wake others up...",
     "how": "How: on this day, hour, minute and second, publish the text \"... come, Lord Jesus!\" in any social network",
     "why": "Why: to facilitate the awakening of the church as well as to draw the attention of those who have not yet thought about the coming of the last time",
-    "timeLeft": "Time left"
+    "timeLeft": "Time left: {{days}} (full days) {{parts}}"
   }
 }
