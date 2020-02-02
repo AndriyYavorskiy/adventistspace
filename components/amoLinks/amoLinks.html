@@ -1,18 +1,21 @@
 <div class="amo-links container">
   <form name="folder-form" class="folder-form amo-links-toolbar amo-theme-bg">
-    <button type="button" ng-disabled="!amoLinks.currentDir.childOf" class="btn parent-dir" ng-click="amoLinks.goToDir(amoLinks.currentDir.childOf);">⮬</button>
-    <input type="text" name="folder" class="folder-amender go-left" placeholder="Имя папки">
-    <button type="button" ng-if="!amoLinks.process || amoLinks.process.type !== 'update-folder'" class="btn create-folder go-left" ng-click="amoLinks.createFolder();" ng-bind="'Создать папку'"></button>
-    <button type="button" ng-if="amoLinks.process.type === 'update-folder'" class="btn create-folder go-left" ng-click="amoLinks.updateFolder(amoLinks.process.folder);" ng-bind="'Изменить папку'"></button>
+    <button type="button" ng-disabled="!amoLinks.currentDir.childOf" class="btn parent-dir"
+      ng-click="amoLinks.goToDir(amoLinks.currentDir.childOf);">⮬</button>
+    <input type="text" name="folder" class="folder-amender go-left" placeholder="{{ 'amoLinks.folderName' | translate }}">
+    <button type="button" ng-if="!amoLinks.process || amoLinks.process.type !== 'update-folder'" 
+      class="btn create-folder go-left" ng-click="amoLinks.createFolder();">{{ 'amoLinks.createFolder' | translate }}</button>
+    <button type="button" ng-if="amoLinks.process.type === 'update-folder'" 
+      class="btn create-folder go-left" ng-click="amoLinks.updateFolder(amoLinks.process.folder);">{{ 'amoLinks.changeFolder' | translate }}</button>
     <button type="button" class="btn blank hide-links" ng-click="amoLinks.close()">✖</button>
   </form>
   <div class="row breadcrumbs">
     <div class="go-left breadcrumb amo-theme-color" ng-repeat="breadcrumb in amoLinks.breadcrumbs"
-      ng-click="amoLinks.goToDir(breadcrumb.id)" ng-bind="breadcrumb.name || 'Дом'"></div>
+      ng-click="amoLinks.goToDir(breadcrumb.id)">{{ breadcrumb.name || 'amoLinks.defaultName' | translate }}</div>
     <button class="btn info amo-theme-color-on-hover go-right general">
       i
       <span class="tooltip">
-        Здесь вы можете сохранять свои Библейские ссылки. Данные сохраняются в памяти браузера.
+        {{ 'amoLinks.infomation' | translate }}.
       </span>
     </button>
   </div>
@@ -49,19 +52,21 @@
           <span class="delete tool" ng-click="amoLinks.goDeleteLink(link)"><img src="./images/bucket.svg"></span>
         </span>
       </div>
-      <div class="nothing-here col-md-12" ng-if="!amoLinks.currentDir.links.length" ng-bind="'В этой папке еще нет ссылок'"></div>
+      <div class="nothing-here col-md-12" ng-if="!amoLinks.currentDir.links.length">{{ 'amoLinks.noLinksYet' | translate }}</div>
     </div>
   </div>
   <form name="link-form" class="link-form amo-links-amender row clearfix ">
     <div class="col-sm-12 col-md-3">
-      <input type="text" name="link" class="inp txt m sensation m full-size" placeholder="ссылка" required>
+      <input type="text" name="link" class="inp txt m sensation m full-size" placeholder="{{ 'amoLinks.link' | translate }}" required>
     </div>
     <div class="col-sm-12 col-md-7">
-      <input type="text" name="name" class="inp txt m sensation full-size" placeholder="описание">
+      <input type="text" name="name" class="inp txt m sensation full-size" placeholder="{{ 'amoLinks.description' | translate }}">
     </div>
     <div class="col-sm-12 col-md-2">
-      <button type="button" ng-if="!amoLinks.process || amoLinks.process.type !== 'update-link'" class="btn m solid create-link full-size" ng-click="amoLinks.saveLink();" ng-bind="'Создать'"></button>
-      <button type="button" ng-if="amoLinks.process.type === 'update-link'" class="btn m solid create-link full-size" ng-click="amoLinks.updateLink(amoLinks.process.link);" ng-bind="'Сохранить'"></button>
+      <button type="button" ng-if="!amoLinks.process || amoLinks.process.type !== 'update-link'"
+        class="btn m solid create-link full-size" ng-click="amoLinks.saveLink();">{{ 'amoLinks.create' | translate }}</button>
+      <button type="button" ng-if="amoLinks.process.type === 'update-link'" class="btn m solid create-link full-size"
+        ng-click="amoLinks.updateLink(amoLinks.process.link);">{{ 'amoLinks.save' | translate }}</button>
     </div>
   </form>
 </div>

@@ -32,5 +32,20 @@
     "how": "How: on this day, hour, minute and second, publish the text \"... come, Lord Jesus!\" in any social network",
     "why": "Why: to facilitate the awakening of the church as well as to draw the attention of those who have not yet thought about the coming of the last time",
     "timeLeft": "Time left: {{days}} (full days) {{parts}}"
+  },
+  "amoLinks": {
+    "folderName": "Folder name",
+    "createFolder": "Create folder",
+    "changeFolder": "Change folder",
+    "defaultName": "Home",
+    "infomation": "Here you can save your biblical references. Data is stored in browser memory",
+    "noLinksYet": "This folder containd no links yet",
+    "link": "link",
+    "description": "description",
+    "create": "Create",
+    "save": "Save"
+  },
+  "amoLinksForMainPage": {
+    "myLinks": "My links"
   }
 }

@@ -1,5 +1,5 @@
 <div class="amo-links-trigger amo-theme-bg" ng-click="amoLinksForMainPage.config.open = !amoLinksForMainPage.config.open;">
-  Мои ссылки
+  {{ 'amoLinksForMainPage.myLinks' | translate }}
 </div>
 <div class="amo-links-for-main-page-box" ng-if="amoLinksForMainPage.config.open">
   <amo-links wrapper-config="amoLinksForMainPage.config"></amo-links>
