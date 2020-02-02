@@ -1,4 +1,9 @@
 {
+  "readBible": "Читати Біблію",
+  "openAutomatically": "Автоматично відкривати Біблію",
+  "amoSearch": {
+    "findBook": "Шукати книгу Біблії"
+  },
   "reader": {
     "read_in_fuullscreen": "Читати в повноекранному режимі",
     "find_in_Bible": "Шукати в Біблії",

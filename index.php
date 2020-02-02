@@ -53,9 +53,9 @@
 		<meta name="keywords" content="Бог, читать библию онлайн, кто ниписал библию, библия, церковь, вера, евангелие">
 		<meta name="twitter:image" content="http://adventamo.com/images/learn.jpg">
 		<meta name="content-source" content="<?php echo $targetLink ? $targetLink : 'ru:john:3:16'; ?>">
-		<meta name="content-data" content="<?php echo $targetBookContentJson ? $targetBookContentJson[$targetChapter - 1][$targetVerse - 1] : "Ибо так возлюбил Бог мир, что отдал Сына Своего Единородного, дабы всякий, верующий в Него, не погиб, но имел жизнь вечную."; ?>">
+		<meta name="content-data" content="<?php echo $targetBookContentJson ? $targetBookContentJson[$targetChapter - 1][$targetVerse - 1] : "Свидетельствующий сие говорит: ей, гряду скоро! Аминь. Ей, гряди, Господи Иисусе!"; ?>">
 		<meta property="og:title" content="<?php
-			echo $targetBookContentJson && $targetChapter && $targetVerse ? $targetBookContentJson[$targetChapter - 1][$targetVerse - 1] : "Adventamo - инструмент для голубокого изучения Библии" ?>" />
+			echo $targetBookContentJson && $targetChapter && $targetVerse ? $targetBookContentJson[$targetChapter - 1][$targetVerse - 1] : "Adventamo - инструмент для глубокого изучения Библии" ?>" />
 		<meta name="description" content="<?php
 			echo $targetDescription ? $targetDescription : 'Изучайте Библию удобно, ищите в Библии, сохраняйте стихи, делитесь с другими!'; ?>" id="og-title">
 		<meta property="og:type" content="book" />

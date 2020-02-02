@@ -14,10 +14,10 @@
       <p class='source' amo-reader-link="{{ targetSource }}" auto-text></p>
       <div style="text-align: center; margin-top: 32px;">
         <!--button class="btn l empty drop-shadow">Читать о Библии</button-->
-        <button class="btn l solid drop-shadow" amo-reader-link>Читать Библию</button>
+        <button class="btn l solid drop-shadow" amo-reader-link>{{ 'readBible' | translate }}</button>
         <div>
           <label class="open-options">
-            Автоматично відкривати Біблію: 
+            {{ 'openAutomatically' | translate }}: 
             <input type="checkbox" id="open-options"
               ng-change="mainCtrl.toggleOpenOption()"
               ng-model="mainCtrl.openOnLoad">

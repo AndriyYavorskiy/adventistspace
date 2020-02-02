@@ -1,4 +1,9 @@
 {
+  "readBible": "Read Bible",
+  "openAutomatically": "Open Bible automatically",
+  "amoSearch": {
+    "findBook": "Find Bible book"
+  },
   "reader": {
     "read_in_fuullscreen": "Read in fullscreen mode",
     "find_in_Bible": "Find in the Bible",
