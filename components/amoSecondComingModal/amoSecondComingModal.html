@@ -1,0 +1,44 @@
+<div cloud class='modal'>
+  <div class='window'>
+    <div class='head'>
+      {{ 'amoSecondComingModal.whatToDo' | translate }}
+      <div close class='close' ng-click="amoSecondComingModal.closeModal()">✖</div>
+    </div>
+    <div class='body'>
+      <div class='columns flex'>
+        <div class="col">
+          <h2>{{ 'amoSecondComingModal.answerTheQuestions' | translate }}</h2>
+        </div>
+      </div>
+      <div class='columns flex'>
+        <ul class='col'>
+          <li class="question">{{ 'amoSecondComingModal.q1' | translate }}</li>
+          <li class="question">{{ 'amoSecondComingModal.q2' | translate }}</li>
+          <li class="question">
+            {{ 'amoSecondComingModal.q3a' | translate }}
+            <span class="amo-theme-color" amo-reader-link="ru:ex:20:1">{{ 'amoSecondComingModal.q3b' | translate }}</span class="autor amo-theme-color">
+            {{ 'amoSecondComingModal.q3c' | translate }}
+          </li>
+          <li class="question">
+            {{ 'amoSecondComingModal.q4' | translate }}
+             <div class="bible-verse w50perc">
+              <div>и соберутся пред Ним все народы; и отделит одних от других, как пастырь отделяет овец от козлов;</div>
+              <div>и поставит овец по правую Свою сторону, а козлов - по левую.</div>
+              <div class="autor amo-theme-color" amo-reader-link="ru:matt:25:32,33" auto-text></div>
+            </div>
+          </li>
+          <li class="question">{{ 'amoSecondComingModal.q5' | translate }}</li>
+          <li class="question">{{ 'amoSecondComingModal.q6' | translate }}</li>
+          <li class="question">{{ 'amoSecondComingModal.q7' | translate }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.question {
+  margin-left: 18px;
+  list-style: lower-greek;
+  margin-bottom: 12px;
+}
+</style>

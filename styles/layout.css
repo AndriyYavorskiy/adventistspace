@@ -20,8 +20,9 @@
 	position: relative;
 	color: #fff;
 	height: 42px;
+	line-height: 26px;
 }
-.window .head span{
+.window .head span {
 	color: #fff;
 	line-height: 26px;
 }
@@ -31,9 +32,9 @@
 .window .head .close{
 	border-radius: 0 2px 0 0;
 	color: #fff;
-	cursor: default;
+	cursor: pointer;
 	line-height: 32px;
-	padding: 5.5px 14px;
+	padding: 5px 14px;
 	position: absolute;
 	right: 0px;
 	text-align: center;
@@ -107,7 +108,7 @@
 
 
 .columns {
-	padding: 32px 0 0 0;
+	padding: 24px 0 0 0;
 }
 .page-footer {
 	background: #3f3f40;

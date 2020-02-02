@@ -117,5 +117,6 @@
 		</main>
 		<amo-toolbar></amo-toolbar>
 		<script src='scripts/amoFullScreen.js'></script>
+		<script src='components/amoSecondComingModal/amoSecondComingModal.js'></script>
 	</body>
 </html>

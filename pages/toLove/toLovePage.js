@@ -1,4 +1,4 @@
-angular.module('AMO').controller('2LovePageController', ['$scope', '$interval', '$filter', function ($scope, $interval, $filter) {
+angular.module('AMO').controller('2LovePageController', ['$scope', '$interval', 'amoModal', function ($scope, $interval, amoModal) {
   var targetDate = new Date();
   targetDate.setYear(2020);
   targetDate.setMonth(1, 20);
@@ -21,5 +21,9 @@ angular.module('AMO').controller('2LovePageController', ['$scope', '$interval', 
       parts: hours + ':' + minutes + ':' + seconds
     };
   }, 1000);
+
+  $scope.showMore = function () {
+    amoModal.open({component: 'amo-second-coming-modal'});
+  }
 
 }]);

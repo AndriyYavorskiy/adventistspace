@@ -31,7 +31,8 @@
     "what": "Wake up and wake others up...",
     "how": "How: on this day, hour, minute and second, publish the text \"... come, Lord Jesus!\" in any social network",
     "why": "Why: to facilitate the awakening of the church as well as to draw the attention of those who have not yet thought about the coming of the last time",
-    "timeLeft": "Time left: {{days}} (full days) {{parts}}"
+    "timeLeft": "Time left: {{days}} (full days) {{parts}}",
+    "more": "More details"
   },
   "amoLinks": {
     "folderName": "Folder name",
@@ -47,5 +48,18 @@
   },
   "amoLinksForMainPage": {
     "myLinks": "My links"
+  },
+  "amoSecondComingModal": {
+    "whatToDo": "What exactly can we do?",
+    "answerTheQuestions": "We need to honestly answer the questions:",
+    "q1": "Do I allow the Holy Spirit to be in my heart, or has my own will already taken hold of me completely?",
+    "q2": "Why can I really call myself a Christian, and is that so?",
+    "q3a": "Do I comply",
+    "q3b": "The law of God",
+    "q3c": "and do I perceive it as God has commanded it?",
+    "q4": "Do I fulfill the requirements to stand on the right side to Christ, as described in the Gospel of Matthew?",
+    "q5": "Am I filled with love, mercy, sacrifice, or am I driven by the desire to become a great spiritual leader?",
+    "q6": "Is there a risk that I will persecute a church that doesn't seem like a God's to me?",
+    "q7": "Is my action and desire really what Jesus wants, or is it from the evil one, but I do not recognize it?"
   }
 }
