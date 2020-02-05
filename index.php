@@ -46,7 +46,7 @@
 ?>
 <html lang='ru' ng-app='AMO'>
 	<head>
-		<title>Библия для верующих | <?php echo $targetDescription ? $targetDescription : 'изучайте с комфортом!'; ?>
+		<title>{{ 'handyBible' | translate}} | <?php echo $targetDescription ? $targetDescription : "{{ 'useConveniently' | translate }}"; ?>
 		</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
