@@ -1,4 +1,4 @@
-.modal{
+.modal {
 	background: rgba(0,0,0, .4);
 	display: flex;
 	height: 100%;
@@ -14,7 +14,7 @@
 	margin: auto;
 }
 
-.window .head{
+.window .head {
 	border-radius: 2px 2px 0 0;
 	padding: 8px 12px;
 	position: relative;
@@ -26,10 +26,10 @@
 	color: #fff;
 	line-height: 26px;
 }
-.window .head .close:hover{
+.window .head .close:hover {
     background: rgba(0,0,0, .1);
 }
-.window .head .close{
+.window .head .close {
 	border-radius: 0 2px 0 0;
 	color: #fff;
 	cursor: pointer;
@@ -48,7 +48,7 @@
 .window .body > div {
 	padding: 8px 12px;
 }
-.window .body .col p{
+.window .body .col p {
 	padding-bottom: 27px;
 }
 .window .footer {
@@ -57,7 +57,7 @@
 	border-radius: 0 0 2px 2px;
 	border-top: 1px solid #ccc;
 }
-.gifts{
+.gifts {
 	margin: auto;
 	padding: 0 4px;
 	left: -40px;
@@ -69,19 +69,19 @@
 	flex-direction: column;
 	z-index: 1;
 }
-.gifts:hover{
+.gifts:hover {
 	background: rgba(222,222,222, .2);
 	box-shadow: 0 0 4px rgba(0,0,0, .4);
 	left: 0;
 }
-.gift{
+.gift {
 	background-size: cover;
 	height: 40px;
 	transition: .3s;
 	width: 40px;
 	transform: scale(0.8);
 }
-.gift:hover{
+.gift:hover {
 	transform: scale(1);
 }
 

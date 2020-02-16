@@ -116,6 +116,45 @@
 			<ng-view></ng-view>
 		</main>
 		<amo-toolbar></amo-toolbar>
+		<div class='page-footer'>
+			<div class="container">
+				<div class='columns row'>
+					<div class='column col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+						<p class="verse-text">Блаженны нищие духом, ибо их есть Царство Небесное.</p>
+						<p class="verse-text">Блаженны плачущие, ибо они утешатся.</p>
+						<p class="verse-text">Блаженны кроткие, ибо они наследуют землю.</p>
+						<p class="verse-text">Блаженны алчущие и жаждущие правды, ибо они насытятся.</p>
+						<p class="verse-text">Блаженны милостивые, ибо они помилованы будут.</p>
+						<p class="verse-text">Блаженны чистые сердцем, ибо они Бога узрят.</p>
+						<p class="verse-text">Блаженны миротворцы, ибо они будут наречены сынами Божиими.</p>
+						<p class="verse-text">Блаженны изгнанные за правду, ибо их есть Царство Небесное.</p>
+						<p class="verse-text">Блаженны вы, когда будут поносить вас и гнать и всячески неправедно злословить за Меня.</p>
+						<p class='autor' amo-reader-link="ru:matt:5:3-11" auto-text></p>
+						<p class="verse-text">тем, которые постоянством в добром деле ищут славы, чести и бессмертия, жизнь вечную</p>
+						<p class='autor' amo-reader-link="ru:rom:2:7" auto-text></p>
+					</div>
+					<div class='column col-lg-4 col-md-4 col-sm-6'>
+						<p class="verse-text">шесть дней делайте дела, а день седьмой должен быть у вас святым, суббота покоя Господу: всякий, кто будет делать в нее дело, предан будет смерти</p>
+						<p class='autor' amo-reader-link="ru:ex:35:2" auto-text></p>
+						<p class="verse-text">И благословил Бог седьмой день, и освятил его, ибо в оный почил от всех дел Своих, которые Бог творил и созидал.</p>
+						<p class='autor' amo-reader-link="ru:gen:2:3" auto-text></p>
+						<p class="verse-text">и пусть хранят сыны Израилевы субботу, празднуя субботу в роды свои, как завет вечный;</p>
+						<p class="verse-text">это - знамение между Мною и сынами Израилевыми навеки, потому что в шесть дней сотворил Господь небо и землю, а в день седьмой почил и покоился.</p>
+						<p class='autor' amo-reader-link="ru:ex:31:16,17" auto-text></p>
+					</div>
+					<div class='column col-lg-4 col-md-4 col-sm-6'>
+						<p class="verse-text">И сказал Бог: сотворим человека по образу Нашему и по подобию Нашему, и да владычествуют они над рыбами морскими, и над птицами небесными, и над зверями, и над скотом, и над всею землею, и над всеми гадами, пресмыкающимися по земле</p>
+						<p class='autor' amo-reader-link="ru:gen:1:26" auto-text></p>
+						<p class="verse-text">Ибо в вас должны быть те же чувствования, какие и во Христе Иисусе:</p>
+						<p class="verse-text">Он, будучи образом Божиим, не почитал хищением быть равным Богу;</p>
+						<p class='autor' amo-reader-link="ru:phil:2:5,6" auto-text></p>
+					</div>
+				</div>
+			</div>
+			<div class="text-center" style="padding: 12px 0">
+				{{ 'contactDeveloper' | translate }}: seventhasd@gmail.com
+			</div>
+		</div>
 		<script src='scripts/amoFullScreen.js'></script>
 		<script src='components/amoSecondComingModal/amoSecondComingModal.js'></script>
 	</body>

@@ -76,6 +76,10 @@ h6 {font-size: 14px; margin-top: 12px;margin-bottom: 8px;}
 	color: inherit;
 }
 
+.text-center {
+	text-align: center;
+}
+
 .slim-scroll::-webkit-scrollbar-track {
 	background: #f5f5f5;
 	border: 1px solid #dadada;
